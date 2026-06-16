@@ -1,0 +1,262 @@
+/* ══════════════════════════════════════════════════════════════
+   Phase I User Study – 2AFC Evaluation
+   Mobile-First Stylesheet
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Typography ──────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+
+/* ── Hide Streamlit chrome for a clean app feel ──────────── */
+#MainMenu, footer, header { visibility: hidden; }
+div[data-testid="stDecoration"] { display: none; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   HEADER BANNER
+   ══════════════════════════════════════════════════════════════ */
+.study-header {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #ffffff;
+    padding: 1.4rem 1.2rem 1.2rem;
+    border-radius: 14px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.study-header .header-label {
+    margin: 0 0 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+}
+
+.study-header h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: #ffffff;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   TAB HINT TEXT
+   ══════════════════════════════════════════════════════════════ */
+.tab-hint {
+    text-align: center;
+    color: #78909c;
+    font-size: 0.85rem;
+    margin: 0.15rem 0 0.4rem;
+    line-height: 1.4;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   ANSWER CARDS (inside tabs)
+   ══════════════════════════════════════════════════════════════ */
+.answer-card {
+    background: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.1rem 1rem;
+    min-height: 100px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 0.5rem;
+    transition: border-color 0.2s ease;
+}
+
+.answer-a { border-left: 4px solid #0097a7; }
+.answer-b { border-left: 4px solid #7b1fa2; }
+
+.answer-text {
+    color: #37474f;
+    line-height: 1.65;
+    font-size: 0.92rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   VOTING SECTION
+   ══════════════════════════════════════════════════════════════ */
+.vote-section-label {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #455a64;
+    margin: 0.8rem 0 0.35rem;
+    text-align: center;
+}
+
+/* ── All buttons: touch-friendly 48 px targets ─────────────── */
+div[data-testid="stButton"] button {
+    min-height: 48px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 0.5rem 0.6rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    white-space: normal;          /* allow text wrap on narrow screens */
+    line-height: 1.3;
+}
+
+div[data-testid="stButton"] button:active {
+    transform: scale(0.97);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   STREAMLIT TABS – clean mobile styling
+   ══════════════════════════════════════════════════════════════ */
+/* Tab bar container */
+div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+    gap: 0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Individual tab buttons */
+div[data-testid="stTabs"] button[data-baseweb="tab"] {
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 0.65rem 0.8rem;
+    min-height: 44px;
+    flex: 1;                      /* equal width tabs on mobile */
+    justify-content: center;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+div[data-testid="stTabs"] button[data-baseweb="tab"][aria-selected="true"] {
+    border-bottom-color: #0097a7;
+    color: #0097a7;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PATIENT QUERY CARD (kept for possible reuse)
+   ══════════════════════════════════════════════════════════════ */
+.patient-query {
+    background: linear-gradient(135deg, #e0f7fa 0%, #e1f5fe 100%);
+    border-left: 5px solid #0097a7;
+    padding: 1rem 1.1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #263238;
+}
+.patient-query strong { color: #00695c; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   OUTRO CARD
+   ══════════════════════════════════════════════════════════════ */
+.outro-card {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+.outro-card h2 { color: #2e7d32; margin-bottom: 0.5rem; }
+.outro-card p  { font-size: 1rem; color: #37474f; line-height: 1.5; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   PROGRESS PILL (spare class for custom use)
+   ══════════════════════════════════════════════════════════════ */
+.progress-pill {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 0.8rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   QUESTIONNAIRE SECTION HEADERS
+   ══════════════════════════════════════════════════════════════ */
+.questionnaire-section {
+    background: linear-gradient(90deg, #e3f2fd 0%, #f8fbff 100%);
+    border-left: 4px solid #0097a7;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.2rem 0 0.6rem;
+}
+
+.section-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #01579b;
+}
+
+.section-desc {
+    font-size: 0.8rem;
+    color: #546e7a;
+    margin-left: 0.4rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   LIKERT RADIO ROWS – vertical, touch-friendly
+   ══════════════════════════════════════════════════════════════ */
+
+/* Question label */
+div[data-testid="stRadio"] > label {
+    font-size: 0.9rem;
+    color: #37474f;
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+    line-height: 1.45;
+}
+
+/* Container for radio options */
+div[data-testid="stRadio"] > div {
+    gap: 0.3rem;
+}
+
+/* Individual radio option labels */
+div[data-testid="stRadio"] > div > label {
+    background: #f5f5f5;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.85rem;
+    min-height: 44px;                /* Apple HIG / WCAG touch target */
+    display: flex;
+    align-items: center;
+    transition: background 0.18s ease, border-color 0.18s ease;
+    cursor: pointer;
+}
+
+div[data-testid="stRadio"] > div > label:hover {
+    background: #e1f5fe;
+    border-color: #0097a7;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   DESKTOP ENHANCEMENTS  (≥ 768 px)
+   ══════════════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+    .study-header {
+        padding: 2rem 2rem 1.8rem;
+    }
+    .study-header h1 {
+        font-size: 1.35rem;
+    }
+    .answer-card {
+        padding: 1.5rem;
+    }
+    .answer-text {
+        font-size: 1rem;
+    }
+    div[data-testid="stButton"] button {
+        font-size: 0.9rem;
+    }
+}

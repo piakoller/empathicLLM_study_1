@@ -1,0 +1,90 @@
+[
+  {
+    "item_id": "PSMA_BENCH_01",
+    "patient_query": "Kann ich durch eine PSMA-Therapie von meinem Krebs geheilt werden?",
+    "answer_a_text": "Ob eine PSMA-Therapie Ihren Krebs heilen kann, hängt von verschiedenen Faktoren ab, einschließlich der Art und des Stadiums Ihres Krebses sowie Ihrer individuellen Situation. PSMA-Therapien (wie Lutetium-177 PSMA) sind vielversprechend, insbesondere bei Prostatakrebs, können aber nicht in allen Fällen eine Heilung garantieren. Konsultieren Sie Ihren behandelnden Arzt für eine persönliche Einschätzung.\n",
+    "answer_b_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "_source_a": "baseline_medgemma",
+    "_source_b": "triple_pillar_pipeline"
+  },
+  {
+    "item_id": "PSMA_BENCH_02",
+    "patient_query": "Stellt die radioaktive Strahlung durch die PSMA-Therapie ein Risiko für mich dar?",
+    "answer_a_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "answer_b_text": "Die PSMA-Therapie beinhaltet die Verabreichung einer radioaktiven Substanz. Diese Substanz setzt Gammastrahlung frei, die das umliegende Gewebe schädigen kann. Es gibt Risiken, aber die Ärzte treffen Vorkehrungen, um die Strahlenbelastung für Sie und andere zu minimieren. Besprechen Sie spezifische Bedenken mit Ihrem Arzt.\n",
+    "_source_a": "triple_pillar_pipeline",
+    "_source_b": "baseline_medgemma"
+  },
+  {
+    "item_id": "PSMA_BENCH_03",
+    "patient_query": "Welche Nebenwirkungen gibt es im Rahmen der PSMA-Therapie?",
+    "answer_a_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "answer_b_text": "Mögliche Nebenwirkungen der PSMA-Therapie sind:\n\n*   Übelkeit und Erbrechen\n*   Müdigkeit (Fatigue)\n*   Niedrige Blutzellzahlen (Neutropenie, Thrombozytopenie, Anämie)\n*   Nierenschäden (vor allem bei höherer Dosis)\n*   Knochenmarksuppression\n*   Hautreaktionen\n*   Schwindel\n*   Kopfschmerzen",
+    "_source_a": "triple_pillar_pipeline",
+    "_source_b": "baseline_medgemma"
+  },
+  {
+    "item_id": "PSMA_BENCH_04",
+    "patient_query": "Welche Strahlenschutzmassnahmen muss ich nach der PSMA-Therapie nach Entlassung aus dem Krankenhaus einhalten?",
+    "answer_a_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Ein möglicher sinnvoller Schutz zur Reduktion der Augen-\nlinsendosis stellt das Tragen einer Röntgen...)",
+    "answer_b_text": "Nach einer PSMA-Therapie mit Lutetium-177 benötigen Sie keine speziellen Strahlenschutzmaßnahmen zu Hause, da die Radioaktivität in Ihrem Körper schnell abnimmt und die Ausscheidung über den Urin erfolgt. Es gibt keine Gefahr für Ihre Umgebung oder Mitmenschen.",
+    "_source_a": "triple_pillar_pipeline",
+    "_source_b": "baseline_medgemma"
+  },
+  {
+    "item_id": "PSMA_BENCH_05",
+    "patient_query": "Wie wahrscheinlich ist es, dass die PSMA-Therapie eine gute Wirkung erzielt?",
+    "answer_a_text": "Die Erfolgswahrscheinlichkeit der PSMA-Therapie hängt von verschiedenen Faktoren ab, wie z.B. dem Stadium des Prostatakrebses, den vorherigen Behandlungen und den individuellen Eigenschaften des Tumors. Ihr behandelnder Arzt kann Ihnen die spezifische Erfolgswahrscheinlichkeit in Ihrem Fall am besten einschätzen.\n",
+    "answer_b_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "_source_a": "baseline_medgemma",
+    "_source_b": "triple_pillar_pipeline"
+  },
+  {
+    "item_id": "PSMA_BENCH_06",
+    "patient_query": "Wird mir durch die PSMA-Therapie übel werden?",
+    "answer_a_text": "Es ist möglich, dass Ihnen durch die PSMA-Therapie übel wird. Übelkeit ist eine häufige Nebenwirkung.",
+    "answer_b_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "_source_a": "baseline_medgemma",
+    "_source_b": "triple_pillar_pipeline"
+  },
+  {
+    "item_id": "PSMA_BENCH_07",
+    "patient_query": "Werden mir durch die PSMA-Therapie die Haare ausfallen?",
+    "answer_a_text": "Nein, eine PSMA-Therapie führt normalerweise nicht zu Haarausfall.\n",
+    "answer_b_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Keywords\n177Lu-PSMA, prostate cancer, radioligand therapy, mCRPC, PSMA\nIntroduction\nMost deaths rela...)",
+    "_source_a": "baseline_medgemma",
+    "_source_b": "triple_pillar_pipeline"
+  },
+  {
+    "item_id": "PSMA_BENCH_08",
+    "patient_query": "Kann ich durch die PSMA-Therapie sterben?",
+    "answer_a_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Keywords\n177Lu-PSMA, prostate cancer, radioligand therapy, mCRPC, PSMA\nIntroduction\nMost deaths rela...)",
+    "answer_b_text": "Eine PSMA-Therapie birgt, wie jede Krebstherapie, Risiken und mögliche Nebenwirkungen. Tod ist eine sehr seltene, aber nicht völlig ausgeschlossene Folge schwerwiegender Komplikationen. Bitte besprechen Sie Ihre individuellen Risiken und Bedenken ausführlich mit Ihrem behandelnden Arzt.\n",
+    "_source_a": "triple_pillar_pipeline",
+    "_source_b": "baseline_medgemma"
+  },
+  {
+    "item_id": "PSMA_BENCH_09",
+    "patient_query": "Wie lange muss ich für eine PSMA-Therapie im Krankenhaus bleiben?",
+    "answer_a_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "answer_b_text": "Die Aufenthaltsdauer für eine PSMA-Therapie im Krankenhaus beträgt in der Regel 1 bis 3 Tage.\n",
+    "_source_a": "triple_pillar_pipeline",
+    "_source_b": "baseline_medgemma"
+  },
+  {
+    "item_id": "PSMA_BENCH_10",
+    "patient_query": "Darf ich während meines Aufenthaltes im Rahmen einer PSMA-Therapie Besuch erhalten?",
+    "answer_a_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "answer_b_text": "Ja, Besuche sind während der PSMA-Therapie in der Regel erlaubt. Es gelten jedoch die allgemeinen Hygienevorschriften und möglicherweise spezifische Regeln des jeweiligen Therapiezentrums. Bitte informieren Sie sich bei Ihrem Behandlungsteam über detaillierte Bestimmungen.\n",
+    "_source_a": "triple_pillar_pipeline",
+    "_source_b": "baseline_medgemma"
+  },
+  {
+    "item_id": "PSMA_BENCH_11",
+    "patient_query": "Mein PSA-Wert steigt trotz der PSMA-Therapie weiter an. Ist das ein Problem?",
+    "answer_a_text": "Ich kann gut verstehen, warum diese Fragen für Ihre Planung von grosser Bedeutung sind. Sie haben sich offensichtlich sehr detailliert über Ihre Therapieoptionen informiert. Ihr medizinisches Team und ich möchten Sie Schritt für Schritt transparent begleiten. Was wäre im Moment am hilfreichsten für Sie zu wissen?\n\nKlinische Einordnung: [Live-Inferenz Fallback] (Evidenz: Prostataspeziﬁsche Membranantigen(PSMA)-basierte Diagnostik\nund Therapie des Prostatakarzinoms\nZusam...)",
+    "answer_b_text": "Ja, ein steigender PSA-Wert während einer PSMA-Therapie ist besorgniserregend und deutet darauf hin, dass die Therapie möglicherweise nicht ausreichend wirkt. Dies sollte mit Ihrem behandelnden Arzt besprochen werden.\n",
+    "_source_a": "triple_pillar_pipeline",
+    "_source_b": "baseline_medgemma"
+  }
+]
