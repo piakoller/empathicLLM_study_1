@@ -9,6 +9,8 @@ build/
 
 # Streamlit
 .streamlit/secrets.toml
+streamlit*.log
+streamlit.zip
 
 # Study data (do NOT commit participant results)
 fallback_results.json

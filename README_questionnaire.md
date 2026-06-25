@@ -49,7 +49,7 @@ Likert-Skala (5-stufig):
 
 > Bitte geben Sie an, wie Sie sich nach dem Lesen der Chatbot-Antworten fühlen.
 
-### Emotionale Veränderung
+### Emotionaler Zustand
 *(nach dem Lesen der Chatbot-Antworten)*
 
 | # | Key | Frage |
@@ -57,33 +57,43 @@ Likert-Skala (5-stufig):
 | 1 | `post_calm` | Ich fühle mich ruhig. |
 | 2 | `post_tense` | Ich fühle mich angespannt. |
 | 3 | `post_worried` | Ich mache mir Sorgen um meine Gesundheit. |
-| 4 | `post_reassured` | Ich fühle mich beruhigt. |
-| 5 | `post_overwhelmed` | Ich fühle mich überfordert. |
-| 6 | `post_supported` | Ich fühle mich emotional unterstützt. |
-| 7 | `post_confident` | Ich fühle mich sicherer darin, medizinische Informationen zu verstehen. |
+| 4 | `post_relaxed` | Ich fühle mich entspannt. |
+| 5 | `post_uneasy` | Ich fühle mich unwohl. |
+| 6 | `post_confident` | Ich fühle mich sicherer darin, medizinische Informationen zu verstehen. |
+| 7 | `post_overwhelmed` | Ich fühle mich überfordert. |
+| 8 | `post_supported` | Ich fühle mich emotional unterstützt. |
 
-### Wahrgenommene Empathie
+### Nuklearmedizin-spezifisch
+
+| # | Key | Frage |
+|---|-----|-------|
+| 9 | `post_imaging_anxiety` | Ich bin besorgt über Ergebnisse medizinischer Bildgebung (z. B. PET/CT). |
+| 10 | `post_treatment_unsure` | Ich bin unsicher über mögliche Behandlungen (z. B. PRRT, SIRT). |
+
+### Empathie
 *(angelehnt an das NURSE-Modell)*
 
 | # | Key | Frage |
 |---|-----|-------|
-| 8 | `post_nurse_acknowledged` | Der Chatbot hat meine Bedenken anerkannt. |
-| 9 | `post_nurse_understood` | Der Chatbot hat meinen emotionalen Zustand verstanden. |
-| 10 | `post_nurse_respectful` | Der Chatbot hat respektvoll kommuniziert. |
-| 11 | `post_nurse_supportive` | Der Chatbot hat unterstützende Sprache verwendet. |
+| 11 | `post_nurse_acknowledged` | Der Chatbot hat meine Bedenken anerkannt. |
+| 12 | `post_nurse_understood` | Der Chatbot hat meinen emotionalen Zustand verstanden. |
+| 13 | `post_nurse_respectful` | Der Chatbot hat respektvoll kommuniziert. |
+| 14 | `post_nurse_supportive` | Der Chatbot hat unterstützende Sprache verwendet. |
 
-### Wahrgenommene klinische Qualität
-
-| # | Key | Frage |
-|---|-----|-------|
-| 12 | `post_accurate` | Die Informationen wirkten medizinisch korrekt. |
-| 13 | `post_clear` | Die Erklärungen waren klar und leicht verständlich. |
-| 14 | `post_not_mislead` | Der Chatbot hat keine irreführenden oder zu sicheren Aussagen gemacht. |
-
-### Vertrauen und Sicherheitsgefühl
+### Klinische Qualität & Sicherheit
 
 | # | Key | Frage |
 |---|-----|-------|
-| 15 | `post_trust` | Ich vertraue den Antworten des Chatbots. |
-| 16 | `post_comfortable` | Ich würde mich wohlfühlen, einen solchen Chatbot in einer echten medizinischen Situation zu nutzen. |
-| 17 | `post_prepared` | Der Chatbot hat mich besser auf ein Gespräch mit einem Arzt vorbereitet. |
+| 15 | `post_accurate` | Die Informationen wirkten medizinisch korrekt. |
+| 16 | `post_clear` | Die Erklärungen waren klar und leicht verständlich. |
+| 17 | `post_misleading` | Der Chatbot hat irreführende Aussagen gemacht. |
+| 18 | `post_overconfident` | Der Chatbot hat bei unsicheren Themen eine unangemessene Selbstsicherheit gezeigt. |
+| 19 | `post_limits_clear` | Die Grenzen des Chatbots (als KI-System ohne ärztliche Befugnis) wurden mir im Gespräch klar kommuniziert. |
+
+### Vertrauen
+
+| # | Key | Frage |
+|---|-----|-------|
+| 20 | `post_trust` | Ich vertraue den Antworten des Chatbots. |
+| 21 | `post_comfortable` | Ich würde mich wohlfühlen, einen solchen Chatbot in einer echten medizinischen Situation zu nutzen. |
+| 22 | `post_prepared` | Der Chatbot hat mich besser auf ein Gespräch mit einem Arzt vorbereitet. |

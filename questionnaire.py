@@ -76,28 +76,40 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
             key   = item["key"]
             label = item["label"]
 
-            current_val = st.session_state[storage_key].get(key)
-            try:
-                default_index = (
-                    _LIKERT_VALUES.index(current_val)
-                    if current_val in _LIKERT_VALUES
-                    else None
-                )
-            except ValueError:
-                default_index = None
+            st.markdown(f"**{label}**")
 
-            choice = st.radio(
-                label,
-                options=_LIKERT_LABELS,
-                index=default_index,
-                horizontal=False,            # vertical layout for mobile
-                key=f"radio_{key}",
+            current_val = st.session_state[storage_key].get(key)
+
+            # Render as full-width touch tiles. Streamlit's segmented_control
+            # uses unstable internal markup, so explicit columns are safer here.
+            cols = st.columns(len(_LIKERT_VALUES), gap="small")
+            for col, value in zip(cols, _LIKERT_VALUES):
+                with col:
+                    if st.button(
+                        str(value),
+                        key=f"likert_{storage_key}_{key}_{value}",
+                        type="primary" if current_val == value else "secondary",
+                        use_container_width=True,
+                    ):
+                        st.session_state[storage_key][key] = value
+                        current_val = value
+                        st.rerun()
+            
+            # Text labels for extremes
+            st.markdown(
+                """
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-top: -10px; margin-bottom: 20px; padding: 0 5px;">
+                    <span>1 – Gar nicht</span>
+                    <span>5 – Sehr</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
             )
 
-            if choice is None:
+            if current_val is None:
                 all_answered = False
             else:
-                answers[key] = _LIKERT_VALUES[_LIKERT_LABELS.index(choice)]
+                answers[key] = int(current_val)
 
         st.markdown("<div style='margin-bottom:1rem'></div>", unsafe_allow_html=True)
 
@@ -117,6 +129,8 @@ def _scale_legend() -> str:
 def render_pre_questionnaire() -> None:
     """Render the pre-study questionnaire view."""
     cfg = _DATA["pre"]
+    
+    st.progress(0.2, text="Schritt 1: Pre-Evaluation")
 
     st.markdown(
         f"""
@@ -127,13 +141,7 @@ def render_pre_questionnaire() -> None:
         """,
         unsafe_allow_html=True,
     )
-    st.markdown(
-        f"""{cfg["instructions"]}
-
-**Skala:**  
-{_scale_legend()}
-"""
-    )
+    st.markdown(f"{cfg['instructions']}")
     st.divider()
 
     answers = _render_likert_section(cfg["sections"], "pre_questionnaire")
@@ -151,6 +159,8 @@ def render_pre_questionnaire() -> None:
 def render_post_questionnaire() -> None:
     """Render the post-study questionnaire view."""
     cfg = _DATA["post"]
+    
+    st.progress(0.9, text="Schritt 3: Post-Evaluation")
 
     st.markdown(
         f"""
@@ -161,13 +171,7 @@ def render_post_questionnaire() -> None:
         """,
         unsafe_allow_html=True,
     )
-    st.markdown(
-        f"""{cfg["instructions"]}
-
-**Skala:**  
-{_scale_legend()}
-"""
-    )
+    st.markdown(f"{cfg['instructions']}")
     st.divider()
 
     answers = _render_likert_section(cfg["sections"], "post_questionnaire")

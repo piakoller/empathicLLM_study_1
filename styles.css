@@ -11,6 +11,31 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 #MainMenu, footer, header { visibility: hidden; }
 div[data-testid="stDecoration"] { display: none; }
 
+/* Use the available phone viewport instead of Streamlit's centered desktop column. */
+div[data-testid="stAppViewContainer"] > .main,
+div[data-testid="stAppViewContainer"] > .main > div {
+    width: 100%;
+}
+
+div[data-testid="stAppViewContainer"] .block-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0.85rem 1rem 1.5rem !important;
+}
+
+@media (max-width: 640px) {
+    div[data-testid="stAppViewContainer"] .block-container {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+
+    .study-header,
+    .questionnaire-section,
+    .answer-card {
+        width: 100%;
+    }
+}
+
 
 /* ══════════════════════════════════════════════════════════════
    HEADER BANNER
@@ -239,8 +264,6 @@ div[data-testid="stRadio"] > div > label:hover {
     border-color: #0097a7;
 }
 
-
-/* ══════════════════════════════════════════════════════════════
    DESKTOP ENHANCEMENTS  (≥ 768 px)
    ══════════════════════════════════════════════════════════════ */
 @media (min-width: 768px) {
@@ -258,5 +281,27 @@ div[data-testid="stRadio"] > div > label:hover {
     }
     div[data-testid="stButton"] button {
         font-size: 0.9rem;
+    }
+}
+
+/* Full-width Likert tile rows */
+div[data-testid="stHorizontalBlock"] {
+    width: 100%;
+}
+
+div[data-testid="stHorizontalBlock"] div[data-testid="column"] {
+    min-width: 0 !important;
+}
+
+div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] button {
+    min-height: 44px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    div[data-testid="stHorizontalBlock"] {
+        gap: 0.25rem !important;
     }
 }

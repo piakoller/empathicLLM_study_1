@@ -36,7 +36,7 @@ import pymongo
 st.set_page_config(
     page_title="Phase-I-Nutzerstudie – LLM-Evaluation",
     page_icon="🩺",
-    layout="centered",                       # constrains width → mobile-friendly
+    layout="wide",
 )
 
 

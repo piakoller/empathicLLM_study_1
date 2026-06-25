@@ -14,30 +14,60 @@
     "sections": [
       {
         "section": "Emotionaler Zustand",
-        "description": "(Kurzskala angelehnt an STAI-State)",
+        "description": "",
         "items": [
-          { "key": "pre_calm",        "label": "Ich f\u00fchle mich ruhig." },
-          { "key": "pre_tense",       "label": "Ich f\u00fchle mich angespannt." },
-          { "key": "pre_worried",     "label": "Ich mache mir Sorgen um meine Gesundheit." },
-          { "key": "pre_relaxed",     "label": "Ich f\u00fchle mich entspannt." },
-          { "key": "pre_uneasy",      "label": "Ich f\u00fchle mich unwohl." },
-          { "key": "pre_confident",   "label": "Ich f\u00fchle mich sicher darin, medizinische Informationen zu verstehen." },
-          { "key": "pre_overwhelmed", "label": "Ich f\u00fchle mich \u00fcberfordert." }
+          {
+            "key": "pre_calm",
+            "label": "Ich f\u00fchle mich ruhig."
+          },
+          {
+            "key": "pre_tense",
+            "label": "Ich f\u00fchle mich angespannt."
+          },
+          {
+            "key": "pre_worried",
+            "label": "Ich mache mir Sorgen um meine Gesundheit."
+          },
+          {
+            "key": "pre_relaxed",
+            "label": "Ich f\u00fchle mich entspannt."
+          },
+          {
+            "key": "pre_uneasy",
+            "label": "Ich f\u00fchle mich unwohl."
+          },
+          {
+            "key": "pre_confident",
+            "label": "Ich f\u00fchle mich sicher darin, medizinische Informationen zu verstehen."
+          },
+          {
+            "key": "pre_overwhelmed",
+            "label": "Ich f\u00fchle mich \u00fcberfordert."
+          }
         ]
       },
       {
         "section": "Nuklearmedizin-spezifische Sorgen",
         "description": "",
         "items": [
-          { "key": "pre_imaging_anxiety",  "label": "Ich bin besorgt \u00fcber Ergebnisse medizinischer Bildgebung (z.\u00a0B. PET/CT)." },
-          { "key": "pre_treatment_unsure", "label": "Ich bin unsicher \u00fcber m\u00f6gliche Behandlungen (z.\u00a0B. PRRT, SIRT)." }
+          {
+            "key": "pre_imaging_anxiety",
+            "label": "Ich bin besorgt \u00fcber Ergebnisse medizinischer Bildgebung (z.\u00a0B. PET/CT)."
+          },
+          {
+            "key": "pre_treatment_unsure",
+            "label": "Ich bin unsicher \u00fcber m\u00f6gliche Behandlungen (z.\u00a0B. PRRT, SIRT)."
+          }
         ]
       },
       {
         "section": "Grundvertrauen in digitale Gesundheitswerkzeuge",
         "description": "",
         "items": [
-          { "key": "pre_trust_digital", "label": "Ich vertraue generell darauf, dass digitale Gesundheitstools hilfreiche Informationen liefern." }
+          {
+            "key": "pre_trust_digital",
+            "label": "Ich vertraue generell darauf, dass digitale Gesundheitstools hilfreiche Informationen liefern."
+          }
         ]
       }
     ]
@@ -49,44 +79,121 @@
     "button_label": "\u2705  Studie abschliessen",
     "sections": [
       {
-        "section": "Emotionale Ver\u00e4nderung",
+        "section": "Emotionaler Zustand",
         "description": "(nach dem Lesen der Chatbot-Antworten)",
         "items": [
-          { "key": "post_calm",        "label": "Ich f\u00fchle mich ruhig." },
-          { "key": "post_tense",       "label": "Ich f\u00fchle mich angespannt." },
-          { "key": "post_worried",     "label": "Ich mache mir Sorgen um meine Gesundheit." },
-          { "key": "post_reassured",   "label": "Ich f\u00fchle mich beruhigt." },
-          { "key": "post_overwhelmed", "label": "Ich f\u00fchle mich \u00fcberfordert." },
-          { "key": "post_supported",   "label": "Ich f\u00fchle mich emotional unterst\u00fctzt." },
-          { "key": "post_confident",   "label": "Ich f\u00fchle mich sicherer darin, medizinische Informationen zu verstehen." }
+          {
+            "key": "post_calm",
+            "label": "Ich f\u00fchle mich ruhig."
+          },
+          {
+            "key": "post_tense",
+            "label": "Ich f\u00fchle mich angespannt."
+          },
+          {
+            "key": "post_worried",
+            "label": "Ich mache mir Sorgen um meine Gesundheit."
+          },
+          {
+            "key": "post_relaxed",
+            "label": "Ich f\u00fchle mich entspannt."
+          },
+          {
+            "key": "post_uneasy",
+            "label": "Ich f\u00fchle mich unwohl."
+          },
+          {
+            "key": "post_confident",
+            "label": "Ich f\u00fchle mich sicherer darin, medizinische Informationen zu verstehen."
+          },
+          {
+            "key": "post_overwhelmed",
+            "label": "Ich f\u00fchle mich \u00fcberfordert."
+          },
+          {
+            "key": "post_supported",
+            "label": "Ich f\u00fchle mich emotional unterst\u00fctzt."
+          }
         ]
       },
       {
-        "section": "Wahrgenommene Empathie",
+        "section": "Nuklearmedizin-spezifisch",
+        "description": "",
+        "items": [
+          {
+            "key": "post_imaging_anxiety",
+            "label": "Ich bin besorgt \u00fcber Ergebnisse medizinischer Bildgebung (z.\u00a0B. PET/CT)."
+          },
+          {
+            "key": "post_treatment_unsure",
+            "label": "Ich bin unsicher \u00fcber m\u00f6gliche Behandlungen (z.\u00a0B. PRRT, SIRT)."
+          }
+        ]
+      },
+      {
+        "section": "Empathie",
         "description": "(angelehnt an das NURSE-Modell)",
         "items": [
-          { "key": "post_nurse_acknowledged", "label": "Der Chatbot hat meine Bedenken anerkannt." },
-          { "key": "post_nurse_understood",   "label": "Der Chatbot hat meinen emotionalen Zustand verstanden." },
-          { "key": "post_nurse_respectful",   "label": "Der Chatbot hat respektvoll kommuniziert." },
-          { "key": "post_nurse_supportive",   "label": "Der Chatbot hat unterst\u00fctzende Sprache verwendet." }
+          {
+            "key": "post_nurse_acknowledged",
+            "label": "Der Chatbot hat meine Bedenken anerkannt."
+          },
+          {
+            "key": "post_nurse_understood",
+            "label": "Der Chatbot hat meinen emotionalen Zustand verstanden."
+          },
+          {
+            "key": "post_nurse_respectful",
+            "label": "Der Chatbot hat respektvoll kommuniziert."
+          },
+          {
+            "key": "post_nurse_supportive",
+            "label": "Der Chatbot hat unterst\u00fctzende Sprache verwendet."
+          }
         ]
       },
       {
-        "section": "Wahrgenommene klinische Qualit\u00e4t",
+        "section": "Klinische Qualit\u00e4t & Sicherheit",
         "description": "",
         "items": [
-          { "key": "post_accurate",    "label": "Die Informationen wirkten medizinisch korrekt." },
-          { "key": "post_clear",       "label": "Die Erkl\u00e4rungen waren klar und leicht verst\u00e4ndlich." },
-          { "key": "post_not_mislead", "label": "Der Chatbot hat keine irref\u00fchrenden oder zu sicheren Aussagen gemacht." }
+          {
+            "key": "post_accurate",
+            "label": "Die Informationen wirkten medizinisch korrekt."
+          },
+          {
+            "key": "post_clear",
+            "label": "Die Erkl\u00e4rungen waren klar und leicht verst\u00e4ndlich."
+          },
+          {
+            "key": "post_misleading",
+            "label": "Der Chatbot hat irref\u00fchrende Aussagen gemacht."
+          },
+          {
+            "key": "post_overconfident",
+            "label": "Der Chatbot hat bei unsicheren Themen eine unangemessene Selbstsicherheit gezeigt."
+          },
+          {
+            "key": "post_limits_clear",
+            "label": "Die Grenzen des Chatbots (als KI-System ohne \u00e4rztliche Befugnis) wurden mir im Gespr\u00e4ch klar kommuniziert."
+          }
         ]
       },
       {
-        "section": "Vertrauen und Sicherheitsgef\u00fchl",
+        "section": "Vertrauen",
         "description": "",
         "items": [
-          { "key": "post_trust",       "label": "Ich vertraue den Antworten des Chatbots." },
-          { "key": "post_comfortable", "label": "Ich w\u00fcrde mich wohlf\u00fchlen, einen solchen Chatbot in einer echten medizinischen Situation zu nutzen." },
-          { "key": "post_prepared",    "label": "Der Chatbot hat mich besser auf ein Gespr\u00e4ch mit einem Arzt vorbereitet." }
+          {
+            "key": "post_trust",
+            "label": "Ich vertraue den Antworten des Chatbots."
+          },
+          {
+            "key": "post_comfortable",
+            "label": "Ich w\u00fcrde mich wohlf\u00fchlen, einen solchen Chatbot in einer echten medizinischen Situation zu nutzen."
+          },
+          {
+            "key": "post_prepared",
+            "label": "Der Chatbot hat mich besser auf ein Gespr\u00e4ch mit einem Arzt vorbereitet."
+          }
         ]
       }
     ]
