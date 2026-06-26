@@ -93,9 +93,13 @@ def save_results(payload: dict) -> tuple[bool, str]:
     if mongo_uri and "<db_password>" not in mongo_uri and "example.mongodb.net" not in mongo_uri:
         try:
             client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=4000)
-            db = client.get_database("user_study")
-            collection = db.get_collection("results")
+            db = client.get_database("empathicLLM_study")
+            collection = db.get_collection("study_1")
             collection.insert_one(payload)
+            print("\n" + "="*80)
+            print("[DB SUCCESS] Data successfully saved to MongoDB (empathicLLM_study.study_1)")
+            print(json.dumps(payload, indent=2, ensure_ascii=False, default=str))
+            print("="*80 + "\n")
             return True, "Daten erfolgreich in MongoDB gespeichert!"
         except Exception as e:
             err_msg = str(e)
@@ -120,11 +124,22 @@ def save_results(payload: dict) -> tuple[bool, str]:
         with open(fallback_path, "w", encoding="utf-8") as fh:
             json.dump(existing_data, fh, indent=2, ensure_ascii=False, default=str)
 
+        print("\n" + "!"*80)
+        print(f"[DB WARNING] MongoDB connection failed. Saved payload locally to 'fallback_results.json'.")
+        print(f"Error detail: {err_msg}")
+        print(json.dumps(payload, indent=2, ensure_ascii=False, default=str))
+        print("!"*80 + "\n")
+
         return False, (
             f"MongoDB nicht verbunden ({err_msg}). "
             "Daten wurden lokal in 'fallback_results.json' gesichert."
         )
     except Exception as local_err:
+        print("\n" + "X"*80)
+        print("[DB ERROR] CRITICAL: Failed to save to MongoDB AND local fallback failed.")
+        print(f"MongoDB Error: {err_msg}")
+        print(f"Local Error: {local_err}")
+        print("X"*80 + "\n")
         return False, f"Speicherfehler: MongoDB – {err_msg} | Lokal – {local_err}"
 
 
@@ -151,6 +166,41 @@ if "post_questionnaire" not in st.session_state:
     st.session_state.post_questionnaire = {}
 if "question_start_time" not in st.session_state:
     st.session_state.question_start_time = None
+if "needs_db_save" not in st.session_state:
+    st.session_state.needs_db_save = False
+
+
+# ──────────────────────────────────────────────────────────────
+# 4b. AUTO-PERSISTENCE ON STATE CHANGES
+# ──────────────────────────────────────────────────────────────
+def build_current_payload() -> dict:
+    """Constructs the current state payload for the user session."""
+    payload = {
+        "user_id": st.session_state.user_id,
+        "demographics": st.session_state.demographics,
+        "pre_questionnaire": st.session_state.pre_questionnaire,
+        "votes": st.session_state.results,
+        "post_questionnaire": st.session_state.post_questionnaire,
+        "status": st.session_state.view,
+        "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "total_items_voted": len(st.session_state.results),
+    }
+    if st.session_state.view == "outro":
+        payload["completed_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        payload["status"] = "completed"
+    return payload
+
+
+def save_current_progress() -> None:
+    """Helper to build and save/update the current state of progress to the database."""
+    payload = build_current_payload()
+    success, msg = save_results(payload)
+    st.session_state.db_save_status = (success, msg)
+
+
+if st.session_state.needs_db_save:
+    st.session_state.needs_db_save = False
+    save_current_progress()
 
 
 # ──────────────────────────────────────────────────────────────
@@ -189,6 +239,9 @@ def _record_vote(vote_label: str) -> None:
 
     # Reset start time so the next question gets a fresh timestamp
     st.session_state.question_start_time = None
+
+    # Request a DB save on the next rerun
+    st.session_state.needs_db_save = True
 
 
 # ══════════════════════════════════════════════════════════════
@@ -270,6 +323,7 @@ def _render_onboarding() -> None:
         # Go to pre-questionnaire first.
         # (Change to "evaluation" to skip the pre-questionnaire.)
         st.session_state.view = "pre_questionnaire"
+        st.session_state.needs_db_save = True
         st.rerun()
 
 
@@ -397,20 +451,11 @@ def _render_outro() -> None:
     st.divider()
 
     # ── Build final payload ──
-    payload = {
-        "user_id": st.session_state.user_id,
-        "demographics": st.session_state.demographics,
-        "pre_questionnaire": st.session_state.pre_questionnaire,
-        "votes": st.session_state.results,
-        "post_questionnaire": st.session_state.post_questionnaire,
-        "completed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "total_items": len(st.session_state.results),
-    }
+    payload = build_current_payload()
 
-    # ── Persist to DB (exactly once per session) ──
+    # ── Persist to DB (if not already done, though it should be) ──
     if st.session_state.db_save_status is None:
-        success, msg = save_results(payload)
-        st.session_state.db_save_status = (success, msg)
+        save_current_progress()
 
     success, msg = st.session_state.db_save_status
     if success:

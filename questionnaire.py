@@ -153,6 +153,7 @@ def render_pre_questionnaire() -> None:
         else:
             st.session_state.pre_questionnaire = answers
             st.session_state.view = "evaluation"
+            st.session_state.needs_db_save = True
             st.rerun()
 
 
@@ -183,4 +184,5 @@ def render_post_questionnaire() -> None:
         else:
             st.session_state.post_questionnaire = answers
             st.session_state.view = "outro"
+            st.session_state.needs_db_save = True
             st.rerun()
