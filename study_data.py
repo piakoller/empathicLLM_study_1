@@ -82,6 +82,14 @@ def _normalize_items(items: list[dict]) -> list[dict]:
     return normalized
 
 
+def _strip_verbal_confidence(text: str) -> str:
+    """Remove inline confidence annotations from generated answers."""
+    marker = "VERBAL_CONFIDENCE:"
+    if marker not in text:
+        return text.strip()
+    return text.split(marker, 1)[0].rstrip()
+
+
 def load_questions() -> list[dict]:
     """Load evaluation items from data files, with a root-level fallback."""
     try:
@@ -100,16 +108,16 @@ def load_questions() -> list[dict]:
                 raise ValueError(f"No benchmark answers found for question: {question}")
 
             if "answer_a_text" in benchmark_row and "answer_b_text" in benchmark_row:
-                answer_a_text = benchmark_row["answer_a_text"]
-                answer_b_text = benchmark_row["answer_b_text"]
+                answer_a_text = _strip_verbal_confidence(str(benchmark_row["answer_a_text"]))
+                answer_b_text = _strip_verbal_confidence(str(benchmark_row["answer_b_text"]))
                 source_a = benchmark_row.get("_source_a", "answer_a")
                 source_b = benchmark_row.get("_source_b", "answer_b")
             else:
                 candidates = benchmark_row.get("candidates", [])
                 if len(candidates) < 2:
                     raise ValueError(f"Need at least two candidate answers for question: {question}")
-                answer_a_text = candidates[0]
-                answer_b_text = candidates[1]
+                answer_a_text = _strip_verbal_confidence(str(candidates[0]))
+                answer_b_text = _strip_verbal_confidence(str(candidates[1]))
                 source_a = "candidate_1"
                 source_b = "candidate_2"
 
