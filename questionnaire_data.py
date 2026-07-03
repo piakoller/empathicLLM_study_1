@@ -16,12 +16,12 @@ def load_questionnaire_data() -> dict:
         return json.load(fh)
 
 
-def scroll_to_top() -> None:
+def scroll_to_top(scroll_key: str = "") -> None:
     """Reset the page scroll position after a rerun."""
-    scroll_script = """
-        <script>
-            const scrollTop = () => {
-                try {
+    scroll_script = f"""
+        <script> /* {scroll_key} */
+            const scrollTop = () => {{
+                try {{
                     const targets = [
                         window.parent,
                         window.parent.document.documentElement,
@@ -31,19 +31,19 @@ def scroll_to_top() -> None:
                         window.parent.document.querySelector('[data-testid="stMainBlockContainer"]'),
                     ];
 
-                    targets.forEach((target) => {
-                        if (!target) {
+                    targets.forEach((target) => {{
+                        if (!target) {{
                             return;
-                        }
-                        if (typeof target.scrollTo === 'function') {
+                        }}
+                        if (typeof target.scrollTo === 'function') {{
                             target.scrollTo(0, 0);
-                        }
+                        }}
                         target.scrollTop = 0;
-                    });
-                } catch (error) {
+                    }});
+                }} catch (error) {{
                     // Ignore DOM timing issues and retry on the next tick.
-                }
-            };
+                }}
+            }};
 
             scrollTop();
             setTimeout(scrollTop, 50);
@@ -51,10 +51,7 @@ def scroll_to_top() -> None:
             setTimeout(scrollTop, 300);
         </script>
     """
-    st.iframe(
-        f"data:text/html,{urllib.parse.quote(scroll_script)}",
-        height=1,
-    )
+    st.components.v1.html(scroll_script, height=0)
 
 
 def build_likert_metadata(data: dict) -> tuple[list[str], list[int]]:

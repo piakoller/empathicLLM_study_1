@@ -12,10 +12,10 @@ from study_data import load_questions
 from study_persistence import build_current_payload, save_current_progress
 
 
-def _scroll_to_top() -> None:
-    """Scroll the Streamlit app to the top using st.iframe."""
-    st.iframe(
-        f"<script> /* {uuid.uuid4()} */ "
+def _scroll_to_top(scroll_key: str = "") -> None:
+    """Scroll the Streamlit app to the top using st.components.v1.html."""
+    st.components.v1.html(
+        f"<script> /* {scroll_key} */ "
         "window.scrollTo(0,0);"
         "try{window.parent.scrollTo(0,0);}catch(e){}"
         "try{"
@@ -25,7 +25,7 @@ def _scroll_to_top() -> None:
         "if(b)b.scrollTop=0;"
         "}catch(e){}"
         "</script>",
-        height=1,
+        height=0,
     )
 
 
@@ -90,14 +90,14 @@ def _render_onboarding(session_state) -> None:
 
     role = st.selectbox(
         "Ihre berufliche Rolle",
-        options=["Patient:in", "Arzt/Ärztin", "Psycholog:in"],
+        options=["Patient:in", "Arzt/Ärztin"],
         index=None,
         placeholder="Bitte auswählen…",
     )
 
     age = st.selectbox(
         "Ihre Altersgruppe",
-        options=["18–25", "26–35", "36–45", "46–55", "56–65", "66–75", "76+"],
+        options=[">35", "36–45", "46–55", "56–65", "66–75", "76-85", "86+"],
         index=None,
         placeholder="Bitte auswählen…",
     )
@@ -139,7 +139,7 @@ def _render_evaluation(session_state) -> None:
 
     if session_state.get("_scroll_top"):
         session_state._scroll_top = False
-        _scroll_to_top()
+        _scroll_to_top(str(uuid.uuid4()))
 
     if session_state.question_start_time is None:
         session_state.question_start_time = datetime.datetime.now(datetime.timezone.utc)
@@ -159,57 +159,53 @@ def _render_evaluation(session_state) -> None:
 
     st.markdown(
         '<p class="tab-hint">'
-        "👆 Wechseln Sie zwischen den Tabs, um beide Antworten zu lesen."
+        "Bitte lesen Sie beide Antworten aufmerksam durch und bewerten Sie diese unten."
         "</p>",
         unsafe_allow_html=True,
     )
 
-    tab_a, tab_b = st.tabs(["📝 Antwort A", "📝 Antwort B"])
-
     escaped_a = html_module.escape(item["answer_a_text"]).replace("\n", "<br>")
     escaped_b = html_module.escape(item["answer_b_text"]).replace("\n", "<br>")
 
-    with tab_a:
-        st.markdown(
-            f'<div class="answer-card answer-a">'
-            f'<div class="answer-text">{escaped_a}</div>'
-            f"</div>",
-            unsafe_allow_html=True,
-        )
+    st.markdown("### 📝 Antwort A")
+    st.markdown(
+        f'<div class="answer-card answer-a">'
+        f'<div class="answer-text">{escaped_a}</div>'
+        f"</div>",
+        unsafe_allow_html=True,
+    )
+    
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    with tab_b:
-        st.markdown(
-            f'<div class="answer-card answer-b">'
-            f'<div class="answer-text">{escaped_b}</div>'
-            f"</div>",
-            unsafe_allow_html=True,
-        )
+    st.markdown("### 📝 Antwort B")
+    st.markdown(
+        f'<div class="answer-card answer-b">'
+        f'<div class="answer-text">{escaped_b}</div>'
+        f"</div>",
+        unsafe_allow_html=True,
+    )
 
     st.markdown('<div class="vote-section-label">Ihre Bewertung:</div>', unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2, gap="small")
-    with col1:
-        if st.button("✅ Antwort A ist besser", key=f"vote_a_{idx}", use_container_width=True):
-            _record_vote(session_state, "A")
-            session_state._scroll_top = True
-            st.rerun()
-    with col2:
-        if st.button("✅ Antwort B ist besser", key=f"vote_b_{idx}", use_container_width=True):
-            _record_vote(session_state, "B")
-            session_state._scroll_top = True
-            st.rerun()
+    if st.button("✅ Antwort A ist besser", key=f"vote_a_{idx}", use_container_width=True):
+        _record_vote(session_state, "A")
+        session_state._scroll_top = True
+        st.rerun()
 
-    col3, col4 = st.columns(2, gap="small")
-    with col3:
-        if st.button("🤝 Beide gleich gut", key=f"vote_tie_good_{idx}", use_container_width=True):
-            _record_vote(session_state, "TIE_GOOD")
-            session_state._scroll_top = True
-            st.rerun()
-    with col4:
-        if st.button("👎 Beide unzureichend", key=f"vote_tie_bad_{idx}", use_container_width=True):
-            _record_vote(session_state, "TIE_BAD")
-            session_state._scroll_top = True
-            st.rerun()
+    if st.button("✅ Antwort B ist besser", key=f"vote_b_{idx}", use_container_width=True):
+        _record_vote(session_state, "B")
+        session_state._scroll_top = True
+        st.rerun()
+
+    if st.button("🤝 Beide gleich gut", key=f"vote_tie_good_{idx}", use_container_width=True):
+        _record_vote(session_state, "TIE_GOOD")
+        session_state._scroll_top = True
+        st.rerun()
+
+    if st.button("👎 Beide unzureichend", key=f"vote_tie_bad_{idx}", use_container_width=True):
+        _record_vote(session_state, "TIE_BAD")
+        session_state._scroll_top = True
+        st.rerun()
 
 
 def _render_outro(session_state) -> None:

@@ -1,5 +1,6 @@
 """Rendered pre- and post-study questionnaire views."""
 
+import uuid
 import streamlit as st
 
 from questionnaire_data import build_likert_metadata, load_questionnaire_data, scroll_to_top
@@ -7,6 +8,29 @@ from questionnaire_data import build_likert_metadata, load_questionnaire_data, s
 
 _DATA = load_questionnaire_data()
 _LIKERT_LABELS, _LIKERT_VALUES = build_likert_metadata(_DATA)
+
+
+def _show_checkmark_animation(storage_key: str):
+    if st.session_state.get(f"just_answered_{storage_key}"):
+        st.markdown(
+            """
+            <div style="position: relative; width: 100%; height: 0; top: 60px; display: flex; justify-content: center; align-items: center; z-index: 999; pointer-events: none;">
+                <div style="animation: fadeOutCheck 1.5s forwards; font-size: 6rem; filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.15));">
+                    ✅
+                </div>
+            </div>
+            <style>
+            @keyframes fadeOutCheck {
+                0% { opacity: 0; }
+                20% { opacity: 1; }
+                70% { opacity: 1; }
+                100% { opacity: 0; display: none; }
+            }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.session_state[f"just_answered_{storage_key}"] = False
 
 
 def _render_likert_section(sections: list[dict], storage_key: str) -> dict | None:
@@ -26,11 +50,19 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
     if not flat_items:
         return None
 
-    scroll_to_top()
-
     cursor_key = f"{storage_key}_cursor"
+    completion_key = f"{storage_key}_completed"
+
     if cursor_key not in st.session_state:
         st.session_state[cursor_key] = 0
+        st.session_state["trigger_scroll"] = True
+        
+    if storage_key not in st.session_state:
+        st.session_state[storage_key] = {}
+
+    if st.session_state.get("trigger_scroll"):
+        st.session_state["trigger_scroll"] = False
+        scroll_to_top(str(uuid.uuid4()))
 
     total_items = len(flat_items)
     raw_idx = int(st.session_state[cursor_key])
@@ -49,6 +81,7 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
 
     if completed:
         scroll_to_top()
+        _show_checkmark_animation(storage_key)
         answered_count = sum(
             1 for item in flat_items if st.session_state[storage_key].get(item["key"]) is not None
         )
@@ -62,23 +95,6 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
     answered_count = sum(
         1 for item in flat_items if st.session_state[storage_key].get(item["key"]) is not None
     )
-    st.progress(
-        answered_count / total_items,
-        text=f"Fragebogen: {answered_count}/{total_items} beantwortet",
-    )
-
-    nav_col1, nav_col2 = st.columns([1, 2], gap="small")
-    with nav_col1:
-        if st.button(
-            "← Zuruck",
-            key=f"nav_prev_{storage_key}",
-            use_container_width=True,
-            disabled=current_idx == 0,
-        ):
-            st.session_state[cursor_key] = current_idx - 1
-            st.rerun()
-    with nav_col2:
-        st.caption("Antworten werden automatisch gespeichert. Vorwärts geht es nach der Auswahl, zurück nur mit Zuruck.")
 
     current_item = flat_items[current_idx]
     desc_html = (
@@ -87,13 +103,26 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
         else ""
     )
     st.markdown(
-        f'<div class="questionnaire-section">'
+        f'<div class="questionnaire-section" style="animation: softFadeIn 0.5s ease-out forwards;">'
         f'<span class="section-title">{current_item["section"]}</span>'
         f'{desc_html}</div>',
         unsafe_allow_html=True,
     )
-    st.markdown(f"**Frage {current_idx + 1} von {total_items}**")
-    st.markdown(f"**{current_item['label']}**")
+
+    st.progress(
+        answered_count / total_items,
+        text=f"Fragebogen: {answered_count}/{total_items} beantwortet",
+    )
+
+    _show_checkmark_animation(storage_key)
+
+    st.markdown(
+        f'<div style="animation: softFadeIn 0.6s ease-out forwards;">'
+        f'<strong>Frage {current_idx + 1} von {total_items}</strong><br><br>'
+        f'<span style="font-size: 1.1em; font-weight: 600;">{current_item["label"]}</span>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
     current_val = st.session_state[storage_key].get(current_item["key"])
     cols = st.columns(len(_LIKERT_VALUES), gap="small")
@@ -106,12 +135,14 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
                 use_container_width=True,
             ):
                 st.session_state[storage_key][current_item["key"]] = value
+                st.session_state[f"just_answered_{storage_key}"] = True
                 if current_idx < total_items - 1:
                     st.session_state[cursor_key] = current_idx + 1
                     st.session_state[completion_key] = False
                 else:
                     st.session_state[cursor_key] = total_items
                     st.session_state[completion_key] = True
+                st.session_state["trigger_scroll"] = True
                 st.rerun()
 
     st.markdown(
@@ -124,7 +155,21 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
         unsafe_allow_html=True,
     )
 
-    scroll_to_top()
+    st.divider()
+    nav_col1, nav_col2 = st.columns([1, 2], gap="small")
+    with nav_col1:
+        if st.button(
+            "← Zurück",
+            key=f"nav_prev_{storage_key}",
+            use_container_width=True,
+            disabled=current_idx == 0,
+        ):
+            st.session_state[cursor_key] = current_idx - 1
+            st.session_state["trigger_scroll"] = True
+            st.rerun()
+    with nav_col2:
+        st.caption("Antworten werden automatisch gespeichert. Vorwärts geht es nach der Auswahl, zurück nur mit Zurück.")
+
     return _collect_answers(flat_items, storage_key)
 
 
@@ -151,17 +196,7 @@ def render_pre_questionnaire() -> None:
 
     st.progress(0.2, text="Schritt 1: Pre-Evaluation")
 
-    st.markdown(
-        f"""
-        <div class="study-header">
-            <p class="header-label">{cfg["header_label"]}</p>
-            <h1>{cfg["title"]}</h1>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
     st.markdown(f"{cfg['instructions']}")
-    st.divider()
 
     answers = _render_likert_section(cfg["sections"], "pre_questionnaire")
 
@@ -181,17 +216,7 @@ def render_post_questionnaire() -> None:
 
     st.progress(0.9, text="Schritt 3: Post-Evaluation")
 
-    st.markdown(
-        f"""
-        <div class="study-header">
-            <p class="header-label">{cfg["header_label"]}</p>
-            <h1>{cfg["title"]}</h1>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
     st.markdown(f"{cfg['instructions']}")
-    st.divider()
 
     answers = _render_likert_section(cfg["sections"], "post_questionnaire")
 

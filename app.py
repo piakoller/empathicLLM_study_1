@@ -21,7 +21,11 @@ _STYLES_PATH = pathlib.Path(__file__).parent / "styles.css"
 def _load_css() -> None:
     """Read the external CSS file and inject it into the Streamlit page."""
     css_text = _STYLES_PATH.read_text(encoding="utf-8")
-    st.markdown(f"<style>{css_text}</style>", unsafe_allow_html=True)
+    
+    font_size_px = 22  # Static large font size
+    dynamic_css = f"html {{ font-size: {font_size_px}px !important; }}"
+    
+    st.markdown(f"<style>{css_text}\n{dynamic_css}</style>", unsafe_allow_html=True)
 
 
 def _initialize_session_state() -> None:
@@ -49,8 +53,8 @@ def _initialize_session_state() -> None:
         st.session_state.needs_db_save = False
 
 
-_load_css()
 _initialize_session_state()
+_load_css()
 
 
 if st.session_state.needs_db_save:
