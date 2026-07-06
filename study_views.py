@@ -41,7 +41,7 @@ def _record_vote(session_state, vote_label: str) -> None:
             "item_id": item["item_id"],
             "vote": vote_label,
             "response_time_s": response_time_s,
-            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat(),
         }
     )
 
@@ -60,31 +60,50 @@ def _render_onboarding(session_state) -> None:
     st.markdown(
         """
         <div class="study-header">
-            <p class="header-label">Phase I · Nutzerstudie</p>
-            <h1>🩺 LLM-Evaluation in der klinischen Theranostik</h1>
+            <div class="header-title">Evaluation von Patientenantworten</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
+    num_questions = len(load_questions())
     st.markdown(
-        """
+        f"""
         Willkommen und vielen Dank für Ihre Teilnahme!
 
-        Sie werden **20 Patientenfragen** zum Thema PSMA-gerichtete
+        Sie werden **{num_questions} Patientenfragen** zum Thema PSMA-gerichtete
         Theranostik bei Prostatakrebs sehen. Zu jeder Frage erhalten Sie
-        zwei anonymisierte, modellgenerierte Antworten in separaten Tabs.
+        zwei Antworten in separaten Tabs.
 
         Ihre Aufgabe: **Wählen Sie die Antwort, die Sie für hilfreicher,
         genauer und angemessener halten** – oder geben Sie an, dass beide
         gleich gut bzw. unzureichend sind.
-
-        Bevor wir beginnen, bitten wir Sie um einige kurze Angaben.
+        
+        **Hinweis:** Die Antworten sind lediglich Vorschläge. Wenn Sie weitere Fragen haben, konsultieren Sie bitte Ihren Arzt.
         """
     )
 
+    st.markdown("")
+
+    if st.button("Weiter", type="primary", use_container_width=True):
+        session_state.view = "demographics"
+        _request_scroll_to_top(session_state)
+        st.rerun()
+    _consume_scroll_to_top(session_state)
+
+
+def _render_demographics(session_state) -> None:
+    st.markdown(
+        """
+        <div class="study-header">
+            <div class="header-title">Angaben zu Ihrer Person</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("Bevor wir beginnen, bitten wir Sie um einige kurze Angaben.")
     st.divider()
-    st.subheader("📋 Angaben zu Ihrer Person")
 
     role = st.selectbox(
         "Ihre Rolle",
@@ -107,9 +126,7 @@ def _render_onboarding(session_state) -> None:
         placeholder="Bitte auswählen…",
     )
 
-    st.markdown("")
-
-    if st.button("Studie starten", type="primary", use_container_width=True):
+    if st.button("Weiter", type="primary", use_container_width=True):
         if not role or not age or not gender:
             st.warning("Bitte füllen Sie alle Felder aus, bevor Sie beginnen.")
             return
@@ -119,7 +136,7 @@ def _render_onboarding(session_state) -> None:
             "role": role,
             "age_range": age,
             "gender": gender,
-            "started_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "started_at": datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat(),
         }
         session_state.mock_data = load_questions()
         session_state.question_idx = 0
@@ -133,25 +150,25 @@ def _render_onboarding(session_state) -> None:
 
 @st.dialog("📝 Antwort A")
 def show_answer_a(text: str):
-    if st.button("❌ Schließen", use_container_width=True, key="close_a"):
-        st.rerun()
     st.markdown(
         f'<div class="answer-card answer-a">'
         f'<div class="answer-text">{text}</div>'
         f"</div>",
         unsafe_allow_html=True,
     )
+    if st.button("❌ Schliessen", use_container_width=True, key="close_a"):
+        st.rerun()
 
 @st.dialog("📝 Antwort B")
 def show_answer_b(text: str):
-    if st.button("❌ Schließen", use_container_width=True, key="close_b"):
-        st.rerun()
     st.markdown(
         f'<div class="answer-card answer-b">'
         f'<div class="answer-text">{text}</div>'
         f"</div>",
         unsafe_allow_html=True,
     )
+    if st.button("❌ Schliessen", use_container_width=True, key="close_b"):
+        st.rerun()
 
 
 def _render_evaluation(session_state) -> None:
@@ -181,30 +198,34 @@ def _render_evaluation(session_state) -> None:
 
     colA, colB = st.columns(2)
     with colA:
-        if st.button("🔍 Antwort A lesen", use_container_width=True, key=f"btn_read_a_{idx}"):
+        if st.button("🔍 Antwort A", use_container_width=True, key=f"btn_read_a_{idx}"):
             show_answer_a(escaped_a)
     with colB:
-        if st.button("🔍 Antwort B lesen", use_container_width=True, key=f"btn_read_b_{idx}"):
+        if st.button("🔍 Antwort B", use_container_width=True, key=f"btn_read_b_{idx}"):
             show_answer_b(escaped_b)
 
     st.markdown("<hr style='margin: 1.5rem 0;'>", unsafe_allow_html=True)
     st.markdown('<div style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.5rem; text-align: center;">Ihre Bewertung:</div>', unsafe_allow_html=True)
 
-    if st.button("✅ Antwort A ist besser", key=f"vote_a_{idx}", use_container_width=True):
-        _record_vote(session_state, "A")
-        st.rerun()
+    col_vote1, col_vote2 = st.columns(2, gap="small")
+    with col_vote1:
+        if st.button("✅ Antwort A\nist besser", key=f"vote_a_{idx}", use_container_width=True):
+            _record_vote(session_state, "A")
+            st.rerun()
+    with col_vote2:
+        if st.button("✅ Antwort B\nist besser", key=f"vote_b_{idx}", use_container_width=True):
+            _record_vote(session_state, "B")
+            st.rerun()
 
-    if st.button("✅ Antwort B ist besser", key=f"vote_b_{idx}", use_container_width=True):
-        _record_vote(session_state, "B")
-        st.rerun()
-
-    if st.button("🤝 Beide gleich gut", key=f"vote_tie_good_{idx}", use_container_width=True):
-        _record_vote(session_state, "TIE_GOOD")
-        st.rerun()
-
-    if st.button("👎 Beide unzureichend", key=f"vote_tie_bad_{idx}", use_container_width=True):
-        _record_vote(session_state, "TIE_BAD")
-        st.rerun()
+    col_tie1, col_tie2 = st.columns(2, gap="small")
+    with col_tie1:
+        if st.button("🤝 Beide gleich\ngut", key=f"vote_tie_good_{idx}", use_container_width=True):
+            _record_vote(session_state, "TIE_GOOD")
+            st.rerun()
+    with col_tie2:
+        if st.button("👎 Beide unzureichend", key=f"vote_tie_bad_{idx}", use_container_width=True):
+            _record_vote(session_state, "TIE_BAD")
+            st.rerun()
 
     components.html(
         """
@@ -238,10 +259,10 @@ def _render_evaluation(session_state) -> None:
         const buttons = parent.querySelectorAll('button');
         buttons.forEach(btn => {
             const text = btn.innerText;
-            if (text.includes("Antwort A lesen") || text.includes("Antwort A ist besser")) {
+            if (text.includes("Antwort A")) {
                 btn.classList.add("btn-a-custom");
             }
-            if (text.includes("Antwort B lesen") || text.includes("Antwort B ist besser")) {
+            if (text.includes("Antwort B")) {
                 btn.classList.add("btn-b-custom");
             }
         });
@@ -300,6 +321,8 @@ def _render_outro(session_state) -> None:
 def render_study_view(session_state) -> None:
     if session_state.view == "onboarding":
         _render_onboarding(session_state)
+    elif session_state.view == "demographics":
+        _render_demographics(session_state)
     elif session_state.view == "pre_questionnaire":
         render_pre_questionnaire()
     elif session_state.view == "evaluation":

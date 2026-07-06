@@ -23,12 +23,6 @@ div[data-testid="stDecoration"] {
     display: none;
 }
 
-/* Use the available phone viewport instead of Streamlit's centered desktop column. */
-div[data-testid="stAppViewContainer"]>.main,
-div[data-testid="stAppViewContainer"]>.main>div {
-    width: 100%;
-}
-
 div[data-testid="stAppViewContainer"] .block-container {
     max-width: 100% !important;
     width: 100% !important;
@@ -48,6 +42,15 @@ div[data-testid="stAppViewContainer"] .block-container {
     }
 }
 
+[data-testid="stAppViewContainer"]>.main {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+[data-testid="stAppViewContainer"] {
+    padding: 0 !important;
+}
 
 /* ══════════════════════════════════════════════════════════════
    HEADER BANNER
@@ -56,9 +59,9 @@ div[data-testid="stAppViewContainer"] .block-container {
     background: #ffffff;
     color: #1a1a1a;
     border: 1px solid #e0e0e0;
-    padding: 2rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
     text-align: left;
     /* Alignment change for a more formal look */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -77,6 +80,16 @@ div[data-testid="stAppViewContainer"] .block-container {
     font-size: 1.5rem;
     color: #00509d;
     /* Professional blue */
+}
+
+.study-header .header-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+    color: #00509d;
+    text-align: center;
 }
 
 
@@ -116,7 +129,7 @@ div[data-testid="stAppViewContainer"] .block-container {
 
 .answer-text {
     color: #111111;
-    line-height: 1.65;
+    line-height: 1.5;
     font-size: 0.92rem;
 }
 
@@ -308,6 +321,7 @@ div[data-testid="stRadio"]>div>label:hover {
 @media (min-width: 768px) {
     .study-header {
         padding: 2rem 2rem 1.8rem;
+        text-align: center;
     }
 
     .study-header h1 {
@@ -341,11 +355,30 @@ div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] button {
     border-radius: 8px;
     font-size: 0.95rem;
     font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Enable multiline text in buttons (allows \n to work) */
+div[data-testid="stButton"] button p {
+    white-space: pre-line !important;
+    margin: 0;
 }
 
 @media (max-width: 640px) {
     div[data-testid="stHorizontalBlock"] {
-        gap: 0.25rem !important;
+        gap: 0.5rem !important;
+        flex-wrap: nowrap !important;
+        flex-direction: row !important;
+    }
+
+    div[data-testid="stHorizontalBlock"]>div[data-testid="column"] {
+        width: calc(50% - 0.25rem) !important;
+        flex: 1 1 calc(50% - 0.25rem) !important;
+        min-width: 0 !important;
+    }
+
+    [data-testid="stAppViewContainer"] * {
+        min-width: 0 !important;
     }
 }
 

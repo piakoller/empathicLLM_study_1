@@ -22,7 +22,7 @@ def _load_css() -> None:
     """Read the external CSS file and inject it into the Streamlit page."""
     css_text = _STYLES_PATH.read_text(encoding="utf-8")
     
-    font_size_px = 22  # Static large font size
+    font_size_px = 18  # Static large font size
     dynamic_css = f"html {{ font-size: {font_size_px}px !important; }}"
     
     st.markdown(f"<style>{css_text}\n{dynamic_css}</style>", unsafe_allow_html=True)

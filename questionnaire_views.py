@@ -96,7 +96,7 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
             answered_count / total_items,
             text=f"Fragebogen: {answered_count}/{total_items} beantwortet",
         )
-        st.markdown("Sie haben alle Fragen beantwortet. Bitte fahren Sie nun mit der Studie fort.")
+        st.markdown("Vielen Dank! Sie haben alle Fragen in diesem Abschnitt beantwortet. Bitte klicken Sie unten, um fortzufahren.")
         return _collect_answers(flat_items, storage_key)
 
     answered_count = sum(
@@ -144,19 +144,16 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
     )
 
     st.divider()
-    nav_col1, nav_col2 = st.columns([1, 2], gap="small")
-    with nav_col1:
-        if st.button(
-            "← Zurück",
-            key=f"nav_prev_{storage_key}",
-            use_container_width=True,
-            disabled=current_idx == 0,
-        ):
-            st.session_state[cursor_key] = current_idx - 1
-            _request_scroll_to_top()
-            st.rerun()
-    with nav_col2:
-        st.caption("Antworten werden automatisch gespeichert. Vorwärts geht es nach der Auswahl, zurück nur mit Zurück.")
+    if st.button(
+        "← Zurück",
+        key=f"nav_prev_{storage_key}",
+        use_container_width=True,
+        disabled=current_idx == 0,
+    ):
+        st.session_state[cursor_key] = current_idx - 1
+        _request_scroll_to_top()
+        st.rerun()
+    st.caption("Antworten werden automatisch gespeichert. Vorwärts geht es nach der Auswahl, zurück nur mit Zurück.")
 
     return _collect_answers(flat_items, storage_key)
 
@@ -184,11 +181,9 @@ def render_pre_questionnaire() -> None:
 
     answers = _render_likert_section(cfg["sections"], "pre_questionnaire")
 
-    st.divider()
-    if st.button(cfg["button_label"], type="primary", use_container_width=True, key="pre_submit"):
-        if answers is None:
-            st.warning("Bitte beantworten Sie alle Fragen, bevor Sie fortfahren.")
-        else:
+    if answers is not None:
+        st.divider()
+        if st.button(cfg["button_label"], type="primary", use_container_width=True, key="pre_submit"):
             st.session_state.pre_questionnaire = answers
             st.session_state.view = "evaluation"
             st.session_state.needs_db_save = True
@@ -203,11 +198,9 @@ def render_post_questionnaire() -> None:
 
     answers = _render_likert_section(cfg["sections"], "post_questionnaire")
 
-    st.divider()
-    if st.button(cfg["button_label"], type="primary", use_container_width=True, key="post_submit"):
-        if answers is None:
-            st.warning("Bitte beantworten Sie alle Fragen, bevor Sie fortfahren.")
-        else:
+    if answers is not None:
+        st.divider()
+        if st.button(cfg["button_label"], type="primary", use_container_width=True, key="post_submit"):
             st.session_state.post_questionnaire = answers
             st.session_state.view = "outro"
             st.session_state.needs_db_save = True

@@ -18,11 +18,11 @@ def build_current_payload(session_state) -> dict:
         "votes": session_state.results,
         "post_questionnaire": session_state.post_questionnaire,
         "status": session_state.view,
-        "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "updated_at": datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat(),
         "total_items_voted": len(session_state.results),
     }
     if session_state.view == "outro":
-        payload["completed_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        payload["completed_at"] = datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat()
         payload["status"] = "completed"
     return payload
 
