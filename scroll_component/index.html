@@ -14,39 +14,14 @@
         
         const doScroll = () => {
             try {
-                if (typeof window.parent.scrollTo === 'function') {
-                    window.parent.scrollTo(0, 0);
-                }
-            } catch (e) {}
-
-            const selectors = [
-                'section.main',
-                '[data-testid="stAppViewContainer"]',
-                '[data-testid="stMainBlockContainer"]'
-            ];
-
-            try {
-                if (window.parent && window.parent.document) {
-                    if (window.parent.document.documentElement) {
-                        window.parent.document.documentElement.scrollTop = 0;
-                    }
-                    if (window.parent.document.body) {
-                        window.parent.document.body.scrollTop = 0;
-                    }
-                    selectors.forEach(sel => {
-                        try {
-                            const el = window.parent.document.querySelector(sel);
-                            if (el) {
-                                if (typeof el.scrollTo === 'function') el.scrollTo(0, 0);
-                                el.scrollTop = 0;
-                            }
-                        } catch (e) {}
-                    });
-                }
+                // The actual scrollable element in Streamlit is section.stMain
+                const stMain = window.parent.document.querySelector('section.stMain') 
+                    || window.parent.document.querySelector('[data-testid="stMain"]');
+                if (stMain) stMain.scrollTop = 0;
             } catch (e) {}
         };
 
-        // Pin scroll to top aggressively for 2.5 full seconds
+        // Fire aggressively to catch any late-rendering content
         doScroll();
         const intervalId = setInterval(doScroll, 20);
         setTimeout(() => clearInterval(intervalId), 2500);

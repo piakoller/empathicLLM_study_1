@@ -22,20 +22,21 @@ def _consume_scroll_to_top() -> None:
 
 def _show_checkmark_animation(storage_key: str):
     if st.session_state.get(f"just_answered_{storage_key}"):
+        unique_id = uuid.uuid4().hex
         st.markdown(
-            """
-            <div style="position: relative; width: 100%; height: 0; top: 60px; display: flex; justify-content: center; align-items: center; z-index: 999; pointer-events: none;">
+            f"""
+            <div id="check-{unique_id}" style="position: relative; width: 100%; height: 0; top: 60px; display: flex; justify-content: center; align-items: center; z-index: 999; pointer-events: none;">
                 <div style="animation: fadeOutCheck 1.5s forwards; font-size: 6rem; filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.15));">
                     ✅
                 </div>
             </div>
             <style>
-            @keyframes fadeOutCheck {
-                0% { opacity: 0; }
-                20% { opacity: 1; }
-                70% { opacity: 1; }
-                100% { opacity: 0; display: none; }
-            }
+            @keyframes fadeOutCheck {{
+                0% {{ opacity: 0; }}
+                20% {{ opacity: 1; }}
+                70% {{ opacity: 1; }}
+                100% {{ opacity: 0; display: none; }}
+            }}
             </style>
             """,
             unsafe_allow_html=True,
@@ -49,6 +50,10 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
     flat_items: list[dict] = []
     for sec in sections:
         for item in sec["items"]:
+            # Only show post_recommend to patients
+            if item["key"] == "post_recommend" and st.session_state.get("role") != "Patient:in":
+                continue
+                
             flat_items.append(
                 {
                     "section": sec["section"],

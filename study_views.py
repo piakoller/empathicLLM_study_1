@@ -149,26 +149,28 @@ def _render_demographics(session_state) -> None:
 
 
 @st.dialog("📝 Antwort A")
-def show_answer_a(text: str):
+def show_answer_a(text: str, idx: int):
+    st.session_state[f"viewed_a_{idx}"] = True
+    if st.button("❌ Schliessen", use_container_width=True, key="close_a"):
+        st.rerun()
     st.markdown(
         f'<div class="answer-card answer-a">'
         f'<div class="answer-text">{text}</div>'
         f"</div>",
         unsafe_allow_html=True,
     )
-    if st.button("❌ Schliessen", use_container_width=True, key="close_a"):
-        st.rerun()
 
 @st.dialog("📝 Antwort B")
-def show_answer_b(text: str):
+def show_answer_b(text: str, idx: int):
+    st.session_state[f"viewed_b_{idx}"] = True
+    if st.button("❌ Schliessen", use_container_width=True, key="close_b"):
+        st.rerun()
     st.markdown(
         f'<div class="answer-card answer-b">'
         f'<div class="answer-text">{text}</div>'
         f"</div>",
         unsafe_allow_html=True,
     )
-    if st.button("❌ Schliessen", use_container_width=True, key="close_b"):
-        st.rerun()
 
 
 def _render_evaluation(session_state) -> None:
@@ -196,35 +198,49 @@ def _render_evaluation(session_state) -> None:
         unsafe_allow_html=True,
     )
 
+    # Track which answers have been viewed
+    viewed_a = st.session_state.get(f"viewed_a_{idx}", False)
+    viewed_b = st.session_state.get(f"viewed_b_{idx}", False)
+    both_viewed = viewed_a and viewed_b
+
     colA, colB = st.columns(2)
     with colA:
-        if st.button("🔍 Antwort A", use_container_width=True, key=f"btn_read_a_{idx}"):
-            show_answer_a(escaped_a)
+        label_a = "✅ Antwort A gelesen" if viewed_a else "🔍 Antwort A"
+        if st.button(label_a, use_container_width=True, key=f"btn_read_a_{idx}"):
+            show_answer_a(escaped_a, idx)
     with colB:
-        if st.button("🔍 Antwort B", use_container_width=True, key=f"btn_read_b_{idx}"):
-            show_answer_b(escaped_b)
+        label_b = "✅ Antwort B gelesen" if viewed_b else "🔍 Antwort B"
+        if st.button(label_b, use_container_width=True, key=f"btn_read_b_{idx}"):
+            show_answer_b(escaped_b, idx)
 
     st.markdown("<hr style='margin: 1.5rem 0;'>", unsafe_allow_html=True)
     st.markdown('<div style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.5rem; text-align: center;">Ihre Bewertung:</div>', unsafe_allow_html=True)
 
+    if not both_viewed:
+        st.info("📖 Bitte lesen Sie zuerst beide Antworten, bevor Sie Ihre Bewertung abgeben.")
+
     col_vote1, col_vote2 = st.columns(2, gap="small")
     with col_vote1:
-        if st.button("✅ Antwort A\nist besser", key=f"vote_a_{idx}", use_container_width=True):
+        if st.button("✅ Antwort A\nist besser", key=f"vote_a_{idx}", use_container_width=True, disabled=not both_viewed):
             _record_vote(session_state, "A")
+            _request_scroll_to_top(session_state)
             st.rerun()
     with col_vote2:
-        if st.button("✅ Antwort B\nist besser", key=f"vote_b_{idx}", use_container_width=True):
+        if st.button("✅ Antwort B\nist besser", key=f"vote_b_{idx}", use_container_width=True, disabled=not both_viewed):
             _record_vote(session_state, "B")
+            _request_scroll_to_top(session_state)
             st.rerun()
 
     col_tie1, col_tie2 = st.columns(2, gap="small")
     with col_tie1:
-        if st.button("🤝 Beide gleich\ngut", key=f"vote_tie_good_{idx}", use_container_width=True):
+        if st.button("🤝 Beide gleich\ngut", key=f"vote_tie_good_{idx}", use_container_width=True, disabled=not both_viewed):
             _record_vote(session_state, "TIE_GOOD")
+            _request_scroll_to_top(session_state)
             st.rerun()
     with col_tie2:
-        if st.button("👎 Beide unzureichend", key=f"vote_tie_bad_{idx}", use_container_width=True):
+        if st.button("👎 Beide unzureichend", key=f"vote_tie_bad_{idx}", use_container_width=True, disabled=not both_viewed):
             _record_vote(session_state, "TIE_BAD")
+            _request_scroll_to_top(session_state)
             st.rerun()
 
     components.html(
@@ -266,12 +282,28 @@ def _render_evaluation(session_state) -> None:
                 btn.classList.add("btn-b-custom");
             }
         });
+
+        // Scroll to top if flag is set
+        if (SHOULD_SCROLL) {
+            function doScroll() {
+                // The actual scrollable element in Streamlit is section.stMain
+                var stMain = parent.querySelector('section.stMain') || parent.querySelector('[data-testid="stMain"]');
+                if (stMain) stMain.scrollTop = 0;
+            }
+            doScroll();
+            setTimeout(doScroll, 50);
+            setTimeout(doScroll, 150);
+            setTimeout(doScroll, 300);
+            setTimeout(doScroll, 600);
+        }
         </script>
-        """.replace("UUID_PLACEHOLDER", str(uuid.uuid4())),
+        """.replace("UUID_PLACEHOLDER", str(uuid.uuid4())).replace("SHOULD_SCROLL", "true" if session_state.get("scroll_to_top_next_render") else "false"),
         height=0,
     )
+    # Clear the scroll flag after rendering
+    session_state.scroll_to_top_next_render = False
 
-    _consume_scroll_to_top(session_state)
+
 
 
 def _render_outro(session_state) -> None:
