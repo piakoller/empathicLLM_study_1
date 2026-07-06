@@ -353,7 +353,7 @@ div[data-testid="stHorizontalBlock"] div[data-testid="column"] {
 div[data-testid="stHorizontalBlock"] div[data-testid="stButton"] button {
     min-height: 56px;
     border-radius: 8px;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     font-weight: 600;
     line-height: 1.3;
 }
@@ -395,4 +395,42 @@ div[data-testid="stButton"] button p {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GLOBAL FONT SIZE OVERRIDE (1.2rem)
+   ══════════════════════════════════════════════════════════════ */
+p, 
+li, 
+label, 
+button, 
+.answer-text, 
+.tab-hint, 
+.section-desc, 
+.vote-section-label, 
+.outro-card p {
+    font-size: 1.2rem !important;
+}
+
+/* Keep header label slightly smaller but legible */
+.study-header .header-label {
+    font-size: 1rem !important; 
+}
+
+/* Ensure captions stay small */
+div[data-testid="stCaptionContainer"],
+div[data-testid="stCaptionContainer"] p,
+div[data-testid="stCaptionContainer"] span,
+.caption-text {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+    color: rgba(49, 51, 63, 0.6) !important;
+    font-weight: 400 !important;
+}
+
+/* Questionnaire Statement styling */
+.question-text {
+    font-weight: 700 !important;
+    color: #00509d !important;
+    font-size: 1.2rem !important;
 }

@@ -108,8 +108,10 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
 
     st.markdown(
         f'<div style="animation: softFadeIn 0.6s ease-out forwards;">'
-        f'<strong>Frage {current_idx + 1} von {total_items}</strong><br><br>'
-        f'<span style="font-size: 1.1em; font-weight: 600;">{current_item["label"]}</span>'
+        f'<div class="caption-text" style="margin-bottom: 0.5rem;">Frage {current_idx + 1} von {total_items}</div>'
+        f'<div class="study-header" style="margin-top: 1.2rem; padding: 1.2rem; margin-bottom: 1.5rem;">'
+        f'<div class="question-text">{current_item["label"]}</div>'
+        f'</div>'
         f'</div>',
         unsafe_allow_html=True
     )
@@ -132,16 +134,6 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
                     st.session_state[completion_key] = True
                 _request_scroll_to_top()
                 st.rerun()
-
-    st.markdown(
-        """
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-top: -10px; margin-bottom: 20px; padding: 0 5px;">
-            <span>1 – Gar nicht</span>
-            <span>5 – Sehr</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
     st.divider()
     if st.button(

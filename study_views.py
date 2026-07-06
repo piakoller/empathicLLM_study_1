@@ -301,21 +301,8 @@ def _render_outro(session_state) -> None:
     else:
         st.warning(f"⚠️ {msg}")
 
-    st.download_button(
-        label="📥  Ergebnisse als JSON herunterladen",
-        data=json.dumps(payload, indent=2, ensure_ascii=False, default=str),
-        file_name=f"study_results_{session_state.user_id[:8]}.json",
-        mime="application/json",
-        use_container_width=True,
-    )
-
-    with st.expander("📦 Erhobene Daten (Verifikation)"):
+    with st.expander("Erhobene Daten (Verifikation)"):
         st.json(payload, expanded=True)
-
-    st.caption(
-        "ℹ️ Der JSON-Block dient der Entwicklungsverifikation und "
-        "wird entfernt, sobald die Datenbank angebunden ist."
-    )
 
 
 def render_study_view(session_state) -> None:
