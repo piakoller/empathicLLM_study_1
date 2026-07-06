@@ -115,12 +115,10 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
     )
 
     current_val = st.session_state[storage_key].get(current_item["key"])
-    cols = st.columns(len(_LIKERT_VALUES), gap="small")
-    for col, value in zip(cols, _LIKERT_VALUES):
-        with col:
-            if st.button(
-                str(value),
-                key=f"likert_{storage_key}_{current_item['key']}_{value}",
+    for value, label in zip(_LIKERT_VALUES, _LIKERT_LABELS):
+        if st.button(
+            str(label),
+            key=f"likert_{storage_key}_{current_item['key']}_{value}",
                 type="primary" if current_val == value else "secondary",
                 use_container_width=True,
             ):

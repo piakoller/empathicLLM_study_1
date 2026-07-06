@@ -2,6 +2,7 @@
 
 import json
 import pathlib
+import random
 
 
 _BASE_DIR = pathlib.Path(__file__).parent
@@ -120,6 +121,10 @@ def load_questions() -> list[dict]:
                 answer_b_text = _strip_verbal_confidence(str(candidates[1]))
                 source_a = "candidate_1"
                 source_b = "candidate_2"
+
+            if random.choice([True, False]):
+                answer_a_text, answer_b_text = answer_b_text, answer_a_text
+                source_a, source_b = source_b, source_a
 
             items.append(
                 {

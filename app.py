@@ -51,8 +51,6 @@ def _initialize_session_state() -> None:
         st.session_state.question_start_time = None
     if "needs_db_save" not in st.session_state:
         st.session_state.needs_db_save = False
-    if "eval_substep" not in st.session_state:
-        st.session_state.eval_substep = 0
 
 
 _initialize_session_state()
