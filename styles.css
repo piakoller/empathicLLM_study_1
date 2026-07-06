@@ -16,7 +16,7 @@ body,
 #MainMenu,
 footer,
 header {
-    visibility: hidden;
+    display: none !important;
 }
 
 div[data-testid="stDecoration"] {

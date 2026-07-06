@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<script>
+    function sendReady() {
+        window.parent.postMessage({isStreamlitMessage: true, type: "streamlit:componentReady", apiVersion: 1}, "*");
+    }
+
+    function onDataFromPython(event) {
+        if (event.data.type !== "streamlit:render") return;
+        
+        const doScroll = () => {
+            try {
+                if (typeof window.parent.scrollTo === 'function') {
+                    window.parent.scrollTo(0, 0);
+                }
+            } catch (e) {}
+
+            const selectors = [
+                'section.main',
+                '[data-testid="stAppViewContainer"]',
+                '[data-testid="stMainBlockContainer"]'
+            ];
+
+            try {
+                if (window.parent && window.parent.document) {
+                    if (window.parent.document.documentElement) {
+                        window.parent.document.documentElement.scrollTop = 0;
+                    }
+                    if (window.parent.document.body) {
+                        window.parent.document.body.scrollTop = 0;
+                    }
+                    selectors.forEach(sel => {
+                        try {
+                            const el = window.parent.document.querySelector(sel);
+                            if (el) {
+                                if (typeof el.scrollTo === 'function') el.scrollTo(0, 0);
+                                el.scrollTop = 0;
+                            }
+                        } catch (e) {}
+                    });
+                }
+            } catch (e) {}
+        };
+
+        // Pin scroll to top aggressively for 2.5 full seconds
+        doScroll();
+        const intervalId = setInterval(doScroll, 20);
+        setTimeout(() => clearInterval(intervalId), 2500);
+
+        // Tell Streamlit to resize this component to 0 height
+        window.parent.postMessage({isStreamlitMessage: true, type: "streamlit:setFrameHeight", height: 0}, "*");
+    }
+
+    window.addEventListener("message", onDataFromPython);
+    sendReady();
+</script>
+</body>
+</html>

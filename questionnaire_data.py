@@ -5,6 +5,7 @@ import pathlib
 import urllib.parse
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 _QUESTIONNAIRE_PATH = pathlib.Path(__file__).parent / "questionnaire_questions.json"
@@ -16,42 +17,12 @@ def load_questionnaire_data() -> dict:
         return json.load(fh)
 
 
+_SCROLL_COMP_PATH = pathlib.Path(__file__).parent / "scroll_component"
+_scroll_component = components.declare_component("scroll_component", path=str(_SCROLL_COMP_PATH))
+
 def scroll_to_top(scroll_key: str = "") -> None:
     """Reset the page scroll position after a rerun."""
-    scroll_script = f"""
-        <script> /* {scroll_key} */
-            const scrollTop = () => {{
-                try {{
-                    const targets = [
-                        window.parent,
-                        window.parent.document.documentElement,
-                        window.parent.document.body,
-                        window.parent.document.querySelector('section.main'),
-                        window.parent.document.querySelector('[data-testid="stAppViewContainer"]'),
-                        window.parent.document.querySelector('[data-testid="stMainBlockContainer"]'),
-                    ];
-
-                    targets.forEach((target) => {{
-                        if (!target) {{
-                            return;
-                        }}
-                        if (typeof target.scrollTo === 'function') {{
-                            target.scrollTo(0, 0);
-                        }}
-                        target.scrollTop = 0;
-                    }});
-                }} catch (error) {{
-                    // Ignore DOM timing issues and retry on the next tick.
-                }}
-            }};
-
-            scrollTop();
-            setTimeout(scrollTop, 50);
-            setTimeout(scrollTop, 150);
-            setTimeout(scrollTop, 300);
-        </script>
-    """
-    st.components.v1.html(scroll_script, height=0)
+    _scroll_component(key=scroll_key)
 
 
 def build_likert_metadata(data: dict) -> tuple[list[str], list[int]]:

@@ -10,6 +10,16 @@ _DATA = load_questionnaire_data()
 _LIKERT_LABELS, _LIKERT_VALUES = build_likert_metadata(_DATA)
 
 
+def _request_scroll_to_top() -> None:
+    st.session_state.scroll_to_top_next_render = True
+
+
+def _consume_scroll_to_top() -> None:
+    if st.session_state.get("scroll_to_top_next_render"):
+        st.session_state.scroll_to_top_next_render = False
+        scroll_to_top(str(uuid.uuid4()))
+
+
 def _show_checkmark_animation(storage_key: str):
     if st.session_state.get(f"just_answered_{storage_key}"):
         st.markdown(
@@ -35,6 +45,7 @@ def _show_checkmark_animation(storage_key: str):
 
 def _render_likert_section(sections: list[dict], storage_key: str) -> dict | None:
     """Render all Likert sections and collect answers."""
+
     flat_items: list[dict] = []
     for sec in sections:
         for item in sec["items"]:
@@ -55,14 +66,10 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
 
     if cursor_key not in st.session_state:
         st.session_state[cursor_key] = 0
-        st.session_state["trigger_scroll"] = True
+        _request_scroll_to_top()
         
     if storage_key not in st.session_state:
         st.session_state[storage_key] = {}
-
-    if st.session_state.get("trigger_scroll"):
-        st.session_state["trigger_scroll"] = False
-        scroll_to_top(str(uuid.uuid4()))
 
     total_items = len(flat_items)
     raw_idx = int(st.session_state[cursor_key])
@@ -97,23 +104,6 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
     )
 
     current_item = flat_items[current_idx]
-    desc_html = (
-        f' <span class="section-desc">{current_item["description"]}</span>'
-        if current_item.get("description")
-        else ""
-    )
-    st.markdown(
-        f'<div class="questionnaire-section" style="animation: softFadeIn 0.5s ease-out forwards;">'
-        f'<span class="section-title">{current_item["section"]}</span>'
-        f'{desc_html}</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.progress(
-        answered_count / total_items,
-        text=f"Fragebogen: {answered_count}/{total_items} beantwortet",
-    )
-
     _show_checkmark_animation(storage_key)
 
     st.markdown(
@@ -142,7 +132,7 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
                 else:
                     st.session_state[cursor_key] = total_items
                     st.session_state[completion_key] = True
-                st.session_state["trigger_scroll"] = True
+                _request_scroll_to_top()
                 st.rerun()
 
     st.markdown(
@@ -165,7 +155,7 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
             disabled=current_idx == 0,
         ):
             st.session_state[cursor_key] = current_idx - 1
-            st.session_state["trigger_scroll"] = True
+            _request_scroll_to_top()
             st.rerun()
     with nav_col2:
         st.caption("Antworten werden automatisch gespeichert. Vorwärts geht es nach der Auswahl, zurück nur mit Zurück.")
@@ -194,10 +184,6 @@ def _scale_legend() -> str:
 def render_pre_questionnaire() -> None:
     cfg = _DATA["pre"]
 
-    st.progress(0.2, text="Schritt 1: Pre-Evaluation")
-
-    st.markdown(f"{cfg['instructions']}")
-
     answers = _render_likert_section(cfg["sections"], "pre_questionnaire")
 
     st.divider()
@@ -208,15 +194,14 @@ def render_pre_questionnaire() -> None:
             st.session_state.pre_questionnaire = answers
             st.session_state.view = "evaluation"
             st.session_state.needs_db_save = True
+            _request_scroll_to_top()
             st.rerun()
+
+    _consume_scroll_to_top()
 
 
 def render_post_questionnaire() -> None:
     cfg = _DATA["post"]
-
-    st.progress(0.9, text="Schritt 3: Post-Evaluation")
-
-    st.markdown(f"{cfg['instructions']}")
 
     answers = _render_likert_section(cfg["sections"], "post_questionnaire")
 
@@ -228,4 +213,7 @@ def render_post_questionnaire() -> None:
             st.session_state.post_questionnaire = answers
             st.session_state.view = "outro"
             st.session_state.needs_db_save = True
+            _request_scroll_to_top()
             st.rerun()
+
+    _consume_scroll_to_top()
