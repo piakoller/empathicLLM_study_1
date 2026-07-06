@@ -4,6 +4,7 @@ import datetime
 import html as html_module
 import json
 import uuid
+from zoneinfo import ZoneInfo
 
 import streamlit as st
 import streamlit.components.v1 as components
@@ -32,7 +33,7 @@ def _record_vote(session_state, vote_label: str) -> None:
 
     response_time_s = None
     if session_state.question_start_time is not None:
-        delta = datetime.datetime.now(datetime.timezone.utc) - session_state.question_start_time
+        delta = datetime.datetime.now(ZoneInfo("Europe/Zurich")) - session_state.question_start_time
         response_time_s = round(delta.total_seconds(), 2)
 
     session_state.results.append(
@@ -41,7 +42,7 @@ def _record_vote(session_state, vote_label: str) -> None:
             "item_id": item["item_id"],
             "vote": vote_label,
             "response_time_s": response_time_s,
-            "timestamp": datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat(),
+            "timestamp": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
         }
     )
 
@@ -136,7 +137,7 @@ def _render_demographics(session_state) -> None:
             "role": role,
             "age_range": age,
             "gender": gender,
-            "started_at": datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat(),
+            "started_at": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
         }
         session_state.mock_data = load_questions()
         session_state.question_idx = 0
@@ -180,7 +181,7 @@ def _render_evaluation(session_state) -> None:
     total = len(items)
 
     if session_state.question_start_time is None:
-        session_state.question_start_time = datetime.datetime.now(datetime.timezone.utc)
+        session_state.question_start_time = datetime.datetime.now(ZoneInfo("Europe/Zurich"))
 
     progress_fraction = idx / total
     st.progress(progress_fraction, text=f"Frage {idx + 1} von {total}")
