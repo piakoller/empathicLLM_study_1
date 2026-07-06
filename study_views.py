@@ -218,7 +218,7 @@ def _render_evaluation(session_state) -> None:
     st.markdown('<div style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.5rem; text-align: center;">Ihre Bewertung:</div>', unsafe_allow_html=True)
 
     if not both_viewed:
-        st.info("📖 Bitte lesen Sie zuerst beide Antworten, bevor Sie Ihre Bewertung abgeben.")
+        st.info("Bitte lesen Sie zuerst beide Antworten, bevor Sie Ihre Bewertung abgeben.")
 
     col_vote1, col_vote2 = st.columns(2, gap="small")
     with col_vote1:

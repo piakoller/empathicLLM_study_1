@@ -37,7 +37,14 @@ def save_results(payload: dict) -> tuple[bool, str]:
             client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=4000)
             db = client.get_database("empathicLLM_study")
             collection = db.get_collection("study_1")
-            collection.insert_one(payload)
+            
+            # Replace existing record for this user or insert a new one
+            collection.replace_one(
+                {"user_id": payload["user_id"]},
+                payload,
+                upsert=True
+            )
+            
             print("\n" + "=" * 80)
             print("[DB SUCCESS] Data successfully saved to MongoDB (empathicLLM_study.study_1)")
             print(json.dumps(payload, indent=2, ensure_ascii=False, default=str))
