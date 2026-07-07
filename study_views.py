@@ -206,11 +206,11 @@ def _render_evaluation(session_state) -> None:
 
     colA, colB = st.columns(2)
     with colA:
-        label_a = "✅ Antwort A gelesen" if viewed_a else "🔍 Antwort A"
+        label_a = "📖 Antwort A gelesen" if viewed_a else "🔍 Antwort A"
         if st.button(label_a, use_container_width=True, key=f"btn_read_a_{idx}"):
             show_answer_a(escaped_a, idx)
     with colB:
-        label_b = "✅ Antwort B gelesen" if viewed_b else "🔍 Antwort B"
+        label_b = "📖 Antwort B gelesen" if viewed_b else "🔍 Antwort B"
         if st.button(label_b, use_container_width=True, key=f"btn_read_b_{idx}"):
             show_answer_b(escaped_b, idx)
 
