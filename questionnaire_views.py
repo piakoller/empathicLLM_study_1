@@ -47,13 +47,23 @@ def _show_checkmark_animation(storage_key: str):
 def _render_likert_section(sections: list[dict], storage_key: str) -> dict | None:
     """Render all Likert sections and collect answers."""
 
+    # Keys that are only meaningful for patients (emotional/mood state items)
+    _PATIENT_ONLY_KEYS = {
+        "pre_calm", "pre_tense", "pre_worried", "pre_relaxed",
+        "pre_uneasy", "pre_confident", "pre_overwhelmed",
+        "post_calm", "post_tense", "post_uneasy",
+        "post_confident", "post_overwhelmed",
+        "post_recommend",
+    }
+
     flat_items: list[dict] = []
+    is_patient = st.session_state.get("role") == "Patient:in"
     for sec in sections:
         for item in sec["items"]:
-            # Only show post_recommend to patients
-            if item["key"] == "post_recommend" and st.session_state.get("role") != "Patient:in":
+            # Emotional state & recommendation questions only shown to patients
+            if item["key"] in _PATIENT_ONLY_KEYS and not is_patient:
                 continue
-                
+
             flat_items.append(
                 {
                     "section": sec["section"],

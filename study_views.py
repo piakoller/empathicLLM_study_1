@@ -115,7 +115,7 @@ def _render_demographics(session_state) -> None:
 
     age = st.selectbox(
         "Ihre Altersgruppe",
-        options=[">35", "36–45", "46–55", "56–65", "66–75", "76-85", "86+"],
+        options=["<35", "35-45", "46-55", "56-65", "66-75", "76-85", "86+"],
         index=None,
         placeholder="Bitte auswählen…",
     )
@@ -139,6 +139,8 @@ def _render_demographics(session_state) -> None:
             "gender": gender,
             "started_at": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
         }
+        # Store role directly in session_state so questionnaire views can access it
+        session_state.role = role
         session_state.mock_data = load_questions()
         session_state.question_idx = 0
         session_state.results = []
