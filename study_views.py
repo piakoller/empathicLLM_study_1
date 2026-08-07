@@ -1,4 +1,4 @@
-"""Streamlit view rendering for the Phase I user study."""
+"""Streamlit view rendering for the Monadic (Single-Answer per Page) Phase I user study."""
 
 import datetime
 import html as html_module
@@ -12,8 +12,6 @@ import streamlit.components.v1 as components
 from questionnaire import render_post_questionnaire, render_pre_questionnaire
 from study_data import load_questions
 from study_persistence import build_current_payload, save_current_progress
-
-
 from questionnaire_data import scroll_to_top
 
 
@@ -27,8 +25,8 @@ def _consume_scroll_to_top(session_state) -> None:
         scroll_to_top(str(uuid.uuid4()))
 
 
-def _record_vote(session_state, vote_label: str) -> None:
-    """Store the vote for the current item including response time, then advance."""
+def _record_ratings(session_state, ratings: dict) -> None:
+    """Store the monadic ratings for the current item including response time, then advance."""
     item = session_state.mock_data[session_state.question_idx]
 
     response_time_s = None
@@ -40,7 +38,8 @@ def _record_vote(session_state, vote_label: str) -> None:
         {
             "user_id": session_state.user_id,
             "item_id": item["item_id"],
-            "vote": vote_label,
+            "condition": item.get("_condition", "unknown"),
+            "ratings": ratings,
             "response_time_s": response_time_s,
             "timestamp": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
         }
@@ -72,15 +71,13 @@ def _render_onboarding(session_state) -> None:
         f"""
         Willkommen und vielen Dank für Ihre Teilnahme!
 
-        Sie werden **{num_questions} Patientenfragen** zum Thema PSMA-gerichtete
-        Theranostik bei Prostatakrebs sehen. Zu jeder Frage erhalten Sie
-        zwei Antworten in separaten Tabs.
+        In dieser Studie sehen Sie **{num_questions} Antworten** auf typische Patientenfragen zum Thema PSMA-gerichtete Theranostik bei Prostatakrebs.
 
-        Ihre Aufgabe: **Wählen Sie die Antwort, die Sie für hilfreicher,
-        genauer und angemessener halten** – oder geben Sie an, dass beide
-        gleich gut bzw. unzureichend sind.
+        Ihre Aufgabe ist ganz einfach: **Lesen Sie jede Antwort aufmerksam durch und wählen Sie anschließend mit einem Klick diejenige Aussage aus, die Ihr Gefühl und Ihre Wahrnehmung beim Lesen am besten beschreibt.**
+
+        *Hinweis für Smartphones:* Sie müssen keine Zahlen eingeben oder Regler verschieben. Ein einfacher Tipp auf die passende Aussage genügt.
         
-        **Hinweis:** Die Antworten sind lediglich Vorschläge. Wenn Sie weitere Fragen haben, konsultieren Sie bitte Ihren Arzt.
+        **Hinweis:** Die generierten Antworten sind lediglich Vorschläge im Rahmen unserer Forschung. Konsultieren Sie bei medizinischen Fragen stets Ihren behandelnden Arzt.
         """
     )
 
@@ -139,7 +136,6 @@ def _render_demographics(session_state) -> None:
             "gender": gender,
             "started_at": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
         }
-        # Store role directly in session_state so questionnaire views can access it
         session_state.role = role
         session_state.mock_data = load_questions()
         session_state.question_idx = 0
@@ -151,31 +147,6 @@ def _render_demographics(session_state) -> None:
     _consume_scroll_to_top(session_state)
 
 
-@st.dialog("📝 Antwort A")
-def show_answer_a(text: str, idx: int):
-    st.session_state[f"viewed_a_{idx}"] = True
-    if st.button("❌ Schliessen", use_container_width=True, key="close_a"):
-        st.rerun()
-    st.markdown(
-        f'<div class="answer-card answer-a">'
-        f'<div class="answer-text">{text}</div>'
-        f"</div>",
-        unsafe_allow_html=True,
-    )
-
-@st.dialog("📝 Antwort B")
-def show_answer_b(text: str, idx: int):
-    st.session_state[f"viewed_b_{idx}"] = True
-    if st.button("❌ Schliessen", use_container_width=True, key="close_b"):
-        st.rerun()
-    st.markdown(
-        f'<div class="answer-card answer-b">'
-        f'<div class="answer-text">{text}</div>'
-        f"</div>",
-        unsafe_allow_html=True,
-    )
-
-
 def _render_evaluation(session_state) -> None:
     items = session_state.mock_data
     idx = session_state.question_idx
@@ -185,128 +156,76 @@ def _render_evaluation(session_state) -> None:
     if session_state.question_start_time is None:
         session_state.question_start_time = datetime.datetime.now(ZoneInfo("Europe/Zurich"))
 
+    # Print current item condition to Python terminal console (once per item)
+    if session_state.get("last_printed_item_idx") != idx:
+        session_state.last_printed_item_idx = idx
+        cond = item.get("_condition", "unknown")
+        q_preview = item.get("patient_query", "")[:45]
+        print(f"[STUDY MONADIC] Item {idx + 1}/{total} | Condition: {cond} | ID: {item.get('item_id')} | Query: '{q_preview}...'")
+
     progress_fraction = idx / total
-    st.progress(progress_fraction, text=f"Frage {idx + 1} von {total}")
+    st.progress(progress_fraction, text=f"Antwort {idx + 1} von {total}")
 
-    escaped_a = html_module.escape(item["answer_a_text"]).replace("\n", "<br>")
-    escaped_b = html_module.escape(item["answer_b_text"]).replace("\n", "<br>")
-
+    # Question Header
     st.markdown(
         f"""
         <div class="study-header">
-            <p class="header-label">Die Patientenfrage</p>
-            <h1>{item["patient_query"]}</h1>
+            <p class="header-label">Die Frage</p>
+            <h1 style="font-size: 1.25em; line-height: 1.4;">{item["patient_query"]}</h1>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # Track which answers have been viewed
-    viewed_a = st.session_state.get(f"viewed_a_{idx}", False)
-    viewed_b = st.session_state.get(f"viewed_b_{idx}", False)
-    both_viewed = viewed_a and viewed_b
+    # Display answer text with full Markdown rendering (bolding, lists, headings)
+    with st.container(border=True):
+        st.markdown(item["answer_text"])
 
-    colA, colB = st.columns(2)
-    with colA:
-        label_a = "📖 Antwort A gelesen" if viewed_a else "🔍 Antwort A"
-        if st.button(label_a, use_container_width=True, key=f"btn_read_a_{idx}"):
-            show_answer_a(escaped_a, idx)
-    with colB:
-        label_b = "📖 Antwort B gelesen" if viewed_b else "🔍 Antwort B"
-        if st.button(label_b, use_container_width=True, key=f"btn_read_b_{idx}"):
-            show_answer_b(escaped_b, idx)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("### Welche Aussage beschreibt Ihre Wahrnehmung dieser Antwort am besten?")
+    st.markdown("Bitte wählen Sie **genau eine Aussage** aus, die am ehesten zutrifft:")
 
-    st.markdown("<hr style='margin: 1.5rem 0;'>", unsafe_allow_html=True)
-    st.markdown('<div style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.5rem; text-align: center;">Ihre Bewertung:</div>', unsafe_allow_html=True)
+    statement_options = [
+        "🟢 A) Die Antwort informiert mich klar, nimmt mir die Sorge und gibt mir ein gutes Gefühl.",
+        "🔵 B) Die Antwort ist rein sachlich und informativ, wirkt auf mich aber etwas kühl.",
+        "🟡 C) Die Antwort ist mir zu kompliziert geschrieben und enthält zu viele Fachwörter.",
+        "🔴 D) Die Antwort verunsichert mich eher oder macht mir Angst vor der Therapie.",
+    ]
 
-    if not both_viewed:
-        st.info("Bitte lesen Sie zuerst beide Antworten, bevor Sie Ihre Bewertung abgeben.")
-
-    col_vote1, col_vote2 = st.columns(2, gap="small")
-    with col_vote1:
-        if st.button("✅ Antwort A\nist besser", key=f"vote_a_{idx}", use_container_width=True, disabled=not both_viewed):
-            _record_vote(session_state, "A")
-            _request_scroll_to_top(session_state)
-            st.rerun()
-    with col_vote2:
-        if st.button("✅ Antwort B\nist besser", key=f"vote_b_{idx}", use_container_width=True, disabled=not both_viewed):
-            _record_vote(session_state, "B")
-            _request_scroll_to_top(session_state)
-            st.rerun()
-
-    col_tie1, col_tie2 = st.columns(2, gap="small")
-    with col_tie1:
-        if st.button("🤝 Beide gleich\ngut", key=f"vote_tie_good_{idx}", use_container_width=True, disabled=not both_viewed):
-            _record_vote(session_state, "TIE_GOOD")
-            _request_scroll_to_top(session_state)
-            st.rerun()
-    with col_tie2:
-        if st.button("👎 Beide unzureichend", key=f"vote_tie_bad_{idx}", use_container_width=True, disabled=not both_viewed):
-            _record_vote(session_state, "TIE_BAD")
-            _request_scroll_to_top(session_state)
-            st.rerun()
-
-    components.html(
-        """
-        <script>
-        // Force re-render: UUID_PLACEHOLDER
-        const parent = window.parent.document;
-        if (!parent.getElementById("custom-btn-styles")) {
-            const style = parent.createElement("style");
-            style.id = "custom-btn-styles";
-            style.innerHTML = `
-                button.btn-a-custom {
-                    background-color: #e0f2fe !important;
-                    border-color: #0284c7 !important;
-                    color: #0c4a6e !important;
-                }
-                button.btn-a-custom:hover {
-                    background-color: #bae6fd !important;
-                }
-                button.btn-b-custom {
-                    background-color: #f3e8ff !important;
-                    border-color: #9333ea !important;
-                    color: #581c87 !important;
-                }
-                button.btn-b-custom:hover {
-                    background-color: #e9d5ff !important;
-                }
-            `;
-            parent.head.appendChild(style);
-        }
-        
-        const buttons = parent.querySelectorAll('button');
-        buttons.forEach(btn => {
-            const text = btn.innerText;
-            if (text.includes("Antwort A")) {
-                btn.classList.add("btn-a-custom");
-            }
-            if (text.includes("Antwort B")) {
-                btn.classList.add("btn-b-custom");
-            }
-        });
-
-        // Scroll to top if flag is set
-        if (SHOULD_SCROLL) {
-            function doScroll() {
-                // The actual scrollable element in Streamlit is section.stMain
-                var stMain = parent.querySelector('section.stMain') || parent.querySelector('[data-testid="stMain"]');
-                if (stMain) stMain.scrollTop = 0;
-            }
-            doScroll();
-            setTimeout(doScroll, 50);
-            setTimeout(doScroll, 150);
-            setTimeout(doScroll, 300);
-            setTimeout(doScroll, 600);
-        }
-        </script>
-        """.replace("UUID_PLACEHOLDER", str(uuid.uuid4())).replace("SHOULD_SCROLL", "true" if session_state.get("scroll_to_top_next_render") else "false"),
-        height=0,
+    selected_statement = st.radio(
+        "Ihre Einschätzung:",
+        options=statement_options,
+        index=None,
+        key=f"stmt_{idx}",
+        label_visibility="collapsed",
     )
-    # Clear the scroll flag after rendering
-    session_state.scroll_to_top_next_render = False
 
+    st.markdown("<br>", unsafe_allow_html=True)
 
+    if st.button("Nächste Antwort bewerten ➡️", type="primary", use_container_width=True, key=f"btn_next_{idx}"):
+        if not selected_statement:
+            st.warning("Bitte wählen Sie zuerst eine Aussage aus, bevor Sie fortfahren.")
+            return
+
+        statement_code = "other"
+        if "informiert mich klar" in selected_statement:
+            statement_code = "empathic_informative"
+        elif "sachlich" in selected_statement:
+            statement_code = "clinical_factual"
+        elif "kompliziert" in selected_statement:
+            statement_code = "too_complex"
+        elif "verunsichert" in selected_statement:
+            statement_code = "causes_anxiety"
+
+        ratings_dict = {
+            "selected_statement": selected_statement,
+            "statement_code": statement_code,
+        }
+        _record_ratings(session_state, ratings_dict)
+        _request_scroll_to_top(session_state)
+        st.rerun()
+
+    _consume_scroll_to_top(session_state)
 
 
 def _render_outro(session_state) -> None:
