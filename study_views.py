@@ -68,17 +68,23 @@ def _render_onboarding(session_state) -> None:
 
     num_questions = len(load_questions())
     st.markdown(
-        f"""
-        Willkommen und vielen Dank für Ihre Teilnahme!
+            f"""
+            ### Herzlich willkommen!
+            Vielen Dank, dass Sie sich die Zeit nehmen, unsere medizinische Forschung zu unterstützen.
+            #### 📋 Worum geht es?
+            Sie sehen nacheinander **{num_questions} Antworten** auf typische Fragen zum Thema **PSMA-Therapie bei Prostatakrebs**. Diese Antworten wurden von einem medizinischen Sprachmodell generiert.
 
-        In dieser Studie sehen Sie **{num_questions} Antworten** auf typische Patientenfragen zum Thema PSMA-gerichtete Theranostik bei Prostatakrebs.
+            #### 💡 Ihre Aufgabe (Dauer: ca. 5–7 Minuten):
+            1. **Lesen Sie jede Antwort aufmerksam durch.**
+            2. **Wählen Sie mit einem Klick diejenige Aussage aus**, die Ihr Gefühl und Ihre Wahrnehmung beim Lesen am besten beschreibt.
+            
+            ---
+            * **Kein Zeitdruck:** Sie können sich so viel Zeit nehmen, wie Sie möchten.
+            * **Keine falschen Antworten:** Es zählt ausschließlich Ihre persönliche Erfahrung.
 
-        Ihre Aufgabe ist ganz einfach: **Lesen Sie jede Antwort aufmerksam durch und wählen Sie anschließend mit einem Klick diejenige Aussage aus, die Ihr Gefühl und Ihre Wahrnehmung beim Lesen am besten beschreibt.**
-
-        *Hinweis für Smartphones:* Sie müssen keine Zahlen eingeben oder Regler verschieben. Ein einfacher Tipp auf die passende Aussage genügt.
-        
-        **Hinweis:** Die generierten Antworten sind lediglich Vorschläge im Rahmen unserer Forschung. Konsultieren Sie bei medizinischen Fragen stets Ihren behandelnden Arzt.
-        """
+            ---
+            > ℹ️ **Wichtiger Hinweis:** Die gezeigten Texte dienen ausschließlich wissenschaftlichen Zwecken. Bei persönlichen medizinischen Fragen konsultieren Sie bitte stets Ihren behandelnden Arzt oder Ärztin.
+            """
     )
 
     st.markdown("")
@@ -185,12 +191,22 @@ def _render_evaluation(session_state) -> None:
     st.markdown("### Welche Aussage beschreibt Ihre Wahrnehmung dieser Antwort am besten?")
     st.markdown("Bitte wählen Sie **genau eine Aussage** aus, die am ehesten zutrifft:")
 
-    statement_options = [
-        "🟢 A) Die Antwort informiert mich klar, nimmt mir die Sorge und gibt mir ein gutes Gefühl.",
-        "🔵 B) Die Antwort ist rein sachlich und informativ, wirkt auf mich aber etwas kühl.",
-        "🟡 C) Die Antwort ist mir zu kompliziert geschrieben und enthält zu viele Fachwörter.",
-        "🔴 D) Die Antwort verunsichert mich eher oder macht mir Angst vor der Therapie.",
-    ]
+    is_doctor = session_state.get("role") == "Arzt/Ärztin"
+
+    if is_doctor:
+        statement_options = [
+            "🟢 A) Medizinisch korrekt, empathisch und hervorragend für das Patientengespräch geeignet.",
+            "🔵 B) Medizinisch präzise und sachlich, aber klinisch eher kühl oder distanziert formuliert.",
+            "🟡 C) Sprachlich zu komplex oder mit zu viel Fachjargon für Laien-Patienten besetzt.",
+            "🔴 D) Medizinisch bedenklich, unvollständig oder potenziell verunsichernd für den Patienten.",
+        ]
+    else:
+        statement_options = [
+            "🟢 A) Die Antwort informiert mich klar, nimmt mir die Sorge und gibt mir ein gutes Gefühl.",
+            "🔵 B) Die Antwort ist rein sachlich und informativ, wirkt auf mich aber etwas kühl.",
+            "🟡 C) Die Antwort ist mir zu kompliziert geschrieben und enthält zu viele Fachwörter.",
+            "🔴 D) Die Antwort verunsichert mich eher oder macht mir Angst vor der Therapie.",
+        ]
 
     selected_statement = st.radio(
         "Ihre Einschätzung:",
@@ -200,21 +216,15 @@ def _render_evaluation(session_state) -> None:
         label_visibility="collapsed",
     )
 
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    if st.button("Nächste Antwort bewerten ➡️", type="primary", use_container_width=True, key=f"btn_next_{idx}"):
-        if not selected_statement:
-            st.warning("Bitte wählen Sie zuerst eine Aussage aus, bevor Sie fortfahren.")
-            return
-
+    if selected_statement:
         statement_code = "other"
-        if "informiert mich klar" in selected_statement:
+        if any(term in selected_statement for term in ["informiert mich klar", "hervorragend"]):
             statement_code = "empathic_informative"
         elif "sachlich" in selected_statement:
             statement_code = "clinical_factual"
-        elif "kompliziert" in selected_statement:
+        elif any(term in selected_statement for term in ["kompliziert", "komplex"]):
             statement_code = "too_complex"
-        elif "verunsichert" in selected_statement:
+        elif any(term in selected_statement for term in ["verunsichert", "bedenklich"]):
             statement_code = "causes_anxiety"
 
         ratings_dict = {
