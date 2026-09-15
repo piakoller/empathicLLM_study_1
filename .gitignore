@@ -33,5 +33,6 @@ venv/
 Thumbs.db
 desktop.ini
 
-# Scratch / analysis
+# Scratch / analysis / attic
 scratch/
+_attic/

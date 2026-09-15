@@ -10,7 +10,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from questionnaire import render_post_questionnaire, render_pre_questionnaire
-from study_data import load_questions
+from study_data import load_questions, n_questions
 from study_persistence import build_current_payload, save_current_progress
 from questionnaire_data import scroll_to_top
 
@@ -39,6 +39,7 @@ def _record_ratings(session_state, ratings: dict) -> None:
             "user_id": session_state.user_id,
             "item_id": item["item_id"],
             "condition": item.get("_condition", "unknown"),
+            "condition_key": item.get("condition", "unknown"),
             "ratings": ratings,
             "response_time_s": response_time_s,
             "timestamp": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
@@ -66,7 +67,7 @@ def _render_onboarding(session_state) -> None:
         unsafe_allow_html=True,
     )
 
-    num_questions = len(load_questions())
+    num_questions = n_questions()
     st.markdown(
             f"""
             ### Herzlich willkommen!
@@ -143,7 +144,7 @@ def _render_demographics(session_state) -> None:
             "started_at": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
         }
         session_state.role = role
-        session_state.mock_data = load_questions()
+        session_state.mock_data = load_questions(session_state.user_id)
         session_state.question_idx = 0
         session_state.results = []
         session_state.view = "pre_questionnaire"

@@ -28,9 +28,27 @@ def build_current_payload(session_state) -> dict:
     return payload
 
 
+def _mongo_uri() -> str | None:
+    """The connection string, from secrets.toml or the environment.
+
+    `st.secrets.get(...)` does not merely return None when there is no
+    secrets.toml — it raises (StreamlitSecretNotFoundError), which took down the
+    whole save path: the `os.environ` lookup and the local-file fallback below
+    never ran. On a machine that has the file this never showed; on a fresh
+    deployment the app died right after the demographics page, before the first
+    rating was collected. The file is gitignored, so a clone is exactly that
+    case.
+    """
+    try:
+        uri = st.secrets.get("MONGODB_URI")
+    except Exception:
+        uri = None
+    return uri or os.environ.get("MONGODB_URI")
+
+
 def save_results(payload: dict) -> tuple[bool, str]:
     """Attempt to save payload to MongoDB, then fall back to a local file."""
-    mongo_uri = st.secrets.get("MONGODB_URI") or os.environ.get("MONGODB_URI")
+    mongo_uri = _mongo_uri()
 
     if mongo_uri and "<db_password>" not in mongo_uri and "example.mongodb.net" not in mongo_uri:
         try:
