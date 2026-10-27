@@ -17,10 +17,10 @@ from questionnaire_data import scroll_to_top
 
 
 # Participant information, disclaimer and debrief: docs/STUDY_START_TEXTS_DRAFT.md.
-CONTACT_MARKDOWN = """#### ✉️ Kontakt
-Fragen zur Studie: Pia Koller · [pia.koller@unibe.ch](mailto:pia.koller@unibe.ch)
+CONTACT_TEXT = """Fragen zur Studie: Pia Koller · [pia.koller@unibe.ch](mailto:pia.koller@unibe.ch)
 
 Fragen zu Ihrer Behandlung: Ihr Behandlungsteam der Nuklearmedizin."""
+CONTACT_MARKDOWN = "#### ✉️ Kontakt\n" + CONTACT_TEXT
 
 ANSWER_DISCLAIMER = "Computer-generierter Text – kann Fehler enthalten. Keine ärztliche Auskunft."
 
@@ -98,32 +98,45 @@ def _render_onboarding(session_state) -> None:
     # About 1.25–1.75 minutes per answer for older readers, plus the questionnaires
     # (20 answers: 25–35 minutes, see docs/STUDY_REVIEW_2026-10-26.md B4).
     minutes_low, minutes_high = round(num_questions * 1.25), round(num_questions * 1.75)
+    # The essentials stay visible; the details open on demand, so the page is
+    # short on a phone but nothing from the participant information is dropped.
     st.markdown(
             f"""
             ### Herzlich willkommen!
-            Vielen Dank, dass Sie sich die Zeit nehmen, unsere medizinische Forschung zu unterstützen.
-            #### 📋 Worum geht es?
             Wir untersuchen, wie verständlich und hilfreich Antworten eines Computerprogramms
-            (eines sogenannten Sprachmodells) auf Fragen zur **PSMA-Therapie bei Prostatakrebs** sind.
-            Sie lesen **{num_questions} kurze Antworten** und sagen uns, wie diese auf Sie wirken.
-            Teilnehmen können Patientinnen und Patienten sowie Ärztinnen und Ärzte; Ihre Rolle wählen Sie im nächsten Schritt.
+            auf Fragen zur **PSMA-Therapie bei Prostatakrebs** sind. Sie lesen
+            **{num_questions} kurze Antworten** und wählen jeweils aus, wie sie auf Sie wirken.
+            Dauer: etwa **{minutes_low}–{minutes_high} Minuten**.
 
-            Die Teilnahme dauert etwa **{minutes_low}–{minutes_high} Minuten**. Sie können jederzeit eine Pause machen.
+            * **Die Texte können Fehler enthalten** und sind keine ärztliche Auskunft.
+            * **Freiwillig und anonym:** Sie können jederzeit aufhören. Wir fragen nicht nach Ihrem Namen.
+            """
+    )
 
-            #### 💡 Ihre Aufgabe
+    with st.expander("💡 Ihre Aufgabe"):
+        st.markdown(
+            """
             1. **Lesen Sie jede Antwort aufmerksam durch.**
             2. **Wählen Sie mit einem Klick diejenige Aussage aus**, die Ihr Gefühl und Ihre Wahrnehmung beim Lesen am besten beschreibt.
 
             * **Kein Zeitdruck:** Sie können sich so viel Zeit nehmen, wie Sie möchten.
             * **Keine falschen Antworten:** Es zählt ausschliesslich Ihre persönliche Erfahrung.
 
-            #### ⚠️ Bitte beachten Sie
-            * **Die Texte können Fehler enthalten.** Sie wurden von einem Computerprogramm geschrieben
-              und sind keine ärztliche Auskunft. Richten Sie Ihre Behandlung nicht nach diesen Texten.
+            Teilnehmen können Patientinnen und Patienten sowie Ärztinnen und Ärzte; Ihre Rolle wählen Sie im nächsten Schritt.
+            """
+        )
+    with st.expander("⚠️ Hinweise zu den Texten"):
+        st.markdown(
+            """
+            * Die Texte wurden von einem Computerprogramm (einem sogenannten Sprachmodell) geschrieben
+              und können Fehler enthalten. Richten Sie Ihre Behandlung nicht nach diesen Texten.
             * Fragen zu Ihrer eigenen Behandlung beantwortet Ihr Behandlungsteam der Nuklearmedizin.
             * Am Ende erhalten Sie die wichtigsten Informationen zur PSMA-Therapie am Inselspital.
-
-            #### 🔒 Freiwillig und anonym
+            """
+        )
+    with st.expander("🔒 Freiwilligkeit und Datenschutz"):
+        st.markdown(
+            """
             * Die Teilnahme ist freiwillig. Ob Sie teilnehmen, hat keinen Einfluss auf Ihre Behandlung.
             * Sie können jederzeit aufhören, ohne Angabe von Gründen.
             * Wir fragen nicht nach Ihrem Namen, Ihrer E-Mail-Adresse oder Ihrem Geburtsdatum.
@@ -133,10 +146,11 @@ def _render_onboarding(session_state) -> None:
             * Weil die Daten anonym sind, können wir Ihre Antworten nachträglich nicht löschen.
               Was Sie bis zu einem Abbruch eingegeben haben, kann deshalb in die Auswertung eingehen.
             """
-    )
-    # Separate calls: st.markdown dedents its text, and the unindented constant would stop that.
-    st.markdown(CONTACT_MARKDOWN)
-    st.markdown("Mit «Weiter» bestätigen Sie, dass Sie diese Informationen gelesen haben und teilnehmen möchten.")
+        )
+    with st.expander("✉️ Kontakt"):
+        st.markdown(CONTACT_TEXT)
+
+    st.markdown("Mit «Weiter» bestätigen Sie, dass Sie diese Informationen zur Kenntnis genommen haben und teilnehmen möchten.")
 
     st.markdown("")
 
