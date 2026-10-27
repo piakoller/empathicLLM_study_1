@@ -36,6 +36,8 @@ Die Teilnahme dauert etwa [25–35] Minuten. Sie können jederzeit eine Pause ma
 - Sie können jederzeit aufhören, ohne Angabe von Gründen.
 - Wir fragen nicht nach Ihrem Namen, Ihrer E-Mail-Adresse oder Ihrem Geburtsdatum.
   Ihre Antworten können Ihnen nicht zugeordnet werden.
+- Die Studie läuft über einen externen Anbieter (Streamlit) mit Servern in den USA.
+  Dieser verarbeitet technisch Ihre IP-Adresse. Wir speichern sie nicht und erhalten sie nicht.
 - Weil die Daten anonym sind, können wir Ihre Antworten nachträglich nicht löschen.
   Was Sie bis zu einem Abbruch eingegeben haben, kann deshalb in die Auswertung eingehen.
 
