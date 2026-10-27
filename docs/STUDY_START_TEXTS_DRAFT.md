@@ -17,7 +17,7 @@ the point of entry, no names, e-mail or IP addresses, voluntary. If the design c
 
 Wir untersuchen, wie verständlich und hilfreich Antworten eines Computerprogramms
 (eines sogenannten Sprachmodells) auf Fragen zur PSMA-Therapie sind. Sie lesen
-[20] kurze Antworten und sagen uns, wie diese auf Sie wirken.
+10 kurze Antworten und sagen uns, wie diese auf Sie wirken.
 
 Die Teilnahme dauert etwa 10–15 Minuten. Sie können jederzeit eine Pause machen.
 
