@@ -6,18 +6,33 @@ instead of being fixed to a subset of questions.
 
 Assignment rule
 ---------------
-With C conditions and questions indexed 1..N, participant p gets
+Each participant sees K = QUESTIONS_PER_PARTICIPANT of the N questions (all of
+them if N <= K). With questions indexed 0..N-1 and C conditions, participant
+number s (the slot) gets the K questions
 
-    condition(question i) = conditions[(i - 1 + offset_p) mod C]
+    start, start + 1, ..., start + K - 1   (mod N),   start = s mod N
 
-where offset_p is derived from the participant's user_id. Two properties follow:
+and the question at position j of that window gets
 
-  * within a participant, the conditions are balanced (N/C each, ±1) and every
-    question is seen exactly once;
-  * across participants, each question appears in every condition about equally
-    often, so question difficulty becomes a block factor rather than a confound.
+    conditions[(j + rotation) mod C],   rotation = (s div N) mod C
 
-Presentation order is shuffled per participant with the same derived seed, so
+Three properties follow:
+
+  * within a participant, every chosen question is seen once and the conditions
+    are balanced (K/C each, ±1);
+  * every N consecutive slots use every start once, and every question lies in
+    exactly K of the N windows, so each question is rated equally often (K/N of
+    the participants each);
+  * every N*C consecutive slots put each question in every condition equally
+    often, so question difficulty is a block factor rather than a confound.
+
+The slot is the number of earlier participants of the same role
+(study_persistence.participant_count), so patients and clinicians are balanced
+separately. Without a database the slot falls back to a hash of the user_id;
+the balance then holds only in expectation (with 40 participants a question
+gets 20 ratings, give or take 3).
+
+Presentation order is shuffled per participant with a seed from the user_id, so
 serial position does not stay tied to a particular item.
 """
 
@@ -36,6 +51,9 @@ CONDITION_LABELS = {
     "direct_empathy": "Direct Empathy (RAG)",
     "two_stage": "Two Stage (RAG)",
 }
+
+# At most this many answers per participant (about 15 minutes; KEK clarification: 10).
+QUESTIONS_PER_PARTICIPANT = 10
 
 
 def _stable_offset(user_id: str) -> int:
@@ -88,11 +106,13 @@ def load_bundle() -> dict:
 
 def n_questions() -> int:
     """Number of items a participant will see. Safe to call before assignment."""
-    return len(load_bundle()["questions"])
+    return min(QUESTIONS_PER_PARTICIPANT, len(load_bundle()["questions"]))
 
 
-def assign_items(user_id: str, bundle: dict | None = None) -> list[dict]:
-    """Return this participant's items, one per question, conditions rotated.
+def assign_items(user_id: str, bundle: dict | None = None, slot: int | None = None) -> list[dict]:
+    """Return this participant's items: a window of QUESTIONS_PER_PARTICIPANT
+    questions, conditions rotated, in shuffled order (see the module docstring).
+    `slot` is the participant number; None falls back to a hash of the user_id.
 
     Each item carries the fields the views and the persistence layer expect:
     item_id, question_index, patient_query, answer_text, condition and
@@ -111,11 +131,18 @@ def assign_items(user_id: str, bundle: dict | None = None) -> list[dict]:
         return items
 
     offset = _stable_offset(user_id)
-    rotation = offset % len(conditions)
+    if slot is None:
+        slot = offset
+    n, k = len(questions), min(QUESTIONS_PER_PARTICIPANT, len(questions))
+    start = slot % n
+    rotation = (slot // n) % len(conditions)
 
     items = []
-    for i, q in enumerate(questions):
-        cond = conditions[(i + rotation) % len(conditions)]
+    for j in range(k):
+        q = questions[(start + j) % n]
+        # By position in the window, not by question index: N need not be a
+        # multiple of C, and the window wraps around.
+        cond = conditions[(j + rotation) % len(conditions)]
         answer = q["answers"].get(cond)
         if not answer:
             continue
@@ -140,11 +167,11 @@ def _make_item(question: dict, condition: str, answer: str) -> dict:
     }
 
 
-def load_questions(user_id: str | None = None) -> list[dict]:
+def load_questions(user_id: str | None = None, slot: int | None = None) -> list[dict]:
     """Backwards-compatible entry point.
 
     With a user_id, returns that participant's counterbalanced items. Without
     one, returns the first rotation — useful only for counting items or for a
     preview, never for a real session.
     """
-    return assign_items(user_id if user_id is not None else "__preview__")
+    return assign_items(user_id if user_id is not None else "__preview__", slot=slot)

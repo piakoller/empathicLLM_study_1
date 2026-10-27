@@ -12,7 +12,7 @@ import streamlit.components.v1 as components
 
 from questionnaire import render_post_questionnaire, render_pre_questionnaire
 from study_data import load_questions, n_questions
-from study_persistence import save_current_progress, study_date
+from study_persistence import participant_count, save_current_progress, study_date
 from questionnaire_data import scroll_to_top
 
 
@@ -106,6 +106,7 @@ def _render_onboarding(session_state) -> None:
             Wir untersuchen, wie verständlich und hilfreich Antworten eines Computerprogramms
             (eines sogenannten Sprachmodells) auf Fragen zur **PSMA-Therapie bei Prostatakrebs** sind.
             Sie lesen **{num_questions} kurze Antworten** und sagen uns, wie diese auf Sie wirken.
+            Teilnehmen können Patientinnen und Patienten sowie Ärztinnen und Ärzte; Ihre Rolle wählen Sie im nächsten Schritt.
 
             Die Teilnahme dauert etwa **{minutes_low}–{minutes_high} Minuten**. Sie können jederzeit eine Pause machen.
 
@@ -191,7 +192,8 @@ def _render_demographics(session_state) -> None:
             "started_at": study_date(),
         }
         session_state.role = role
-        session_state.mock_data = load_questions(session_state.user_id)
+        # Counted before this participant's own record is saved (needs_db_save below).
+        session_state.mock_data = load_questions(session_state.user_id, slot=participant_count(role))
         session_state.question_idx = 0
         session_state.results = []
         session_state.view = "pre_questionnaire"
@@ -321,11 +323,13 @@ def _render_outro(session_state) -> None:
     if session_state.db_save_status is None:
         save_current_progress(session_state)
 
-    success, msg = session_state.db_save_status
+    # Participants see a neutral line either way; the technical detail of a failed
+    # save goes to the server log only (study_persistence.save_results).
+    success, _ = session_state.db_save_status
     if success:
-        st.success(f"✅ {msg}")
+        st.success("Ihre Antworten wurden gespeichert. Sie können dieses Fenster jetzt schliessen.")
     else:
-        st.warning(f"⚠️ {msg}")
+        st.info("Sie können dieses Fenster jetzt schliessen.")
 
 
 def render_study_view(session_state) -> None:

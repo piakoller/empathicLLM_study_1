@@ -56,16 +56,37 @@ def _mongo_uri() -> str | None:
     return uri or os.environ.get("MONGODB_URI")
 
 
+def _uri_configured(mongo_uri: str | None) -> bool:
+    return bool(mongo_uri) and "<db_password>" not in mongo_uri and "example.mongodb.net" not in mongo_uri
+
+
+def _collection(mongo_uri: str):
+    client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=4000)
+    return client.get_database("empathicLLM_study").get_collection("study_1")
+
+
+def participant_count(role: str) -> int | None:
+    """Number of earlier participants with this role: the slot that balances the
+    question assignment (study_data.assign_items). None without a database, so
+    the assignment falls back to the user_id hash."""
+    mongo_uri = _mongo_uri()
+    if not _uri_configured(mongo_uri):
+        return None
+    try:
+        return _collection(mongo_uri).count_documents({"demographics.role": role})
+    except Exception as exc:
+        print(f"[DB WARNING] participant count failed, using the user_id hash: {exc}")
+        return None
+
+
 def save_results(payload: dict) -> tuple[bool, str]:
     """Attempt to save payload to MongoDB, then fall back to a local file."""
     mongo_uri = _mongo_uri()
 
-    if mongo_uri and "<db_password>" not in mongo_uri and "example.mongodb.net" not in mongo_uri:
+    if _uri_configured(mongo_uri):
         try:
-            client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=4000)
-            db = client.get_database("empathicLLM_study")
-            collection = db.get_collection("study_1")
-            
+            collection = _collection(mongo_uri)
+
             # Replace existing record for this user or insert a new one
             collection.replace_one(
                 {"user_id": payload["user_id"]},
