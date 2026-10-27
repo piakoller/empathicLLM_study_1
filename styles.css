@@ -467,13 +467,15 @@ div[data-testid="stRadio"] label:has(input:checked) {
    POSTER-THEME  —  16 Sep 2026
    The rating screen is rebuilt to match the flyer panel "Was Sie sehen":
    white cards on a mint ground, a small green label above each card, the
-   four statements as cards with a coloured dot on the left and the radio
-   on the right. Colours sampled from the flyer artwork itself:
+   four statements as cards with the radio on the right (the coloured dots
+   were removed on 27 Oct 2026: green-to-red suggested good-to-bad and could
+   steer the choice). Colours sampled from the flyer artwork itself:
 
      #d9efe9  mint ground          #00956c  green labels, dot A
      #1e2c2e  ink                  #4a90d9  dot B
      #004d56  secondary text       #e8a020  dot C
-     #e3003a  Uni Bern red         #e3003a  dot D, primary action
+     #e3003a  Uni Bern red         #e3003a  dot D
+     #00734f  deep green           primary action ("Weiter")
 
    Appended rather than merged: the structural rules above (Streamlit
    selectors, mobile padding, touch targets) stay untouched, and this block
@@ -494,18 +496,19 @@ div[data-testid="stRadio"] label:has(input:checked) {
 }
 
 /* ── the banner on onboarding, demographics and the questionnaire ─── */
+/* A plain white card like the question and answer cards: it frames the page
+   without competing with the text. */
 .study-header {
-    background: linear-gradient(135deg, #e3003a 0%, #a32a54 42%,
-                                #2d7f68 78%, #00956c 100%);
+    background: #fff;
     border: none !important;
-    color: #fff !important;
+    color: var(--ink) !important;
     border-radius: 14px;
     padding: 1.4rem 1.3rem 1.5rem !important;
-    box-shadow: 0 4px 14px rgba(30, 44, 46, .16);
+    box-shadow: 0 2px 10px rgba(30, 44, 46, .08);
 }
 .study-header .header-label,
 .study-header .header-title,
-.study-header h1 { color: #fff !important; text-align: left; }
+.study-header h1 { color: var(--ink) !important; text-align: left; }
 .study-header .header-label { opacity: .9; letter-spacing: .12em; }
 .study-header .header-title { font-size: 1.35rem; line-height: 1.24; font-weight: 700; }
 
@@ -592,7 +595,7 @@ h3, .vote-section-label {
     box-shadow: 0 0 0 1.5px var(--insel-green);
 }
 
-/* ── buttons: white, the red kept for the one primary action ────── */
+/* ── buttons: white; the primary action in the calmer deep green ── */
 div[data-testid="stButton"] button {
     border: 1.5px solid var(--line) !important;
     border-radius: 12px !important;
@@ -607,12 +610,12 @@ div[data-testid="stButton"] button:hover {
 div[data-testid="stButton"] button:active,
 div[data-testid="stButton"] button[data-state="active"],
 div[data-testid="stButton"] button[kind="primary"] {
-    background-color: var(--ub-red) !important;
-    border-color: var(--ub-red) !important;
+    background-color: var(--insel-green-deep) !important;
+    border-color: var(--insel-green-deep) !important;
     color: #fff !important;
 }
 div[data-testid="stButton"] button[kind="primary"]:hover {
-    background-color: #c30033 !important; border-color: #c30033 !important;
+    background-color: #005c3f !important; border-color: #005c3f !important;
 }
 
 /* ── the rest of the palette ────────────────────────────────────── */

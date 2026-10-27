@@ -79,6 +79,7 @@ Reading:
 
 ## Open for the meeting
 
-1. Two or three arms (decision 2), given the table above.
+1. ~~Two or three arms~~ Decided 27 Oct 2026: three arms. Target about 60–70 patients
+   (and the same number of clinicians if they are analysed on their own).
 2. Rating format (decision 3). A vs. B comparison would need its own power calculation.
 3. Realistic recruitment: how many PSMA patients per month can be asked at Insel?

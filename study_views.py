@@ -88,7 +88,7 @@ def _render_onboarding(session_state) -> None:
     st.markdown(
         """
         <div class="study-header">
-            <div class="header-title">Evaluation von Patientenantworten</div>
+            <div class="header-title">Herzlich willkommen!</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -102,7 +102,6 @@ def _render_onboarding(session_state) -> None:
     # short on a phone but nothing from the participant information is dropped.
     st.markdown(
             f"""
-            ### Herzlich willkommen!
             Wir untersuchen, wie verständlich und hilfreich Antworten eines Computerprogramms
             auf Fragen zur **PSMA-Therapie bei Prostatakrebs** sind. Sie lesen
             **{num_questions} kurze Antworten** und wählen jeweils aus, wie sie auf Sie wirken.
@@ -270,17 +269,17 @@ def _render_evaluation(session_state) -> None:
 
     if is_doctor:
         statement_options = [
-            "🟢 A) Medizinisch korrekt, empathisch und hervorragend für das Patientengespräch geeignet.",
-            "🔵 B) Medizinisch präzise und sachlich, aber klinisch eher kühl oder distanziert formuliert.",
-            "🟡 C) Sprachlich zu komplex oder mit zu viel Fachjargon für Laien-Patienten besetzt.",
-            "🔴 D) Medizinisch bedenklich, unvollständig oder potenziell verunsichernd für den Patienten.",
+            "A) Medizinisch korrekt, empathisch und hervorragend für das Patientengespräch geeignet.",
+            "B) Medizinisch präzise und sachlich, aber klinisch eher kühl oder distanziert formuliert.",
+            "C) Sprachlich zu komplex oder mit zu viel Fachjargon für Laien-Patienten besetzt.",
+            "D) Medizinisch bedenklich, unvollständig oder potenziell verunsichernd für den Patienten.",
         ]
     else:
         statement_options = [
-            "🟢 A) Die Antwort informiert mich klar, nimmt mir die Sorge und gibt mir ein gutes Gefühl.",
-            "🔵 B) Die Antwort ist rein sachlich und informativ, wirkt auf mich aber etwas kühl.",
-            "🟡 C) Die Antwort ist mir zu kompliziert geschrieben und enthält zu viele Fachwörter.",
-            "🔴 D) Die Antwort verunsichert mich eher oder macht mir Angst vor der Therapie.",
+            "A) Die Antwort informiert mich klar, nimmt mir die Sorge und gibt mir ein gutes Gefühl.",
+            "B) Die Antwort ist rein sachlich und informativ, wirkt auf mich aber etwas kühl.",
+            "C) Die Antwort ist mir zu kompliziert geschrieben und enthält zu viele Fachwörter.",
+            "D) Die Antwort verunsichert mich eher oder macht mir Angst vor der Therapie.",
         ]
 
     selected_statement = st.radio(
