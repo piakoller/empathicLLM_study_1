@@ -95,9 +95,9 @@ def _render_onboarding(session_state) -> None:
     )
 
     num_questions = n_questions()
-    # About 1.25–1.75 minutes per answer for older readers, plus the questionnaires
-    # (20 answers: 25–35 minutes, see docs/STUDY_REVIEW_2026-10-26.md B4).
-    minutes_low, minutes_high = round(num_questions * 1.25), round(num_questions * 1.75)
+    # About 1–1.5 minutes per answer, questionnaires included: 10 answers give
+    # 10–15 minutes, the figure printed on flyer and poster (27 Oct 2026).
+    minutes_low, minutes_high = round(num_questions * 1.0), round(num_questions * 1.5)
     # The essentials stay visible; the details open on demand, so the page is
     # short on a phone but nothing from the participant information is dropped.
     st.markdown(
