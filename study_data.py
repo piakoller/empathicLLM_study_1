@@ -152,6 +152,19 @@ def assign_items(user_id: str, bundle: dict | None = None, slot: int | None = No
     return items
 
 
+def items_from_ids(item_ids: list[str], bundle: dict | None = None) -> list[dict]:
+    """Rebuild saved items (e.g. "Q07_TWO_STAGE") in the given order, for a reload."""
+    bundle = bundle or load_bundle()
+    by_index = {q["question_index"]: q for q in bundle["questions"]}
+    items = []
+    for item_id in item_ids:
+        idx, slug = item_id.split("_", 1)
+        q = by_index[int(idx[1:])]
+        cond = slug.lower()
+        items.append(_make_item(q, cond, q["answers"][cond]))
+    return items
+
+
 def _make_item(question: dict, condition: str, answer: str) -> dict:
     label = CONDITION_LABELS.get(condition, condition)
     idx = question["question_index"]

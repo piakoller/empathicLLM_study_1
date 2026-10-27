@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-27T14:49:44+01:00",
+  "built_at": "2026-10-27T15:19:44+01:00",
   "conditions": [
     "clinical_only",
     "direct_empathy",
@@ -104,5 +104,9 @@
       }
     }
   },
-  "assignment": "decided per participant in study_data.assign_items(); condition(question i) = conditions[(i - 1 + offset_p) mod C]"
+  "assignment": "decided per participant in study_data.assign_items(): a window of QUESTIONS_PER_PARTICIPANT questions chosen by a per-role participant count, arms rotated by position, order shuffled",
+  "display_typo_fixes": {
+    "PSMA-Therpie": "PSMA-Therapie",
+    "Wie lange dauerte eine": "Wie lange dauert eine"
+  }
 }

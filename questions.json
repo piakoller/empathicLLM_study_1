@@ -1,7 +1,7 @@
 {
   "meta": {
     "backend": "LMDeploy  [google/medgemma-27b-it @ http://localhost:8000/v1]",
-    "built_at": "2026-10-27T14:49:44+01:00",
+    "built_at": "2026-10-27T15:19:44+01:00",
     "conditions": [
       "clinical_only",
       "direct_empathy",
@@ -106,7 +106,11 @@
         }
       }
     },
-    "assignment": "decided per participant in study_data.assign_items(); condition(question i) = conditions[(i - 1 + offset_p) mod C]"
+    "assignment": "decided per participant in study_data.assign_items(): a window of QUESTIONS_PER_PARTICIPANT questions chosen by a per-role participant count, arms rotated by position, order shuffled",
+    "display_typo_fixes": {
+      "PSMA-Therpie": "PSMA-Therapie",
+      "Wie lange dauerte eine": "Wie lange dauert eine"
+    }
   },
   "questions": [
     {
@@ -210,7 +214,7 @@
     },
     {
       "question_index": 12,
-      "patient_query": "Wie viel Lebenszeit kann ich durch eine PSMA-Therpie hinzugewinnen?",
+      "patient_query": "Wie viel Lebenszeit kann ich durch eine PSMA-Therapie hinzugewinnen?",
       "answers": {
         "clinical_only": "Ja, Sie können durch eine PSMA-Therapie Ihre Lebenserwartung erhöhen. Eine Heilung des Tumors ist jedoch unwahrscheinlich, wie bei vielen Krebsarten im fortgeschrittenen Stadium. Die Therapie kann Ihre Lebensqualität verbessern. Die Therapie wird stationär durchgeführt. Die Behandlungsdauer beträgt in der Regel 3 Tage pro Zyklus. Die Zyklen werden alle 6-8 Wochen wiederholt, bis der Tumor nicht mehr anspricht oder Nebenwirkungen auftreten. Ihr Behandlungsteam der Nuklearmedizin kann Ihnen genauere Angaben machen.",
         "direct_empathy": "Die PSMA-Therapie kann Ihre Lebensqualität verbessern und Ihre Lebenserwartung erhöhen. Eine Heilung des Tumors ist dabei jedoch unwahrscheinlich, wie bei vielen fortgeschrittenen Krebsarten. Die Therapie wird stationär durchgeführt, meist in Zyklen von 6-8 Wochen, solange sie gut anschlägt und die Nebenwirkungen überschaubar bleiben.\n\nEine Studie zeigte eine statistisch signifikante Verlängerung der Gesamtüberlebenszeit um durchschnittlich 4 Monate im Vergleich zu einer anderen Behandlung. Weitere Studien zeigten eine Verbesserung der Lebensqualität. Die genaue Lebenserwartung hängt jedoch von vielen individuellen Faktoren ab. Besprechen Sie Ihre persönliche Situation und Erwartungen mit Ihrem Behandlungsteam der Nuklearmedizin.",
@@ -282,7 +286,7 @@
     },
     {
       "question_index": 20,
-      "patient_query": "Wie lange dauerte eine PSMA-Therapie?",
+      "patient_query": "Wie lange dauert eine PSMA-Therapie?",
       "answers": {
         "clinical_only": "Eine PSMA-Therapie besteht aus mehreren Behandlungszyklen. Diese werden in der Regel alle 6-8 Wochen wiederholt. Die Therapie wird so lange fortgesetzt, bis der Tumor nicht mehr ausreichend anspricht oder die Nebenwirkungen zu stark werden. Die Anzahl der Zyklen ist individuell verschieden und muss mit Ihrem Behandlungsteam der Nuklearmedizin besprochen werden.",
         "direct_empathy": "Eine PSMA-Therapie besteht aus mehreren Behandlungszyklen. Diese werden in der Regel alle 6-8 Wochen wiederholt. Die Anzahl der Zyklen hängt davon ab, wie gut Ihr Tumor auf die Therapie anspricht und welche Nebenwirkungen auftreten. Die Therapie muss stationär durchgeführt werden. Während des Aufenthalts von 3 Tagen dürfen Sie die Station nicht verlassen und sollten keine Besucher empfangen. Die genaue Dauer und Anzahl der Zyklen besprechen Sie am besten mit Ihrem Behandlungsteam der Nuklearmedizin.",

@@ -65,6 +65,20 @@ SKIP_DIRS = {"incomplete", "archive", "derived"}
 
 COMPARE_KEYS = ("mode", "n_candidates", "max_tokens", "threshold_tau")
 
+# Typos in the benchmark's question list. The model was asked the questions as
+# they are; only the text shown to participants is corrected, and the bundle's
+# meta records which fixes were applied.
+DISPLAY_TYPO_FIXES = {
+    "PSMA-Therpie": "PSMA-Therapie",
+    "Wie lange dauerte eine": "Wie lange dauert eine",
+}
+
+
+def fix_display_typos(question: str) -> str:
+    for wrong, right in DISPLAY_TYPO_FIXES.items():
+        question = question.replace(wrong, right)
+    return question
+
 
 def strip_verbal_confidence(text: str) -> str:
     """Remove the VERBAL_CONFIDENCE tag. It is in every delivered answer by
@@ -209,7 +223,7 @@ def main() -> None:
              if q.strip() in shared]
 
     questions = [{"question_index": i,
-                  "patient_query": q,
+                  "patient_query": fix_display_typos(q),
                   "answers": {c: per_cond[c][q] for c in wanted}}
                  for i, q in enumerate(order, start=1)]
 
@@ -219,8 +233,11 @@ def main() -> None:
         "n_questions": len(questions),
         "runs": {c: {"file": p.name, "metadata": d.get("metadata", {})}
                  for c, (p, d) in chosen.items()},
-        "assignment": ("decided per participant in study_data.assign_items(); "
-                       "condition(question i) = conditions[(i - 1 + offset_p) mod C]"),
+        "assignment": ("decided per participant in study_data.assign_items(): a window of "
+                       "QUESTIONS_PER_PARTICIPANT questions chosen by a per-role participant "
+                       "count, arms rotated by position, order shuffled"),
+        "display_typo_fixes": {wrong: right for wrong, right in DISPLAY_TYPO_FIXES.items()
+                               if any(wrong in q for q in order)},
     }
     bundle = {"meta": {"backend": chosen[wanted[0]][1]["metadata"].get("mode", "?"),
                        **provenance},

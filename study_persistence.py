@@ -31,6 +31,9 @@ def build_current_payload(session_state) -> dict:
         "status": session_state.view,
         "updated_at": study_date(),
         "total_items_voted": len(session_state.results),
+        # The assigned items in presentation order, so a reload can restore them
+        # (the slot that chose them has moved on by then).
+        "assigned_items": [item["item_id"] for item in session_state.mock_data],
     }
     if session_state.view == "outro":
         payload["completed_at"] = study_date()
@@ -76,6 +79,18 @@ def participant_count(role: str) -> int | None:
         return _collection(mongo_uri).count_documents({"demographics.role": role})
     except Exception as exc:
         print(f"[DB WARNING] participant count failed, using the user_id hash: {exc}")
+        return None
+
+
+def load_progress(user_id: str) -> dict | None:
+    """The saved record of this participant, or None (no database, nothing saved yet)."""
+    mongo_uri = _mongo_uri()
+    if not _uri_configured(mongo_uri):
+        return None
+    try:
+        return _collection(mongo_uri).find_one({"user_id": user_id}, {"_id": 0})
+    except Exception as exc:
+        print(f"[DB WARNING] could not load progress, starting fresh: {exc}")
         return None
 
 

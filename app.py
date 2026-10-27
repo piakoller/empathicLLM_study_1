@@ -5,7 +5,8 @@ import uuid
 
 import streamlit as st
 
-from study_persistence import save_current_progress
+from study_data import items_from_ids
+from study_persistence import load_progress, save_current_progress
 from study_views import render_study_view
 
 
@@ -28,9 +29,42 @@ def _load_css() -> None:
     st.markdown(f"<style>{css_text}\n{dynamic_css}</style>", unsafe_allow_html=True)
 
 
+def _restore_progress(record: dict) -> None:
+    """Put a saved record back into the session after a page reload."""
+    ss = st.session_state
+    ss.demographics = record.get("demographics") or {}
+    ss.role = ss.demographics.get("role")
+    ss.pre_questionnaire = record.get("pre_questionnaire") or {}
+    ss.results = record.get("votes") or []
+    ss.post_questionnaire = record.get("post_questionnaire") or {}
+    try:
+        ss.mock_data = items_from_ids(record.get("assigned_items") or [])
+    except (KeyError, ValueError):
+        ss.mock_data = []  # bundle changed since the record was saved
+    status = record.get("status")
+    if status == "completed":
+        ss.view = "outro"
+        ss.db_save_status = (True, "")  # already saved; do not save again
+    elif ss.mock_data and status in ("pre_questionnaire", "evaluation", "post_questionnaire"):
+        ss.view = status
+        ss.question_idx = min(len(ss.results), len(ss.mock_data) - 1)
+    # otherwise the participant starts over under the same id
+
+
 def _initialize_session_state() -> None:
     if "user_id" not in st.session_state:
-        st.session_state.user_id = str(uuid.uuid4())
+        # The id lives in the URL (?pid=…), so a reload continues the same
+        # participant instead of starting a new one and using up a slot.
+        pid = st.query_params.get("pid")
+        try:
+            pid = str(uuid.UUID(pid)) if pid else None
+        except ValueError:
+            pid = None
+        st.session_state.user_id = pid or str(uuid.uuid4())
+        st.query_params["pid"] = st.session_state.user_id
+        record = load_progress(pid) if pid else None
+        if record:
+            _restore_progress(record)
     if "view" not in st.session_state:
         st.session_state.view = "onboarding"
     if "question_idx" not in st.session_state:
