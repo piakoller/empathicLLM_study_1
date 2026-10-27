@@ -462,3 +462,189 @@ div[data-testid="stRadio"] label:has(input:checked) {
     background-color: #e0f2fe !important;
     font-weight: 700 !important;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   POSTER-THEME  —  16 Sep 2026
+   The rating screen is rebuilt to match the flyer panel "Was Sie sehen":
+   white cards on a mint ground, a small green label above each card, the
+   four statements as cards with a coloured dot on the left and the radio
+   on the right. Colours sampled from the flyer artwork itself:
+
+     #d9efe9  mint ground          #00956c  green labels, dot A
+     #1e2c2e  ink                  #4a90d9  dot B
+     #004d56  secondary text       #e8a020  dot C
+     #e3003a  Uni Bern red         #e3003a  dot D, primary action
+
+   Appended rather than merged: the structural rules above (Streamlit
+   selectors, mobile padding, touch targets) stay untouched, and this block
+   can be lifted out in one piece.
+   ══════════════════════════════════════════════════════════════ */
+:root {
+    --ub-red: #e3003a;
+    --insel-green: #00956c;
+    --insel-green-deep: #00734f;
+    --mint: #d9efe9;
+    --ink: #1e2c2e;
+    --ink-2: #004d56;
+    --line: #e2ebe8;
+    --dot-a: #00956c;
+    --dot-b: #4a90d9;
+    --dot-c: #e8a020;
+    --dot-d: #e3003a;
+}
+
+/* ── the banner on onboarding, demographics and the questionnaire ─── */
+.study-header {
+    background: linear-gradient(135deg, #e3003a 0%, #a32a54 42%,
+                                #2d7f68 78%, #00956c 100%);
+    border: none !important;
+    color: #fff !important;
+    border-radius: 14px;
+    padding: 1.4rem 1.3rem 1.5rem !important;
+    box-shadow: 0 4px 14px rgba(30, 44, 46, .16);
+}
+.study-header .header-label,
+.study-header .header-title,
+.study-header h1 { color: #fff !important; text-align: left; }
+.study-header .header-label { opacity: .9; letter-spacing: .12em; }
+.study-header .header-title { font-size: 1.35rem; line-height: 1.24; font-weight: 700; }
+
+/* ── the question, as the white card from the flyer ─────────────── */
+.study-header.question-header {
+    background: #fff !important;
+    box-shadow: 0 2px 10px rgba(30, 44, 46, .09) !important;
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem 1.3rem !important;
+    text-align: center;
+}
+.study-header.question-header .header-label {
+    color: var(--insel-green) !important;
+    text-align: center;
+    opacity: 1;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: .55rem;
+}
+.study-header.question-header h1 {
+    color: var(--ink) !important;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+/* ── the answer: a plain white card, no coloured edge ───────────── */
+div[data-testid="stVerticalBlockBorderWrapper"],
+.answer-card {
+    background: #fff !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 10px rgba(30, 44, 46, .08);
+    color: var(--ink) !important;
+}
+
+/* ── the rating block heading ───────────────────────────────────── */
+h3, .vote-section-label {
+    color: var(--insel-green) !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+}
+
+/* ── the four statements ────────────────────────────────────────── */
+[data-testid="stRadioGroup"] { gap: .55rem !important; }
+
+/* Streamlit 1.63 names the option itself; the older `> div > label` chain
+   matched nothing here, which is why the cards stayed unstyled. */
+[data-testid="stRadioOption"] {
+    background: #fff !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 4px rgba(30, 44, 46, .07);
+    color: var(--ink) !important;
+    padding: .85rem 1rem !important;
+    margin: 0 !important;
+}
+
+[data-testid="stRadioOption"]:hover {
+    border-color: var(--insel-green) !important;
+    background: #f7fcfa !important;
+}
+
+/* the circle moves to the right edge and the statement fills the rest,
+   as in the flyer mock */
+[data-testid="stRadioOption"] > div > div {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: .8rem;
+}
+[data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] { flex: 1; }
+[data-testid="stRadioOption"] p { margin: 0; line-height: 1.38; }
+
+/* The unselected circle inherits the app background and disappeared on the
+   white card; give it a ring of its own so it reads as something to tap. */
+[data-testid="stRadioOption"] > div > div > div:first-child > div {
+    border: 1.5px solid #cdddd7 !important;
+    background: #fff !important;
+}
+[data-testid="stRadioOption"]:has(input:checked) {
+    border-color: var(--insel-green) !important;
+    box-shadow: 0 0 0 1.5px var(--insel-green);
+}
+
+/* ── buttons: white, the red kept for the one primary action ────── */
+div[data-testid="stButton"] button {
+    border: 1.5px solid var(--line) !important;
+    border-radius: 12px !important;
+    color: var(--ink) !important;
+    background: #fff !important;
+    box-shadow: 0 1px 4px rgba(30, 44, 46, .07);
+}
+div[data-testid="stButton"] button:hover {
+    border-color: var(--insel-green) !important;
+    background: #f7fcfa !important;
+}
+div[data-testid="stButton"] button:active,
+div[data-testid="stButton"] button[data-state="active"],
+div[data-testid="stButton"] button[kind="primary"] {
+    background-color: var(--ub-red) !important;
+    border-color: var(--ub-red) !important;
+    color: #fff !important;
+}
+div[data-testid="stButton"] button[kind="primary"]:hover {
+    background-color: #c30033 !important; border-color: #c30033 !important;
+}
+
+/* ── the rest of the palette ────────────────────────────────────── */
+.patient-query {
+    background: #fff !important;
+    border: 1px solid var(--line) !important;
+    border-left: 5px solid var(--insel-green) !important;
+    border-radius: 12px !important;
+    color: var(--ink) !important;
+}
+.patient-query strong { color: var(--insel-green-deep) !important; }
+
+.questionnaire-section {
+    background: #fff !important;
+    border: 1px solid var(--line) !important;
+    border-left: 4px solid var(--insel-green) !important;
+}
+.section-title { color: var(--insel-green) !important; }
+.section-desc,
+.caption-text,
+div[data-testid="stCaptionContainer"] { color: var(--ink-2) !important; }
+
+.progress-pill { background: #fff !important; color: var(--insel-green) !important; }
+div[data-testid="stProgress"] > div > div > div > div { background-color: var(--insel-green) !important; }
+
+.outro-card {
+    background: #fff !important;
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 10px rgba(30, 44, 46, .08);
+}
+.outro-card h2 { color: var(--insel-green) !important; }
+.outro-card p { color: var(--ink) !important; }
+
+a, a:visited { color: var(--insel-green-deep) !important; }
+.tab-hint, .question-text { color: var(--ink) !important; }

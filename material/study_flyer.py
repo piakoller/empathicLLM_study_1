@@ -86,6 +86,28 @@ CONFIG = {
                         "Server gespeichert und nur von der Studienleitung ausgewertet.",
 }
 
+# The two institutional colours, sampled from the supplied logo files:
+#   #e3003a  Universität Bern, red
+#   #00956c  Inselspital, green (the emblem)
+#   #667079  Inselspital, blue-grey (the wordmark)
+UNIBE_RED = "#e3003a"
+INSEL_GREEN = "#00956c"
+INSEL_BLUE = "#667079"
+
+# Background of the coloured field on poster and flyer cover. One of:
+#   "teal"      the app's own colour, as before — the page a patient reaches
+#               after scanning looks like the paper they scanned
+#   "red-green" Uni Bern red to Inselspital green
+#   "red-blue"  Uni Bern red to the Inselspital blue-grey
+HERO_BACKGROUND = "red-blue"
+
+_HERO = {
+    "teal": "#0097a7",
+    "red-green": f"linear-gradient(145deg, {UNIBE_RED} 0%, #8f4a52 52%, {INSEL_GREEN} 100%)",
+    "red-blue": f"linear-gradient(145deg, {UNIBE_RED} 0%, #a4385a 48%, {INSEL_BLUE} 100%)",
+}
+HERO_BG = _HERO[HERO_BACKGROUND]
+
 ACCENT = "#0097a7"
 ACCENT_DEEP = "#00707c"
 INK = "#12232a"
@@ -178,6 +200,10 @@ ICON = {
            '<path d="M16 11.4a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-3.8-1.8L5 15.4'
            'a1.8 1.8 0 0 1 2.6-2.4L9 14.4"/>',
     "check": '<circle cx="12" cy="12" r="9"/><path d="M8 12.4l2.7 2.6L16 9.6"/>',
+    "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5.3l3.4 2"/>',
+    "lock": '<rect x="4.5" y="10.5" width="15" height="10" rx="2"/>'
+            '<path d="M8.2 10.5V7.8a3.8 3.8 0 0 1 7.6 0v2.7"/>',
+    "shield": '<path d="M12 3l7 2.8v5.4c0 4.3-2.9 8-7 9.8-4.1-1.8-7-5.5-7-9.8V5.8z"/>',
 }
 
 
@@ -197,6 +223,18 @@ def mark(value: str) -> str:
 
 def pretty_url(url: str) -> str:
     return re.sub(r"^https?://", "", url).rstrip("/")
+
+
+def badges(items, cls: str = "") -> str:
+    """Time, anonymity, no effect on treatment — as marks, not as a sentence.
+
+    Printed with the same line pictograms as everything else rather than with
+    emoji: an emoji in a print PDF renders in whatever colour font the printer
+    happens to substitute, which on a clinical document looks like an accident.
+    """
+    cells = "".join(
+        f'<div class="badge">{icon(ic, 4.6)}<span>{txt}</span></div>' for ic, txt in items)
+    return f'<div class="badges {cls}">{cells}</div>'
 
 
 def phone(qr: str, screen_note: str) -> str:
@@ -238,6 +276,11 @@ body {{ font-family: Arial, 'Liberation Sans', Helvetica, sans-serif;
 
 ol.steps {{ list-style: none; counter-reset: s; }}
 ol.steps li {{ counter-increment: s; position: relative; }}
+.badges {{ display: flex; gap: 3mm; flex-wrap: wrap; }}
+.badge {{ display: flex; align-items: center; gap: 2mm; padding: 2mm 3.5mm;
+          border-radius: 10mm; background: {TINT}; color: {INK};
+          font-size: 8pt; font-weight: 700; line-height: 1.15; }}
+.badge svg {{ flex: none; color: {ACCENT_DEEP}; }}
 ol.steps li::before {{
     content: counter(s); position: absolute; left: 0; top: 0;
     display: flex; align-items: center; justify-content: center;
@@ -256,7 +299,7 @@ def poster_html(c: dict) -> str:
 .top {{ padding: 14mm 22mm 12mm; display: flex; justify-content: space-between;
         align-items: center; }}
 
-.hero {{ flex: 1; background: {ACCENT}; color: #fff; padding: 18mm 22mm 20mm;
+.hero {{ flex: 1; background: {HERO_BG}; color: #fff; padding: 18mm 22mm 20mm;
          display: flex; flex-direction: column; justify-content: center; }}
 .hero-row {{ display: flex; gap: 14mm; align-items: center; margin-top: 12mm; }}
 .hero-text {{ flex: 1; }}
@@ -264,17 +307,30 @@ def poster_html(c: dict) -> str:
 h1 {{ font-size: 46pt; line-height: 1.08; letter-spacing: -.02em; margin-top: 5mm; }}
 h1 em {{ font-style: normal; color: #ffe9a8; }}
 .sub {{ font-size: 20pt; line-height: 1.42; color: #e8fbfd; }}
-.pills {{ display: flex; gap: 4mm; margin-top: 9mm; flex-wrap: wrap; }}
-.quote {{ margin-top: 11mm; padding: 6mm 7mm 6mm 14mm; position: relative;
-          background: rgba(255,255,255,.14); border-radius: 3mm;
-          font-size: 17pt; line-height: 1.35; font-style: italic; color: #fff; }}
-.quote::before {{ content: "“"; position: absolute; left: 4mm; top: 2mm;
-          font-size: 40pt; font-style: normal; line-height: 1; color: #ffe9a8; font-weight: 700; }}
-.quote .cap {{ font-size: 11.5pt; font-style: normal; color: #c9eef2; margin-top: 3mm; }}
+.badges.on-colour {{ margin-top: 9mm; gap: 3mm; flex-direction: column;
+          align-items: flex-start; }}
+.badges.on-colour .badge {{ background: rgba(255,255,255,.93); font-size: 13pt;
+          padding: 3.2mm 6mm; gap: 3.5mm; }}
+.badges.on-colour .badge svg {{ width: 6.2mm !important; height: 6.2mm !important;
+          stroke-width: 1.6; }}
+.quote {{ margin-top: 11mm; padding: 7mm 8mm 6.5mm 16mm; position: relative;
+          background: #fff; border-radius: 3mm; border-left: 2.4mm solid {ACCENT_DEEP};
+          box-shadow: 0 1.2mm 3mm rgba(0,0,0,.14);
+          font-size: 19pt; line-height: 1.3; font-style: italic;
+          font-weight: 700; color: {INK}; }}
+.quote::before {{ content: "“"; position: absolute; left: 5mm; top: 2.5mm;
+          font-size: 44pt; font-style: normal; line-height: 1; color: {ACCENT};
+          font-weight: 700; }}
+.quote .cap {{ font-size: 11.5pt; font-style: normal; font-weight: 400;
+          color: {INK2}; margin-top: 3mm; }}
 .pill {{ background: rgba(255,255,255,.17); border: .4mm solid rgba(255,255,255,.5);
          border-radius: 14mm; padding: 3mm 7mm; font-size: 14pt; font-weight: 700; }}
 
-.phone {{ width: 96mm; flex: none; box-shadow: 0 0 0 2mm rgba(255,255,255,.25); }}
+.phone {{ width: 96mm; flex: none;
+          box-shadow: 0 0 0 3mm rgba(255,255,255,.35), 0 3mm 9mm rgba(0,0,0,.22); }}
+.to-qr {{ display: flex; align-items: center; gap: 3mm; margin-top: 9mm;
+          font-size: 16pt; font-weight: 700; color: #ffe9a8; }}
+.to-qr svg {{ width: 14mm; height: 7mm; flex: none; }}
 .phone-qr svg {{ width: 78mm; margin: 0 auto; }}
 .phone-note {{ font-size: 13pt; margin-top: 3.5mm; line-height: 1.3; }}
 
@@ -308,11 +364,13 @@ ul.isteps .txt {{ font-size: 14.5pt; line-height: 1.38; padding-top: 1.6mm; }}
         PSMA-Therapie beantwortet. Ob seine Antworten verständlich sind und
         ob sie guttun, können nur Sie beurteilen.<br><br>
         <strong>Sagen Sie uns, wie sie auf Sie wirken.</strong></p>
-        <div class="pills">
-          <div class="pill">5–7 Minuten</div>
-          <div class="pill">am eigenen Handy</div>
-          <div class="pill">anonym</div>
-        </div>
+        {badges([("clock", "5–7 Minuten"),
+                 ("lock", "anonym — kein Name, keine Krankengeschichte"),
+                 ("shield", "ohne Einfluss auf Ihre Behandlung")], "on-colour")}
+        <div class="to-qr"><span>Hier geht es los</span>
+          <svg viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="3"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h40M34 4l8 8-8 8"/></svg></div>
         <div class="quote">Bin ich nach der Entlassung gefährlich
           für meine Mitmenschen?
           <div class="cap">Eine der 20 Fragen, die Sie bewerten.</div>
@@ -373,6 +431,10 @@ def flyer_html(c: dict) -> str:
 .flyer-panel .eyebrow {{ font-size: 7.5pt; color: {ACCENT}; }}
 /* Each panel opens with a tinted band that bleeds to its edges, so the three
    sections are visible as sections the moment the flyer is unfolded. */
+.flyer-panel .badges {{ flex-direction: column; align-items: flex-start; gap: 1.8mm; }}
+.flyer-panel .badge {{ font-size: 7.6pt; padding: 1.8mm 3.5mm; gap: 2.2mm;
+                       background: #fff; border: .3mm solid #d3e3e6; }}
+.flyer-panel .badge svg {{ width: 4mm !important; height: 4mm !important; }}
 .panel-head {{ background: {TINT}; margin: -10mm -8.5mm 4mm; padding: 7mm 8.5mm 5mm;
                border-bottom: .8mm solid {ACCENT}; }}
 .panel-head .eyebrow {{ display: block; margin-bottom: 1.5mm; }}
@@ -397,6 +459,8 @@ ul.isteps .txt {{ flex: 1; font-size: 8.3pt; line-height: 1.38; padding-top: .8m
 /* Three of the twenty questions, quoted verbatim. Nothing describes the study
    as economically as the questions themselves — and unlike a sample answer,
    a question gives nothing away about how the answers should be judged. */
+.pull {{ margin: 2.5mm 0 3mm; padding-left: 4mm; border-left: 1.2mm solid {ACCENT};
+          font-size: 9.2pt; line-height: 1.32; font-weight: 700; color: {INK}; }}
 .aims {{ margin-top: 4mm; padding: 4mm 4.5mm; border-radius: 1.5mm;
           background: {TINT}; border-left: 1.2mm solid {ACCENT}; }}
 .aims-title {{ font-size: 8.6pt; font-weight: 700; color: {ACCENT_DEEP}; margin-bottom: 2mm; }}
@@ -420,7 +484,7 @@ ul.isteps .txt {{ flex: 1; font-size: 8.3pt; line-height: 1.38; padding-top: .8m
 .flyer-panel .backlogos {{ margin-top: 3.5mm; }}
 
 /* cover */
-.flyer-cover {{ padding: 0; background: {ACCENT}; color: #fff; }}
+.flyer-cover {{ padding: 0; background: {HERO_BG}; color: #fff; }}
 .flyer-cover .inner {{ flex: 1; padding: 7.5mm 8.5mm 6.5mm; display: flex; flex-direction: column; }}
 .flyer-cover .logobar {{ background: #fff; padding: 4.5mm 8.5mm; display: flex; align-items: center;
                         justify-content: space-between; }}
@@ -428,6 +492,11 @@ ul.isteps .txt {{ flex: 1; font-size: 8.3pt; line-height: 1.38; padding-top: .8m
 .flyer-cover h1 em {{ font-style: normal; color: #ffe9a8; }}
 .flyer-cover .lead {{ font-size: 8.3pt; line-height: 1.42; margin-top: 3mm; color: #e8fbfd; }}
 .flyer-cover .eyebrow {{ color: #bdf0f5; font-size: 7.2pt; }}
+.badges.on-cover {{ flex-direction: column; align-items: flex-start;
+                    gap: 1.8mm; margin-top: 4mm; }}
+.badges.on-cover .badge {{ background: rgba(255,255,255,.93); font-size: 7.6pt;
+                    padding: 1.8mm 3.5mm; gap: 2.2mm; }}
+.badges.on-cover .badge svg {{ width: 4mm !important; height: 4mm !important; }}
 .flyer-cover .phone {{ width: 44mm; margin: auto auto 0; border-color: #fff;
                       background: rgba(255,255,255,.12); padding: 2.5mm 2mm 3mm;
                       border-width: 1.1mm; border-radius: 4.5mm;
@@ -473,8 +542,11 @@ ul.isteps .txt {{ flex: 1; font-size: 8.3pt; line-height: 1.38; padding-top: .8m
   <!-- Panel 6: Rückseite / Kontakt & Datenschutz -->
   <div class="flyer-panel">
     <div class="panel-head"><span class="eyebrow">Kontakt &amp; Datenschutz</span><h2>Ihre Daten</h2></div>
-    <p>Wir erheben <strong>keinen Namen, keine Adresse und keine Kontaktdaten</strong>
-    sowie keine Daten aus Ihrer Krankengeschichte.</p>
+    {badges([("lock", "kein Name, keine Adresse"),
+             ("shield", "nichts aus Ihrer Krankengeschichte"),
+             ("clock", "5–7 Minuten, dann fertig")])}
+    <p style="margin-top:3.5mm">Wir erheben <strong>keinen Namen, keine Adresse und
+    keine Kontaktdaten</strong> sowie keine Daten aus Ihrer Krankengeschichte.</p>
     <p>Gespeichert werden ausschliesslich: Ihre Rolle (Patient:in / Ärzt:in),
     Ihre Altersgruppe, Geschlecht, Ihre Bewertungen der Modellantworten und die Bearbeitungszeit.</p>
     <p>{c['storage_sentence']}</p>
@@ -504,8 +576,12 @@ ul.isteps .txt {{ flex: 1; font-size: 8.3pt; line-height: 1.38; padding-top: .8m
     <div class="inner">
       <div class="eyebrow">Kurze Befragung · PSMA-Therapie</div>
       <h1>Helfen Sie mit, die Zukunft des <em>Arztgesprächs zu gestalten</em></h1>
-      <p class="lead">Wie sollte ein Computer über Ihre Therapie sprechen?
-      5–7 Minuten am eigenen Smartphone — freiwillig und anonym.</p>
+      <p class="lead">Eine PSMA-Therapie wirft viele Fragen auf. Helfen Sie uns,
+      die Antworten darauf verständlicher zu machen — für die Patientinnen und
+      Patienten nach Ihnen.</p>
+      {badges([("clock", "5–7 Minuten"),
+               ("lock", "anonym, ohne Anmeldung"),
+               ("shield", "ohne Einfluss auf Ihre Behandlung")], "on-cover")}
       {phone(qr_svg(url), "Code scannen")}
       <div class="u">{mark(pretty_url(url))}</div>
     </div>
@@ -531,12 +607,12 @@ ul.isteps .txt {{ flex: 1; font-size: 8.3pt; line-height: 1.38; padding-top: .8m
     kann kein Computer selbst beurteilen — <strong>sondern nur Sie</strong>.</p>
 
     <h3>Warum wir das jetzt untersuchen</h3>
-    <p>Solche Systeme beantworten heute schon medizinische Fragen — meist ohne
-    dass jemand geprüft hätte, wie ihre Antworten auf Betroffene wirken.</p>
-    <p>Dazu kommt ein Zielkonflikt: Je wärmer und einfacher eine Antwort
-    formuliert ist, desto eher entfernt sie sich vom fachlich Belegten.
-    <strong>Wie gross dieser Konflikt ist, wollen wir wissen, bevor solche Texte
-    in der Betreuung eingesetzt werden</strong> — nicht danach.</p>
+    <div class="pull">Verständlich ist nicht dasselbe wie richtig — wir prüfen,
+    ob eine wärmere Antwort genauso verlässlich bleibt.</div>
+    <p>Solche Systeme beantworten heute schon medizinische Fragen, meist ohne
+    dass jemand geprüft hätte, wie das auf Betroffene wirkt. Wir wollen das
+    wissen, <strong>bevor</strong> solche Texte in der Betreuung eingesetzt
+    werden — nicht danach.</p>
   </div>
 
   <!-- Panel 3: Was Sie sehen werden -->
