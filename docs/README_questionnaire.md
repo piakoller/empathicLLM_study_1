@@ -35,7 +35,7 @@ Likert-Skala (5-stufig):
 | # | Key | Frage |
 |---|-----|-------|
 | 8 | `pre_imaging_anxiety` | Ich bin besorgt über Ergebnisse medizinischer Bildgebung (z. B. PET/CT). |
-| 9 | `pre_treatment_unsure` | Ich bin unsicher über mögliche Behandlungen (z. B. PRRT, SIRT). |
+| 9 | `pre_treatment_unsure` | Ich bin unsicher über mögliche Behandlungen (z. B. PSMA-Therapie). |
 
 ### Grundvertrauen in digitale Gesundheitswerkzeuge
 
@@ -68,7 +68,7 @@ Likert-Skala (5-stufig):
 | # | Key | Frage |
 |---|-----|-------|
 | 9 | `post_imaging_anxiety` | Ich bin besorgt über Ergebnisse medizinischer Bildgebung (z. B. PET/CT). |
-| 10 | `post_treatment_unsure` | Ich bin unsicher über mögliche Behandlungen (z. B. PRRT, SIRT). |
+| 10 | `post_treatment_unsure` | Ich bin unsicher über mögliche Behandlungen (z. B. PSMA-Therapie). |
 
 ### Empathie
 *(angelehnt an das NURSE-Modell)*

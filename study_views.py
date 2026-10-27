@@ -1,6 +1,7 @@
 """Streamlit view rendering for the Monadic (Single-Answer per Page) Phase I user study."""
 
 import datetime
+import html
 import html as html_module
 import json
 import uuid
@@ -11,8 +12,34 @@ import streamlit.components.v1 as components
 
 from questionnaire import render_post_questionnaire, render_pre_questionnaire
 from study_data import load_questions, n_questions
-from study_persistence import build_current_payload, save_current_progress
+from study_persistence import save_current_progress, study_date
 from questionnaire_data import scroll_to_top
+
+
+# Participant information, disclaimer and debrief: docs/STUDY_START_TEXTS_DRAFT.md.
+CONTACT_MARKDOWN = """#### ✉️ Kontakt
+Fragen zur Studie: Pia Koller · [pia.koller@unibe.ch](mailto:pia.koller@unibe.ch)
+
+Fragen zu Ihrer Behandlung: Ihr Behandlungsteam der Nuklearmedizin."""
+
+ANSWER_DISCLAIMER = "Computer-generierter Text – kann Fehler enthalten. Keine ärztliche Auskunft."
+
+# The facts must be confirmed by the nuclear medicine physicians before the pilot.
+DEBRIEF_MARKDOWN = """Die Antworten, die Sie gelesen haben, stammen von einem Computerprogramm. Wir haben
+verschiedene Arten verglichen, solche Antworten zu schreiben. Einige Antworten können
+ungenau oder unvollständig gewesen sein.
+
+#### Wichtige Informationen zur PSMA-Therapie am Inselspital
+* Die Therapie findet stationär statt. Sie bleiben etwa 3 Tage im Spital.
+* Während des Aufenthalts dürfen Sie die Station nicht verlassen und keinen Besuch empfangen.
+* Die Therapie wird in Zyklen wiederholt, meist alle 6–8 Wochen.
+* Bei Prostatakrebs mit Ablegern ist eine Heilung meist nicht zu erwarten. Die Therapie
+  kann aber das Wachstum bremsen und Beschwerden lindern.
+* Wie Sie sich nach der Entlassung zu Hause verhalten sollen, erklärt Ihnen Ihr
+  Behandlungsteam vor dem Austritt. Sie erhalten dazu ein Merkblatt.
+
+Wenn beim Lesen Fragen oder Sorgen entstanden sind, sprechen Sie bitte mit Ihrem
+Behandlungsteam der Nuklearmedizin."""
 
 
 def _request_scroll_to_top(session_state) -> None:
@@ -42,7 +69,7 @@ def _record_ratings(session_state, ratings: dict) -> None:
             "condition_key": item.get("condition", "unknown"),
             "ratings": ratings,
             "response_time_s": response_time_s,
-            "timestamp": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
+            "timestamp": study_date(),
         }
     )
 
@@ -68,25 +95,45 @@ def _render_onboarding(session_state) -> None:
     )
 
     num_questions = n_questions()
+    # About 1.25–1.75 minutes per answer for older readers, plus the questionnaires
+    # (20 answers: 25–35 minutes, see docs/STUDY_REVIEW_2026-10-26.md B4).
+    minutes_low, minutes_high = round(num_questions * 1.25), round(num_questions * 1.75)
     st.markdown(
             f"""
             ### Herzlich willkommen!
             Vielen Dank, dass Sie sich die Zeit nehmen, unsere medizinische Forschung zu unterstützen.
             #### 📋 Worum geht es?
-            Sie sehen nacheinander **{num_questions} Antworten** auf typische Fragen zum Thema **PSMA-Therapie bei Prostatakrebs**. Diese Antworten wurden von einem medizinischen Sprachmodell generiert.
+            Wir untersuchen, wie verständlich und hilfreich Antworten eines Computerprogramms
+            (eines sogenannten Sprachmodells) auf Fragen zur **PSMA-Therapie bei Prostatakrebs** sind.
+            Sie lesen **{num_questions} kurze Antworten** und sagen uns, wie diese auf Sie wirken.
 
-            #### 💡 Ihre Aufgabe (Dauer: ca. 5–7 Minuten):
+            Die Teilnahme dauert etwa **{minutes_low}–{minutes_high} Minuten**. Sie können jederzeit eine Pause machen.
+
+            #### 💡 Ihre Aufgabe
             1. **Lesen Sie jede Antwort aufmerksam durch.**
             2. **Wählen Sie mit einem Klick diejenige Aussage aus**, die Ihr Gefühl und Ihre Wahrnehmung beim Lesen am besten beschreibt.
-            
-            ---
-            * **Kein Zeitdruck:** Sie können sich so viel Zeit nehmen, wie Sie möchten.
-            * **Keine falschen Antworten:** Es zählt ausschließlich Ihre persönliche Erfahrung.
 
-            ---
-            > ℹ️ **Wichtiger Hinweis:** Die gezeigten Texte dienen ausschließlich wissenschaftlichen Zwecken. Bei persönlichen medizinischen Fragen konsultieren Sie bitte stets Ihren behandelnden Arzt oder Ärztin.
+            * **Kein Zeitdruck:** Sie können sich so viel Zeit nehmen, wie Sie möchten.
+            * **Keine falschen Antworten:** Es zählt ausschliesslich Ihre persönliche Erfahrung.
+
+            #### ⚠️ Bitte beachten Sie
+            * **Die Texte können Fehler enthalten.** Sie wurden von einem Computerprogramm geschrieben
+              und sind keine ärztliche Auskunft. Richten Sie Ihre Behandlung nicht nach diesen Texten.
+            * Fragen zu Ihrer eigenen Behandlung beantwortet Ihr Behandlungsteam der Nuklearmedizin.
+            * Am Ende erhalten Sie die wichtigsten Informationen zur PSMA-Therapie am Inselspital.
+
+            #### 🔒 Freiwillig und anonym
+            * Die Teilnahme ist freiwillig. Ob Sie teilnehmen, hat keinen Einfluss auf Ihre Behandlung.
+            * Sie können jederzeit aufhören, ohne Angabe von Gründen.
+            * Wir fragen nicht nach Ihrem Namen, Ihrer E-Mail-Adresse oder Ihrem Geburtsdatum.
+              Ihre Antworten können Ihnen nicht zugeordnet werden.
+            * Weil die Daten anonym sind, können wir Ihre Antworten nachträglich nicht löschen.
+              Was Sie bis zu einem Abbruch eingegeben haben, kann deshalb in die Auswertung eingehen.
             """
     )
+    # Separate calls: st.markdown dedents its text, and the unindented constant would stop that.
+    st.markdown(CONTACT_MARKDOWN)
+    st.markdown("Mit «Weiter» bestätigen Sie, dass Sie diese Informationen gelesen haben und teilnehmen möchten.")
 
     st.markdown("")
 
@@ -141,7 +188,7 @@ def _render_demographics(session_state) -> None:
             "role": role,
             "age_range": age,
             "gender": gender,
-            "started_at": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
+            "started_at": study_date(),
         }
         session_state.role = role
         session_state.mock_data = load_questions(session_state.user_id)
@@ -176,7 +223,7 @@ def _render_evaluation(session_state) -> None:
     # Question Header
     st.markdown(
         f"""
-        <div class="study-header">
+        <div class="study-header question-header">
             <p class="header-label">Die Frage</p>
             <h1 style="font-size: 1.25em; line-height: 1.4;">{item["patient_query"]}</h1>
         </div>
@@ -184,9 +231,18 @@ def _render_evaluation(session_state) -> None:
         unsafe_allow_html=True,
     )
 
-    # Display answer text with full Markdown rendering (bolding, lists, headings)
-    with st.container(border=True):
-        st.markdown(item["answer_text"])
+    # The answer as its own white card, matching the flyer panel. Rendered as
+    # explicit paragraphs rather than through st.container(border=True): the
+    # bordered container's wrapper carries no stable class to style, and the
+    # answers contain no markdown syntax (checked across all 40 texts: no #, *,
+    # _, backticks, pipes or raw HTML), so escaping and splitting on the blank
+    # line reproduces them exactly.
+    _paras = "".join(
+        f"<p>{html.escape(par.strip())}</p>"
+        for par in item["answer_text"].split("\n\n") if par.strip()
+    )
+    st.caption(f"ℹ️ {ANSWER_DISCLAIMER}")
+    st.markdown(f'<div class="answer-card">{_paras}</div>', unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("### Welche Aussage beschreibt Ihre Wahrnehmung dieser Antwort am besten?")
@@ -255,7 +311,12 @@ def _render_outro(session_state) -> None:
 
     st.divider()
 
-    payload = build_current_payload(session_state)
+    # Clinicians get the thanks and the contact; the debrief is written for patients.
+    if session_state.get("role") != "Arzt/Ärztin":
+        st.markdown(DEBRIEF_MARKDOWN)
+        st.divider()
+    st.markdown(CONTACT_MARKDOWN)
+    st.divider()
 
     if session_state.db_save_status is None:
         save_current_progress(session_state)
@@ -265,9 +326,6 @@ def _render_outro(session_state) -> None:
         st.success(f"✅ {msg}")
     else:
         st.warning(f"⚠️ {msg}")
-
-    with st.expander("Erhobene Daten (Verifikation)"):
-        st.json(payload, expanded=True)
 
 
 def render_study_view(session_state) -> None:

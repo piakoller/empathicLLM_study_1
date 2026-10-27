@@ -47,7 +47,11 @@ YOU = re.compile(r"\b(Sie|Ihre?[nrms]?|Ihnen)\b")
 META = re.compile(
     r"(bereitgestellt\w*|vorliegend\w+ Information\w*|laut den Unterlagen|"
     r"die Dokumente|in den Unterlagen|mir zur Verf[üu]gung|Kontext\w*|"
-    r"Leitlinien empfehlen|Studien zeigen|die Quellen)", re.I)
+    r"Leitlinien empfehlen|Studien zeigen|die Quellen|"
+    # source or fact labels in brackets after a sentence, e.g. "(Insel-Patienteninformation)",
+    # "(Faktenblatt)", "(klinische Tatsache)", "(Fakt 2)", "(Studie)"
+    r"\([^)]*(Patienteninformation|Fachinformation|Leitlinie|gesetzliche Vorgabe|"
+    r"klinische (Erfahrung|Information|Tatsache)|Quelle|\w*blatt|Studie|Fakt|Tatsache|Evidenz)[^)]*\))", re.I)
 
 # Letter furniture. Chat answers are not letters.
 SALUT = re.compile(r"^\s*(Sehr geehrte|Liebe[rs]?\b|Guten Tag|Hallo\b|Antwort\s*:)", re.I)

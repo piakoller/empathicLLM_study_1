@@ -10,6 +10,16 @@ import pymongo
 import streamlit as st
 
 
+def study_date() -> str:
+    """Today's date in Zurich, the only absolute time the study stores.
+
+    Clock times of participation could be matched against clinic appointments in
+    a small single-site sample; durations (response_time_s) are measured in
+    memory and need no clock time.
+    """
+    return datetime.datetime.now(ZoneInfo("Europe/Zurich")).date().isoformat()
+
+
 def build_current_payload(session_state) -> dict:
     """Construct the current state payload for the user session."""
     payload = {
@@ -19,11 +29,11 @@ def build_current_payload(session_state) -> dict:
         "votes": session_state.results,
         "post_questionnaire": session_state.post_questionnaire,
         "status": session_state.view,
-        "updated_at": datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat(),
+        "updated_at": study_date(),
         "total_items_voted": len(session_state.results),
     }
     if session_state.view == "outro":
-        payload["completed_at"] = datetime.datetime.now(ZoneInfo("Europe/Zurich")).isoformat()
+        payload["completed_at"] = study_date()
         payload["status"] = "completed"
     return payload
 
@@ -63,10 +73,9 @@ def save_results(payload: dict) -> tuple[bool, str]:
                 upsert=True
             )
             
-            print("\n" + "=" * 80)
-            print("[DB SUCCESS] Data successfully saved to MongoDB (empathicLLM_study.study_1)")
-            print(json.dumps(payload, indent=2, ensure_ascii=False, default=str))
-            print("=" * 80 + "\n")
+            # Status only: the payload itself must not end up in the host's logs.
+            print(f"[DB SUCCESS] saved to MongoDB (empathicLLM_study.study_1), "
+                  f"status={payload['status']}, items={payload['total_items_voted']}")
             return True, "Daten erfolgreich in MongoDB gespeichert!"
         except Exception as exc:
             err_msg = str(exc)
@@ -93,7 +102,6 @@ def save_results(payload: dict) -> tuple[bool, str]:
         print("\n" + "!" * 80)
         print("[DB WARNING] MongoDB connection failed. Saved payload locally to 'fallback_results.json'.")
         print(f"Error detail: {err_msg}")
-        print(json.dumps(payload, indent=2, ensure_ascii=False, default=str))
         print("!" * 80 + "\n")
 
         return False, (

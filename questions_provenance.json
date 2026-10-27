@@ -1,23 +1,30 @@
 {
-  "built_at": "2026-09-15T10:56:43+00:00",
+  "built_at": "2026-10-27T14:49:44+01:00",
   "conditions": [
     "clinical_only",
-    "direct_empathy"
+    "direct_empathy",
+    "two_stage"
   ],
   "n_questions": 20,
   "runs": {
     "clinical_only": {
-      "file": "uq_tradeoff_clinical_only_20260909T182449.json",
+      "file": "uq_tradeoff_clinical_only_20261027T120227.json",
       "metadata": {
-        "generated_at": "2026-09-09T18:24:49.942762+02:00",
+        "generated_at": "2026-10-27T12:02:27.996977+01:00",
         "mode": "LMDeploy  [google/medgemma-27b-it @ http://localhost:8000/v1]",
         "pipeline_type": "rag",
         "prompt_mode": "clinical_only",
         "no_rag": false,
         "total_questions": 20,
         "n_candidates": 5,
+        "n_final": 5,
+        "final_temperatures": [
+          0.1,
+          0.7
+        ],
         "threshold_tau": 0.6,
         "max_tokens": 2048,
+        "request_timeout_s": 600,
         "methods_evaluated": [
           "sequence_nll_confidence",
           "perplexity_score",
@@ -33,15 +40,52 @@
       }
     },
     "direct_empathy": {
-      "file": "uq_tradeoff_direct_empathy_20260909T221829.json",
+      "file": "uq_tradeoff_direct_empathy_20261027T121943.json",
       "metadata": {
-        "generated_at": "2026-09-09T22:18:29.744721+02:00",
+        "generated_at": "2026-10-27T12:19:43.854372+01:00",
         "mode": "LMDeploy  [google/medgemma-27b-it @ http://localhost:8000/v1]",
         "pipeline_type": "rag",
         "prompt_mode": "direct_empathy",
         "no_rag": false,
         "total_questions": 20,
         "n_candidates": 5,
+        "n_final": 5,
+        "final_temperatures": [
+          0.1,
+          0.7
+        ],
+        "threshold_tau": 0.6,
+        "max_tokens": 2048,
+        "request_timeout_s": 600,
+        "methods_evaluated": [
+          "sequence_nll_confidence",
+          "perplexity_score",
+          "mean_token_entropy",
+          "top1_vs_top2_gap",
+          "tfidf_consistency",
+          "nli_consistency",
+          "combined_score",
+          "rag_similarity",
+          "emotion_classifier_confidence",
+          "verbalized_confidence"
+        ]
+      }
+    },
+    "two_stage": {
+      "file": "uq_tradeoff_two_stage_20261027T133113.json",
+      "metadata": {
+        "generated_at": "2026-10-27T13:31:13.256797+01:00",
+        "mode": "LMDeploy  [google/medgemma-27b-it @ http://localhost:8000/v1]",
+        "pipeline_type": "rag",
+        "prompt_mode": "two_stage",
+        "no_rag": false,
+        "total_questions": 20,
+        "n_candidates": 5,
+        "n_final": 5,
+        "final_temperatures": [
+          0.1,
+          0.7
+        ],
         "threshold_tau": 0.6,
         "max_tokens": 2048,
         "request_timeout_s": 600,
