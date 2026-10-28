@@ -239,7 +239,7 @@ def _render_demographics(session_state) -> None:
         }
         session_state.role = role
         # Counted before this participant's own record is saved (needs_db_save below).
-        session_state.mock_data = load_questions(session_state.user_id, slot=participant_count(role))
+        session_state.mock_data = load_questions(session_state.user_id, slot=participant_count(role, session_state.get("test_run", False)))
         session_state.question_idx = 0
         session_state.results = []
         session_state.view = "pre_questionnaire"

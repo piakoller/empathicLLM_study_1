@@ -101,7 +101,7 @@ Also checked:
 
 **The live MongoDB connection.** The test used a placeholder URI on purpose, so
 as not to touch your credentials. Do one complete run yourself and confirm a
-document with `status: "completed"` appears in `empathicLLM_study.study_1`.
+document with `status: "completed"` appears in `empathicLLM_study.study1_patients` (or `study1_clinicians`; test links with `?test=1` write to `study1_test`).
 Until that is seen once, the database path is untested.
 
 ## Two things to expect during data collection

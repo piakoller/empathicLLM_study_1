@@ -34,6 +34,7 @@ def build_current_payload(session_state) -> dict:
         # The assigned items in presentation order, so a reload can restore them
         # (the slot that chose them has moved on by then).
         "assigned_items": [item["item_id"] for item in session_state.mock_data],
+        "test_run": bool(session_state.get("test_run", False)),
     }
     if session_state.view == "outro":
         payload["completed_at"] = study_date()
@@ -63,32 +64,53 @@ def _uri_configured(mongo_uri: str | None) -> bool:
     return bool(mongo_uri) and "<db_password>" not in mongo_uri and "example.mongodb.net" not in mongo_uri
 
 
-def _collection(mongo_uri: str, name: str = "study_1"):
+# Collections in the database empathicLLM_study:
+#   study1_patients     the real study, one document per patient
+#   study1_clinicians   the real study, one document per clinician
+#   study1_test         test runs (links with ?test=1): never counted, delete before the analysis
+#   medical_review      the physicians' check of the answers (review_view.py)
+#   study_1             everything saved before 28 Oct 2026 (older app versions); no longer written
+PATIENTS, CLINICIANS, TEST = "study1_patients", "study1_clinicians", "study1_test"
+
+
+def participant_collection(role: str | None, test_run: bool = False) -> str:
+    if test_run:
+        return TEST
+    return CLINICIANS if role == "Arzt/Ärztin" else PATIENTS
+
+
+def _collection(mongo_uri: str, name: str = PATIENTS):
     client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=4000)
     return client.get_database("empathicLLM_study").get_collection(name)
 
 
-def participant_count(role: str) -> int | None:
+def participant_count(role: str, test_run: bool = False) -> int | None:
     """Number of earlier participants with this role: the slot that balances the
     question assignment (study_data.assign_items). None without a database, so
-    the assignment falls back to the user_id hash."""
+    the assignment falls back to the user_id hash. Test runs count only among
+    themselves, so they never shift the real study's assignment."""
     mongo_uri = _mongo_uri()
     if not _uri_configured(mongo_uri):
         return None
     try:
-        return _collection(mongo_uri).count_documents({"demographics.role": role})
+        name = participant_collection(role, test_run)
+        return _collection(mongo_uri, name).count_documents({"demographics.role": role})
     except Exception as exc:
         print(f"[DB WARNING] participant count failed, using the user_id hash: {exc}")
         return None
 
 
-def load_progress(user_id: str) -> dict | None:
+def load_progress(user_id: str, test_run: bool = False) -> dict | None:
     """The saved record of this participant, or None (no database, nothing saved yet)."""
     mongo_uri = _mongo_uri()
     if not _uri_configured(mongo_uri):
         return None
     try:
-        return _collection(mongo_uri).find_one({"user_id": user_id}, {"_id": 0})
+        for name in ([TEST] if test_run else [PATIENTS, CLINICIANS]):
+            record = _collection(mongo_uri, name).find_one({"user_id": user_id}, {"_id": 0})
+            if record:
+                return record
+        return None
     except Exception as exc:
         print(f"[DB WARNING] could not load progress, starting fresh: {exc}")
         return None
@@ -100,7 +122,9 @@ def save_results(payload: dict) -> tuple[bool, str]:
 
     if _uri_configured(mongo_uri):
         try:
-            collection = _collection(mongo_uri)
+            name = participant_collection((payload.get("demographics") or {}).get("role"),
+                                          payload.get("test_run", False))
+            collection = _collection(mongo_uri, name)
 
             # Replace existing record for this user or insert a new one
             collection.replace_one(
@@ -108,9 +132,9 @@ def save_results(payload: dict) -> tuple[bool, str]:
                 payload,
                 upsert=True
             )
-            
+
             # Status only: the payload itself must not end up in the host's logs.
-            print(f"[DB SUCCESS] saved to MongoDB (empathicLLM_study.study_1), "
+            print(f"[DB SUCCESS] saved to MongoDB (empathicLLM_study.{name}), "
                   f"status={payload['status']}, items={payload['total_items_voted']}")
             return True, "Daten erfolgreich in MongoDB gespeichert!"
         except Exception as exc:

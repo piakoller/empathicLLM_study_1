@@ -53,6 +53,9 @@ def _restore_progress(record: dict) -> None:
 
 
 def _initialize_session_state() -> None:
+    if "test_run" not in st.session_state:
+        # Test link (?test=1): saved to its own collection and never counted in the study.
+        st.session_state.test_run = st.query_params.get("test") == "1"
     if "user_id" not in st.session_state:
         # The id lives in the URL (?pid=…), so a reload continues the same
         # participant instead of starting a new one and using up a slot.
@@ -63,7 +66,7 @@ def _initialize_session_state() -> None:
             pid = None
         st.session_state.user_id = pid or str(uuid.uuid4())
         st.query_params["pid"] = st.session_state.user_id
-        record = load_progress(pid) if pid else None
+        record = load_progress(pid, st.session_state.test_run) if pid else None
         if record:
             _restore_progress(record)
     if "view" not in st.session_state:
@@ -105,4 +108,6 @@ if st.session_state.needs_db_save:
     save_current_progress(st.session_state)
 
 
+if st.session_state.test_run:
+    st.caption("Testlauf – diese Antworten zählen nicht zur Studie.")
 render_study_view(st.session_state)
