@@ -548,14 +548,38 @@ div[data-testid="stVerticalBlockBorderWrapper"],
 }
 
 /* ── the rating block heading ───────────────────────────────────── */
+/* At least as large as the options below it (1.15rem): older readers must
+   be able to read the question they are answering. */
 h3, .vote-section-label {
     color: var(--insel-green) !important;
-    font-size: 1rem !important;
+    font-size: 1.25rem !important;
+    line-height: 1.35 !important;
     font-weight: 700 !important;
 }
 
 /* ── the four statements ────────────────────────────────────────── */
 [data-testid="stRadioGroup"] { gap: .55rem !important; }
+/* every option card spans the full width, however short its text: the group
+   stacks its options with align-items: flex-start, so each option's wrapper
+   (and the card in it) shrank to its text */
+[data-testid="stRadioGroup"] { align-items: stretch !important; }
+[data-testid="stRadioGroup"] > div,
+[data-testid="stRadioOption"] { width: 100% !important; }
+
+/* ── dropdown lists (role, age group, gender): white like the fields ── */
+/* Streamlit 1.66 renders the list as stSelectboxVirtualDropdown (older: a
+   baseweb popover); both get the white of the fields */
+[data-testid="stSelectboxVirtualDropdown"],
+div[data-baseweb="popover"] ul,
+div[data-baseweb="popover"] [role="listbox"] {
+    background: #fff !important;
+}
+[data-testid="stSelectboxVirtualDropdown"] [role="option"]:hover,
+[data-testid="stSelectboxVirtualDropdown"] [role="option"][aria-selected="true"],
+div[data-baseweb="popover"] [role="option"]:hover,
+div[data-baseweb="popover"] [role="option"][aria-selected="true"] {
+    background: #f2f6f5 !important;
+}
 
 /* Streamlit 1.63 names the option itself; the older `> div > label` chain
    matched nothing here, which is why the cards stayed unstyled. */

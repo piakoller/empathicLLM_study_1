@@ -49,10 +49,8 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
 
     # Keys that are only meaningful for patients (emotional/mood state items)
     _PATIENT_ONLY_KEYS = {
-        "pre_calm", "pre_tense", "pre_worried", "pre_relaxed",
-        "pre_uneasy", "pre_confident", "pre_overwhelmed",
-        "post_calm", "post_tense", "post_uneasy",
-        "post_confident", "post_overwhelmed",
+        "pre_calm", "pre_tense", "pre_worried", "pre_confident",
+        "post_calm", "post_tense", "post_confident",
         "post_recommend",
         # SURE test on the decision about PSMA therapy (patients decide, clinicians do not)
         "pre_sure_s", "pre_sure_u", "pre_sure_r", "pre_sure_e",

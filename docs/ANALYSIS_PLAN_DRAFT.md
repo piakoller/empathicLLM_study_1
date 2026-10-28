@@ -43,7 +43,8 @@ certain than Clinical Only answers.
   D (unsettling) as a burden signal.
 - Clinicians: A ("medizinisch korrekt, empathisch und hervorragend geeignet") per arm, and
   D ("medizinisch bedenklich …") per arm as a safety signal.
-- Patients: change in the pre/post mood items (calm, tense, uneasy, overwhelmed, confident).
+- Patients: change in the pre/post mood items (calm, tense, confident in understanding medical
+  information; shortened on 28 Oct 2026 to the same three items before and after).
   Exploratory only: each person reads all arms, so a change cannot be attributed to one arm.
 - Reading time per answer (`response_time_s`).
 - Manipulation check, from the texts: words and Flesch score per arm.

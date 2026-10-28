@@ -29,34 +29,8 @@
             "label": "Ich mache mir Sorgen um meine Gesundheit."
           },
           {
-            "key": "pre_relaxed",
-            "label": "Ich f\u00fchle mich entspannt."
-          },
-          {
-            "key": "pre_uneasy",
-            "label": "Ich f\u00fchle mich unwohl."
-          },
-          {
             "key": "pre_confident",
             "label": "Ich f\u00fchle mich sicher darin, medizinische Informationen zu verstehen."
-          },
-          {
-            "key": "pre_overwhelmed",
-            "label": "Ich f\u00fchle mich \u00fcberfordert."
-          }
-        ]
-      },
-      {
-        "section": "Nuklearmedizin-spezifische Sorgen",
-        "description": "",
-        "items": [
-          {
-            "key": "pre_imaging_anxiety",
-            "label": "Ich bin besorgt \u00fcber Ergebnisse medizinischer Bildgebung (z.\u00a0B. PET/CT)."
-          },
-          {
-            "key": "pre_treatment_unsure",
-            "label": "Ich bin unsicher \u00fcber m\u00f6gliche Behandlungen (z.\u00a0B. PSMA-Therapie)."
           }
         ]
       },
@@ -127,16 +101,8 @@
             "label": "Ich f\u00fchle mich angespannt."
           },
           {
-            "key": "post_uneasy",
-            "label": "Ich f\u00fchle mich unwohl."
-          },
-          {
             "key": "post_confident",
             "label": "Ich f\u00fchle mich sicher darin, medizinische Informationen zu verstehen."
-          },
-          {
-            "key": "post_overwhelmed",
-            "label": "Ich f\u00fchle mich \u00fcberfordert."
           }
         ]
       },
@@ -144,10 +110,6 @@
         "section": "Empathie",
         "description": "",
         "items": [
-          {
-            "key": "post_empathy_concerns",
-            "label": "Das System hat emotionale Sorgen und \u00c4ngste in den Texten angemessen gew\u00fcrdigt."
-          },
           {
             "key": "post_empathy_tone",
             "label": "Der sprachliche Tonfall des Systems war durchgehend respektvoll und unterst\u00fctzend."
@@ -159,20 +121,8 @@
         "description": "",
         "items": [
           {
-            "key": "post_accurate",
-            "label": "Die medizinischen Erkl\u00e4rungen (z. B. zu Therapievoraussetzungen oder Befunden) wirkten fachlich korrekt und pr\u00e4zise."
-          },
-          {
-            "key": "post_clear",
-            "label": "Die Texte waren klar strukturiert und leicht verst\u00e4ndlich formuliert."
-          },
-          {
             "key": "post_misleading",
             "label": "Das System hat irref\u00fchrende oder sachlich falsche Informationen geliefert."
-          },
-          {
-            "key": "post_overconfident",
-            "label": "Das System trat in klinisch unsicheren Situationen mit einer unangemessenen Selbstsicherheit auf."
           }
         ]
       },

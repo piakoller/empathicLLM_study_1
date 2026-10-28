@@ -1,6 +1,9 @@
 # Fragebogen – Übersicht
 
-Likert-Skala (5-stufig):
+Stand 28.10.2026, aus `questionnaire_questions.json`. Gekürzt von 31 auf 20 Fragen für Patienten:
+doppelte oder schwer verständliche Fragen gestrichen, vorher und nachher gleiche Befindens-Fragen.
+
+Likert-Skala (5-stufig), sofern nicht anders angegeben:
 
 | Wert | Bedeutung |
 |------|-----------|
@@ -12,88 +15,73 @@ Likert-Skala (5-stufig):
 
 ---
 
-## 📋 VOR der Studie — *Ihr aktuelles Befinden*
-
-> Bitte geben Sie an, wie Sie sich gerade fühlen.
-> Es gibt keine richtigen oder falschen Antworten.
+## VOR den Antworten
 
 ### Emotionaler Zustand
-*(Kurzskala angelehnt an STAI-State)*
 
-| # | Key | Frage |
-|---|-----|-------|
-| 1 | `pre_calm` | Ich fühle mich ruhig. |
-| 2 | `pre_tense` | Ich fühle mich angespannt. |
-| 3 | `pre_worried` | Ich mache mir Sorgen um meine Gesundheit. |
-| 4 | `pre_relaxed` | Ich fühle mich entspannt. |
-| 5 | `pre_uneasy` | Ich fühle mich unwohl. |
-| 6 | `pre_confident` | Ich fühle mich sicher darin, medizinische Informationen zu verstehen. |
-| 7 | `pre_overwhelmed` | Ich fühle mich überfordert. |
-
-### Nuklearmedizin-spezifische Sorgen
-
-| # | Key | Frage |
-|---|-----|-------|
-| 8 | `pre_imaging_anxiety` | Ich bin besorgt über Ergebnisse medizinischer Bildgebung (z. B. PET/CT). |
-| 9 | `pre_treatment_unsure` | Ich bin unsicher über mögliche Behandlungen (z. B. PSMA-Therapie). |
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 1 | `pre_calm` | Ich fühle mich ruhig. | Skala 1–5 | nur Patienten |
+| 2 | `pre_tense` | Ich fühle mich angespannt. | Skala 1–5 | nur Patienten |
+| 3 | `pre_worried` | Ich mache mir Sorgen um meine Gesundheit. | Skala 1–5 | nur Patienten |
+| 4 | `pre_confident` | Ich fühle mich sicher darin, medizinische Informationen zu verstehen. | Skala 1–5 | nur Patienten |
 
 ### Grundvertrauen in digitale Gesundheitswerkzeuge
 
-| # | Key | Frage |
-|---|-----|-------|
-| 10 | `pre_trust_digital` | Ich vertraue generell darauf, dass digitale Gesundheitstools hilfreiche Informationen liefern. |
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 5 | `pre_trust_digital` | Ich vertraue generell darauf, dass digitale Gesundheitstools hilfreiche Informationen liefern. | Skala 1–5 | alle |
+
+### Ihre Entscheidung zur PSMA-Therapie
+
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 6 | `pre_sure_s` | Fühlen Sie sich sicher, was für Sie die beste Entscheidung zur PSMA-Therapie ist? | Ja / Nein | nur Patienten |
+| 7 | `pre_sure_u` | Kennen Sie die Vorteile und Risiken der PSMA-Therapie? | Ja / Nein | nur Patienten |
+| 8 | `pre_sure_r` | Ist Ihnen klar, welche Vorteile und Risiken Ihnen am wichtigsten sind? | Ja / Nein | nur Patienten |
+| 9 | `pre_sure_e` | Haben Sie genügend Unterstützung und Beratung, um Ihre Entscheidung zu treffen? | Ja / Nein | nur Patienten |
+
 
 ---
 
-## 📋 NACH der Studie — *Ihr Befinden nach den Chatbot-Antworten*
-
-> Bitte geben Sie an, wie Sie sich nach dem Lesen der Chatbot-Antworten fühlen.
+## NACH den Antworten
 
 ### Emotionaler Zustand
-*(nach dem Lesen der Chatbot-Antworten)*
 
-| # | Key | Frage |
-|---|-----|-------|
-| 1 | `post_calm` | Ich fühle mich ruhig. |
-| 2 | `post_tense` | Ich fühle mich angespannt. |
-| 3 | `post_worried` | Ich mache mir Sorgen um meine Gesundheit. |
-| 4 | `post_relaxed` | Ich fühle mich entspannt. |
-| 5 | `post_uneasy` | Ich fühle mich unwohl. |
-| 6 | `post_confident` | Ich fühle mich sicherer darin, medizinische Informationen zu verstehen. |
-| 7 | `post_overwhelmed` | Ich fühle mich überfordert. |
-| 8 | `post_supported` | Ich fühle mich emotional unterstützt. |
-
-### Nuklearmedizin-spezifisch
-
-| # | Key | Frage |
-|---|-----|-------|
-| 9 | `post_imaging_anxiety` | Ich bin besorgt über Ergebnisse medizinischer Bildgebung (z. B. PET/CT). |
-| 10 | `post_treatment_unsure` | Ich bin unsicher über mögliche Behandlungen (z. B. PSMA-Therapie). |
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 1 | `post_calm` | Ich fühle mich ruhig. | Skala 1–5 | nur Patienten |
+| 2 | `post_tense` | Ich fühle mich angespannt. | Skala 1–5 | nur Patienten |
+| 3 | `post_confident` | Ich fühle mich sicher darin, medizinische Informationen zu verstehen. | Skala 1–5 | nur Patienten |
 
 ### Empathie
-*(angelehnt an das NURSE-Modell)*
 
-| # | Key | Frage |
-|---|-----|-------|
-| 11 | `post_nurse_acknowledged` | Der Chatbot hat meine Bedenken anerkannt. |
-| 12 | `post_nurse_understood` | Der Chatbot hat meinen emotionalen Zustand verstanden. |
-| 13 | `post_nurse_respectful` | Der Chatbot hat respektvoll kommuniziert. |
-| 14 | `post_nurse_supportive` | Der Chatbot hat unterstützende Sprache verwendet. |
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 4 | `post_empathy_tone` | Der sprachliche Tonfall des Systems war durchgehend respektvoll und unterstützend. | Skala 1–5 | alle |
 
 ### Klinische Qualität & Sicherheit
 
-| # | Key | Frage |
-|---|-----|-------|
-| 15 | `post_accurate` | Die Informationen wirkten medizinisch korrekt. |
-| 16 | `post_clear` | Die Erklärungen waren klar und leicht verständlich. |
-| 17 | `post_misleading` | Der Chatbot hat irreführende Aussagen gemacht. |
-| 18 | `post_overconfident` | Der Chatbot hat bei unsicheren Themen eine unangemessene Selbstsicherheit gezeigt. |
-| 19 | `post_limits_clear` | Die Grenzen des Chatbots (als KI-System ohne ärztliche Befugnis) wurden mir im Gespräch klar kommuniziert. |
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 5 | `post_misleading` | Das System hat irreführende oder sachlich falsche Informationen geliefert. | Skala 1–5 | alle |
 
 ### Vertrauen
 
-| # | Key | Frage |
-|---|-----|-------|
-| 20 | `post_trust` | Ich vertraue den Antworten des Chatbots. |
-| 21 | `post_comfortable` | Ich würde mich wohlfühlen, einen solchen Chatbot in einer echten medizinischen Situation zu nutzen. |
-| 22 | `post_prepared` | Der Chatbot hat mich besser auf ein Gespräch mit einem Arzt vorbereitet. |
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 6 | `post_trust` | Ich hatte insgesamt Vertrauen in die Antworten des Systems. | Skala 1–5 | alle |
+| 7 | `post_recommend` | Ich würde den Einsatz eines solchen Systems als Unterstützung (z. B. zur Vorbereitung auf das Arztgespräch) befürworten. | Skala 1–5 | nur Patienten |
+
+### Ihre Entscheidung zur PSMA-Therapie
+
+| # | Key | Frage | Antworten | Wer |
+|---|-----|-------|-----------|-----|
+| 8 | `post_sure_s` | Fühlen Sie sich sicher, was für Sie die beste Entscheidung zur PSMA-Therapie ist? | Ja / Nein | nur Patienten |
+| 9 | `post_sure_u` | Kennen Sie die Vorteile und Risiken der PSMA-Therapie? | Ja / Nein | nur Patienten |
+| 10 | `post_sure_r` | Ist Ihnen klar, welche Vorteile und Risiken Ihnen am wichtigsten sind? | Ja / Nein | nur Patienten |
+| 11 | `post_sure_e` | Haben Sie genügend Unterstützung und Beratung, um Ihre Entscheidung zu treffen? | Ja / Nein | nur Patienten |
+
+---
+
+Die SURE-Fragen (Légaré et al. 2010) vor dem Einsatz mit der validierten deutschen Version abgleichen.

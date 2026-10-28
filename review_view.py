@@ -113,7 +113,7 @@ def _item_page(rater: str, items: list[dict], idx: int) -> None:
     saved = st.session_state.rv_ratings.get(item["id"], {})
     labels = list(CHOICES)
     current = next((i for i, l in enumerate(labels) if CHOICES[l] == saved.get("rating")), None)
-    rating = st.radio("Bewertung", labels, index=current, key=f"rv_rating_{item['id']}", horizontal=True)
+    rating = st.radio("Bewertung", labels, index=current, key=f"rv_rating_{item['id']}")
     comment = st.text_area("Was stimmt nicht? (bei «kleiner Fehler» und «potenziell schädlich»)",
                            value=saved.get("comment", ""), key=f"rv_comment_{item['id']}", height=100)
 
@@ -143,7 +143,7 @@ def _infosheet_page(rater: str) -> None:
     for i, fact in enumerate(INFOSHEET_FACTS, start=1):
         saved = st.session_state.rv_info.get(str(i), {})
         st.markdown(f"**{i}.** {fact}")
-        ok = st.radio("Stimmt so?", ["ja", "nein"], horizontal=True, key=f"rv_info_ok_{i}",
+        ok = st.radio("Stimmt so?", ["ja", "nein"], key=f"rv_info_ok_{i}",
                       index={"ja": 0, "nein": 1}.get(saved.get("ok")))
         fix = st.text_input("Korrektur", value=saved.get("correction", ""), key=f"rv_info_fix_{i}",
                             label_visibility="collapsed", placeholder="Korrektur (falls nein)")
