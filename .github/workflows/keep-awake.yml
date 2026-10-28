@@ -1,0 +1,25 @@
+# Keeps the study app on Streamlit Community Cloud awake: opens it every 6 hours
+# in a headless browser and wakes it if it fell asleep (.github/scripts/keep_awake.py).
+# Run it by hand under Actions -> "Keep study app awake" -> "Run workflow".
+name: Keep study app awake
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"     # every 6 hours (UTC), off the full hour
+  workflow_dispatch:
+
+jobs:
+  visit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright
+        run: |
+          pip install playwright==1.48.0
+          python -m playwright install --with-deps chromium
+      - name: Open the app
+        run: python .github/scripts/keep_awake.py https://empathicllmstudy1.streamlit.app/
