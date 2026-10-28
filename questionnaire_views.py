@@ -54,6 +54,9 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
         "post_calm", "post_tense", "post_uneasy",
         "post_confident", "post_overwhelmed",
         "post_recommend",
+        # SURE test on the decision about PSMA therapy (patients decide, clinicians do not)
+        "pre_sure_s", "pre_sure_u", "pre_sure_r", "pre_sure_e",
+        "post_sure_s", "post_sure_u", "post_sure_r", "post_sure_e",
     }
 
     flat_items: list[dict] = []
@@ -70,6 +73,8 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
                     "description": sec.get("description", ""),
                     "key": item["key"],
                     "label": item["label"],
+                    # an item may bring its own answers (e.g. SURE: Ja/Nein); otherwise the Likert scale
+                    "options": item.get("options"),
                 }
             )
 
@@ -132,7 +137,11 @@ def _render_likert_section(sections: list[dict], storage_key: str) -> dict | Non
     )
 
     current_val = st.session_state[storage_key].get(current_item["key"])
-    for value, label in zip(_LIKERT_VALUES, _LIKERT_LABELS):
+    if current_item["options"]:
+        choices = [(int(v), lbl) for v, lbl in current_item["options"].items()]
+    else:
+        choices = list(zip(_LIKERT_VALUES, _LIKERT_LABELS))
+    for value, label in choices:
         if st.button(
             str(label),
             key=f"likert_{storage_key}_{current_item['key']}_{value}",

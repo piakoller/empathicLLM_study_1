@@ -22,6 +22,37 @@ CONTACT_TEXT = """Fragen zur Studie: Pia Koller · [pia.koller@unibe.ch](mailto:
 Fragen zu Ihrer Behandlung: Ihr Behandlungsteam der Nuklearmedizin."""
 CONTACT_MARKDOWN = "#### ✉️ Kontakt\n" + CONTACT_TEXT
 
+# Decision question after each answer (stored as decision_code).
+# "zur", not "für": the question must not presume the decision.
+PATIENT_DECISION_QUESTION = "Wie wirkt diese Antwort auf Ihre Entscheidung zur PSMA-Therapie?"
+PATIENT_DECISION_OPTIONS = {          # label -> code: +2 much more certain … -2 much less certain
+    "Ich fühle mich deutlich sicherer.": 2,
+    "Ich fühle mich etwas sicherer.": 1,
+    "Unverändert.": 0,
+    "Ich fühle mich etwas unsicherer.": -1,
+    "Ich fühle mich deutlich unsicherer.": -2,
+}
+DOCTOR_DECISION_QUESTION = "Würden Sie diese Antwort einer Patientin oder einem Patienten so mitgeben?"
+DOCTOR_DECISION_OPTIONS = {
+    "Ja, so wie sie ist.": "as_is",
+    "Ja, aber mit Änderungen.": "with_changes",
+    "Nein.": "no",
+}
+
+UNCERTAIN_HINT = ("Wenn Sie nach dem Lesen unsicher sind, sprechen Sie bitte mit Ihrem Behandlungsteam "
+                  "der Nuklearmedizin. Die Texte in dieser Studie ersetzen kein ärztliches Gespräch.")
+
+
+def left_uncertain(session_state) -> bool:
+    """True if the patient rated at least two answers as making them less certain, or answered
+    any SURE item with "Nein" after the answers (SURE score below 4 = decisional conflict)."""
+    less_certain = sum(1 for r in session_state.results
+                       if isinstance(r.get("ratings", {}).get("decision_code"), int)
+                       and r["ratings"]["decision_code"] < 0)
+    post = session_state.post_questionnaire or {}
+    return less_certain >= 2 or any(post.get(f"post_sure_{k}") == 0 for k in "sure")
+
+
 ANSWER_DISCLAIMER = "Computer-generierter Text – kann Fehler enthalten. Keine ärztliche Auskunft."
 
 # The facts must be confirmed by the nuclear medicine physicians before the pilot.
@@ -290,7 +321,23 @@ def _render_evaluation(session_state) -> None:
         label_visibility="collapsed",
     )
 
-    if selected_statement:
+    # Second question: does the answer change the decision? Patients rate their own
+    # certainty about the therapy (many are already in it, so "for/against" would not
+    # fit); clinicians rate whether they would hand the answer to a patient.
+    st.markdown("<br>", unsafe_allow_html=True)
+    decision_options = DOCTOR_DECISION_OPTIONS if is_doctor else PATIENT_DECISION_OPTIONS
+    st.markdown("### " + (DOCTOR_DECISION_QUESTION if is_doctor else PATIENT_DECISION_QUESTION))
+    selected_decision = st.radio(
+        "Entscheidung:",
+        options=list(decision_options),
+        index=None,
+        key=f"dec_{idx}",
+        label_visibility="collapsed",
+    )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    if st.button("Weiter", type="primary", use_container_width=True, key=f"next_{idx}",
+                 disabled=not (selected_statement and selected_decision)):
         statement_code = "other"
         if any(term in selected_statement for term in ["informiert mich klar", "hervorragend"]):
             statement_code = "empathic_informative"
@@ -304,6 +351,8 @@ def _render_evaluation(session_state) -> None:
         ratings_dict = {
             "selected_statement": selected_statement,
             "statement_code": statement_code,
+            "decision_answer": selected_decision,
+            "decision_code": decision_options[selected_decision],
         }
         _record_ratings(session_state, ratings_dict)
         _request_scroll_to_top(session_state)
@@ -330,6 +379,10 @@ def _render_outro(session_state) -> None:
 
     # Clinicians get the thanks and the contact; the debrief is written for patients.
     if session_state.get("role") != "Arzt/Ärztin":
+        # The data are anonymous, so nobody can follow up later: a patient who came out of
+        # the study less certain is pointed to the care team here, on screen.
+        if left_uncertain(session_state):
+            st.warning(UNCERTAIN_HINT)
         st.markdown(DEBRIEF_MARKDOWN)
         st.divider()
     st.markdown(CONTACT_MARKDOWN)

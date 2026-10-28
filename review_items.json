@@ -1,0 +1,425 @@
+{
+  "built_from": "2026-10-27T15:19:44+01:00",
+  "items": [
+    {
+      "id": "A01",
+      "question_index": 12,
+      "patient_query": "Wie viel Lebenszeit kann ich durch eine PSMA-Therapie hinzugewinnen?",
+      "answer_text": "Ja, Sie können durch die PSMA-Therapie möglicherweise Ihre Lebenszeit verlängern und Ihre Lebensqualität verbessern. Es ist jedoch wichtig zu wissen, dass eine Heilung Ihres Tumors, wie bei vielen fortgeschrittenen Krebsarten, unwahrscheinlich ist. Studien zeigen, dass die Therapie Ihre Lebenserwartung im Vergleich zu einer anderen Behandlung (Cabazitaxel) um etwa vier Monate verlängern kann. Die Therapie mit dem radioaktiven Wirkstoff Lutetium-177 wirkt sehr gezielt, da die Strahlung im Gewebe nur wenige Millimeter weit reicht. Dadurch wird das gesunde Gewebe um den Tumor kaum belastet. Insgesamt kann sich Ihre Lebensqualität durch die Behandlung verbessern. Es gibt verschiedene Aspekte zu berücksichtigen, und Ihr Behandlungsteam der Nuklearmedizin kann diese gerne mit Ihnen besprechen.",
+      "hint": "automatische Prüfung: «Studien zeigen»"
+    },
+    {
+      "id": "A02",
+      "question_index": 14,
+      "patient_query": "Bin ich nach Entlassung aus dem Krankenhaus nach einer PSMA-Therapie gefährlich für meine Mitmenschen?",
+      "answer_text": "Nein, Sie sind nach Entlassung aus dem Krankenhaus in der Regel nicht gefährlich für Ihre Mitmenschen. Die Therapie mit Lutetium-177 erfolgt in einer stationären Umgebung. Während des Aufenthalts dürfen Sie die Station nicht verlassen und sollten keine Besucher empfangen. Nach der Entlassung müssen Sie bestimmte Vorsichtsmassnahmen beachten, die Ihr Behandlungsteam der Nuklearmedizin Ihnen erklärt.",
+      "hint": "die Antworten zu dieser Frage widersprechen sich"
+    },
+    {
+      "id": "A03",
+      "question_index": 16,
+      "patient_query": "Wie häufig sind schwere Nebenwirkungen bei der PSMA-Therapie?",
+      "answer_text": "Ja, bei der PSMA-Therapie mit Lutetium-177 können schwere Nebenwirkungen auftreten. In Studien wurde eine Rate von etwa 38% bis 53% für schwere Nebenwirkungen (Grad 3/4) festgestellt. Die häufigsten schweren Nebenwirkungen sind Blutarmut, niedrige Blutplättchenzahlen, niedrige Lymphozytenzahlen und Müdigkeit. Etwa 12% der Patienten mussten die Therapie aufgrund von Nebenwirkungen abbrechen. Es ist wichtig zu wissen, dass diese Therapie unter stationären Bedingungen durchgeführt wird, und Sie während des Aufenthalts (3 Tage) die Station nicht verlassen und keine Besucher empfangen dürfen. Ihr Behandlungsteam der Nuklearmedizin wird Sie umfassend über mögliche Nebenwirkungen und deren Management aufklären.",
+      "hint": "automatische Prüfung: Antwort nicht im ersten Satz"
+    },
+    {
+      "id": "A04",
+      "question_index": 20,
+      "patient_query": "Wie lange dauert eine PSMA-Therapie?",
+      "answer_text": "Eine PSMA-Therapie besteht aus mehreren Behandlungszyklen. Diese werden in der Regel alle 6-8 Wochen wiederholt. Die Therapie wird so lange fortgesetzt, bis der Tumor nicht mehr ausreichend anspricht oder die Nebenwirkungen zu stark werden. Die Anzahl der Zyklen ist individuell verschieden und muss mit Ihrem Behandlungsteam der Nuklearmedizin besprochen werden.",
+      "hint": "automatische Prüfung: Antwort nicht im ersten Satz"
+    },
+    {
+      "id": "A05",
+      "question_index": 11,
+      "patient_query": "Mein PSA-Wert steigt trotz der PSMA-Therapie weiter an. Ist das ein Problem?",
+      "answer_text": "Ja, ein Anstieg Ihres PSA-Werts während der PSMA-Therapie kann bedeuten, dass die Behandlung möglicherweise nicht mehr so gut wirkt, wie wir es uns wünschen.\n\nEs gibt klare Definitionen, wann wir von einem solchen Anstieg sprechen, der als PSA-Progress bezeichnet wird. Ein PSA-Progress liegt vor, wenn Ihr PSA-Wert um mindestens 25 % und um mindestens 2 ng/mL über den niedrigsten Wert seit Beginn der Therapie steigt. Diese Messung muss mindestens drei Wochen später wiederholt werden, um sicherzugehen. Sollte Ihr PSA-Wert vor der Therapie nicht gesunken sein, gilt ein Anstieg um mindestens 25 % und 2 ng/mL nach 12 Wochen Therapiebeginn ebenfalls als PSA-Progress.\n\nDieser PSA-Progress deutet darauf hin, dass die Therapie möglicherweise ihre volle Wirkung verliert. Ihr Behandlungsteam der Nuklearmedizin wird die Therapiezyklen so lange fortsetzen, bis der Tumor nicht mehr ausreichend anspricht oder Nebenwirkungen auftreten.\n\nEs ist verständlich, dass diese Entwicklung Fragen aufwirft. Gerne können wir diese verschiedenen Aspekte gemeinsam besprechen, damit Sie sich besser informieren können. Vielleicht möchten Sie diese Punkte auch mit Ihrem behandelnden Radioonkologen besprechen, um Ihre weitere Planung zu erleichtern.",
+      "hint": "automatische Prüfung"
+    },
+    {
+      "id": "A06",
+      "question_index": 14,
+      "patient_query": "Bin ich nach Entlassung aus dem Krankenhaus nach einer PSMA-Therapie gefährlich für meine Mitmenschen?",
+      "answer_text": "Ja, Sie werden nach der PSMA-Therapie für Ihre Mitmenschen gefährlich sein, weshalb die Behandlung stationär erfolgen muss. Während Ihres dreitägigen Aufenthalts im Krankenhaus dürfen Sie die Station aus Strahlenschutzgründen nicht verlassen und sollten keine Besucher empfangen. Ihr Behandlungsteam der Nuklearmedizin wird Sie vor Ihrer Entlassung über die notwendigen Vorsichtsmassnahmen zu Hause aufklären.",
+      "hint": "die Antworten zu dieser Frage widersprechen sich"
+    },
+    {
+      "id": "A07",
+      "question_index": 14,
+      "patient_query": "Bin ich nach Entlassung aus dem Krankenhaus nach einer PSMA-Therapie gefährlich für meine Mitmenschen?",
+      "answer_text": "Nein, Sie sind nach der Entlassung aus dem Krankenhaus in der Regel nicht gefährlich für Ihre Mitmenschen, aber es gibt Vorsichtsmassnahmen. Nach einer Behandlung mit Lutetium-177 (ein radioaktives Medikament) werden Sie für eine bestimmte Zeit stationär behandelt. Während dieser Zeit, die etwa drei Tage dauert, sollten Sie die Station nicht verlassen und keine Besucher empfangen, um die Strahlenbelastung für andere zu minimieren. Nach der Entlassung gibt Ihr Behandlungsteam der Nuklearmedizin Ihnen spezifische Anweisungen, wie Sie sich zu Hause verhalten sollen, um die Strahlenbelastung für Ihr Umfeld so gering wie möglich zu halten. Diese Massnahmen sind zeitlich begrenzt und werden individuell angepasst.",
+      "hint": "die Antworten zu dieser Frage widersprechen sich"
+    },
+    {
+      "id": "A08",
+      "question_index": 11,
+      "patient_query": "Mein PSA-Wert steigt trotz der PSMA-Therapie weiter an. Ist das ein Problem?",
+      "answer_text": "Ja, ein weiter steigender PSA-Wert trotz PSMA-Therapie kann ein Zeichen dafür sein, dass die Therapie nicht ausreichend wirkt. Bei etwa einem Drittel der Patienten zeigt sich kein zufriedenstellender therapeutischer Effekt. Ein PSA-Progress wird definiert als ein Anstieg um mindestens 25 % und 2 ng/mL über den niedrigsten Wert seit Beginn der Therapie, bestätigt nach mindestens 3 Wochen. Oder, wenn es keinen anfänglichen Abfall gab, ein Anstieg um mindestens 25 % und 2 ng/mL nach 12 Wochen über dem Ausgangswert. Dies deutet darauf hin, dass der Tumor möglicherweise nicht ausreichend auf die Behandlung anspricht. Ihr Behandlungsteam der Nuklearmedizin wird dies beurteilen und gegebenenfalls weitere Schritte planen.",
+      "hint": "automatische Prüfung"
+    },
+    {
+      "id": "A09",
+      "question_index": 20,
+      "patient_query": "Wie lange dauert eine PSMA-Therapie?",
+      "answer_text": "Eine PSMA-Therapie besteht aus mehreren Behandlungszyklen. Diese werden in der Regel alle 6-8 Wochen wiederholt. Die Anzahl der Zyklen hängt davon ab, wie gut Ihr Tumor auf die Therapie anspricht und welche Nebenwirkungen auftreten. Die Therapie muss stationär durchgeführt werden. Während des Aufenthalts von 3 Tagen dürfen Sie die Station nicht verlassen und sollten keine Besucher empfangen. Die genaue Dauer und Anzahl der Zyklen besprechen Sie am besten mit Ihrem Behandlungsteam der Nuklearmedizin.",
+      "hint": "automatische Prüfung: Antwort nicht im ersten Satz"
+    },
+    {
+      "id": "A10",
+      "question_index": 15,
+      "patient_query": "Warum darf ich während des Krankenhausaufenthalts zur PSMA-Therapie nicht nach draussen?",
+      "answer_text": "Sie dürfen während des stationären Aufenthalts zur PSMA-Therapie die Station nicht verlassen und sollten keine Besucher empfangen. Dies dient dem Strahlenschutz, da Ihr Körper radioaktiv ist und eine Strahlenbelastung für Ihre Umgebung darstellen könnte. Die Therapie muss unter stationären Bedingungen durchgeführt werden. Während der gesamten stationären Verweildauer (3 Tage) dürfen Sie die Station nicht verlassen.",
+      "hint": ""
+    },
+    {
+      "id": "A11",
+      "question_index": 3,
+      "patient_query": "Welche Nebenwirkungen gibt es im Rahmen der PSMA-Therapie?",
+      "answer_text": "Ja, Sie können mit einigen Nebenwirkungen rechnen, wenn Sie mit Lutetium-177 behandelt werden. Mundtrockenheit ist eine häufige Nebenwirkung dieser Therapie. Geschmacksveränderungen können ebenfalls auftreten. Diese Beschwerden beginnen meist ab dem vierten Behandlungszyklus und können sich im Laufe der Zeit verstärken. Es kann auch zu einer relevanten Abnahme der Blutzellen kommen, wie zum Beispiel Anämie (zu wenige rote Blutzellen), Thrombozytopenie (zu wenige Blutplättchen) oder Lymphozytopenie (zu wenige bestimmte weiße Blutzellen). Gelegentlich kann auch Trockenheit der Augen auftreten. Andere Nebenwirkungen sind selten. Ihr Behandlungsteam der Nuklearmedizin wird Sie darüber informieren und Sie begleiten.",
+      "hint": ""
+    },
+    {
+      "id": "A12",
+      "question_index": 16,
+      "patient_query": "Wie häufig sind schwere Nebenwirkungen bei der PSMA-Therapie?",
+      "answer_text": "Ja, Sie können mit Nebenwirkungen rechnen, die meist ab dem vierten Behandlungszyklus stärker werden. Dazu gehören Geschmacksveränderungen und Mundtrockenheit, weil die Speicheldrüsen betroffen sind. Auch eine Abnahme der Blutzellen und trockene Augen können auftreten. In einer Studie (VISION) waren schwere Nebenwirkungen (Grad 3/4) bei 52,7 % der Patienten zu beobachten, die mit Lutetium-177 behandelt wurden. Andere Nebenwirkungen sind selten. Es ist verständlich, dass diese Informationen verwirrend sein können. Gerne erläutere ich Ihnen die verschiedenen Aspekte genauer. Besprechen Sie diese Details doch bitte mit Ihrem Behandlungsteam der Nuklearmedizin, um die beste Planung für Sie zu ermöglichen.",
+      "hint": ""
+    },
+    {
+      "id": "A13",
+      "question_index": 12,
+      "patient_query": "Wie viel Lebenszeit kann ich durch eine PSMA-Therapie hinzugewinnen?",
+      "answer_text": "Ja, Sie können durch eine PSMA-Therapie Ihre Lebenserwartung erhöhen. Eine Heilung des Tumors ist jedoch unwahrscheinlich, wie bei vielen Krebsarten im fortgeschrittenen Stadium. Die Therapie kann Ihre Lebensqualität verbessern. Die Therapie wird stationär durchgeführt. Die Behandlungsdauer beträgt in der Regel 3 Tage pro Zyklus. Die Zyklen werden alle 6-8 Wochen wiederholt, bis der Tumor nicht mehr anspricht oder Nebenwirkungen auftreten. Ihr Behandlungsteam der Nuklearmedizin kann Ihnen genauere Angaben machen.",
+      "hint": ""
+    },
+    {
+      "id": "A14",
+      "question_index": 19,
+      "patient_query": "Wie stellt man fest, ob die PSMA-Therapie wirkt?",
+      "answer_text": "Ja, Sie können feststellen, ob die PSMA-Therapie wirkt, indem man Veränderungen im Krankheitsverlauf beobachtet. Ein wichtiger Indikator ist der PSA-Wert (Prostata-spezifisches Antigen) im Blut. Ein deutlicher Abfall des PSA-Wertes nach Beginn der Therapie deutet auf eine gute Ansprechen hin. Auch eine Stabilisierung der Tumormasse über mehrere Monate ist ein Zeichen dafür, dass die Therapie wirkt. Manchmal schrumpft der Tumor sogar deutlich. Ihr Behandlungsteam der Nuklearmedizin wird Ihren Verlauf genau überwachen und beurteilen, ob die Therapie erfolgreich ist.",
+      "hint": ""
+    },
+    {
+      "id": "A15",
+      "question_index": 9,
+      "patient_query": "Wie lange muss ich für eine PSMA-Therapie im Krankenhaus bleiben?",
+      "answer_text": "Sie müssen für die PSMA-Therapie stationär im Krankenhaus bleiben. Während des gesamten Aufenthalts, der drei Tage dauert, dürfen Sie die Station aus Strahlenschutzgründen nicht verlassen und sollten keine Besucher empfangen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über die genauen Details informieren.",
+      "hint": ""
+    },
+    {
+      "id": "A16",
+      "question_index": 4,
+      "patient_query": "Welche Strahlenschutzmassnahmen muss ich nach der PSMA-Therapie nach Entlassung aus dem Krankenhaus einhalten?",
+      "answer_text": "Sie müssen nach der Entlassung aus dem Krankenhaus bestimmte Strahlenschutzmassnahmen einhalten. Zunächst sollten Sie während zwei Wochen nach der Entlassung allein schlafen, idealerweise in einem separaten Raum. Innerhalb von sechs Monaten nach der Therapie wird empfohlen, kein Kind zu zeugen. Ihr Behandlungsteam der Nuklearmedizin wird Sie mündlich über diese Massnahmen aufklären und Ihnen schriftliche Informationen geben. Diese beinhalten Angaben zu Ihrer Therapie, der Aktivität und der Dosisleistung bei der Entlassung. Sie werden auch darüber informiert, wie Sie radioaktiven Abfall entsorgen, z.B. Windeln oder Einlagen in der Nuklearmedizinabteilung.",
+      "hint": ""
+    },
+    {
+      "id": "A17",
+      "question_index": 20,
+      "patient_query": "Wie lange dauert eine PSMA-Therapie?",
+      "answer_text": "Ja, Sie erhalten die PSMA-Therapie in der Zulassungsstudie in der Regel mit vier Infusionen. Diese Therapiezyklen erfolgen meist im Abstand von 6 bis 8 Wochen. Die Behandlung wird fortgesetzt, bis der Tumor nicht mehr ausreichend anspricht oder Nebenwirkungen auftreten. Die Strahlung der Therapie wirkt im Gewebe nur wenige Millimeter weit. Die Therapie-Substanz dockt an eine bestimmte Stelle an den Krebszellen an und reichert sich dort an.",
+      "hint": ""
+    },
+    {
+      "id": "A18",
+      "question_index": 10,
+      "patient_query": "Darf ich während meines Aufenthaltes im Rahmen einer PSMA-Therapie Besuch erhalten?",
+      "answer_text": "Nein, während Ihres stationären Aufenthalts für die PSMA-Therapie dürfen Sie aus Strahlenschutzgründen keinen Besuch empfangen. Ihre Angehörigen können Sie jedoch jederzeit telefonisch erreichen. Es gibt eine Möglichkeit für die Angehörigen, Ihnen etwas über die Schleuse abzugeben.",
+      "hint": ""
+    },
+    {
+      "id": "A19",
+      "question_index": 4,
+      "patient_query": "Welche Strahlenschutzmassnahmen muss ich nach der PSMA-Therapie nach Entlassung aus dem Krankenhaus einhalten?",
+      "answer_text": "Nach Ihrer PSMA-Therapie mit Lutetium-177 müssen Sie für etwa zwei Wochen nach der Entlassung bestimmte Vorsichtsmassnahmen treffen. Sie sollten während dieser Zeit allein schlafen, idealerweise in einem separaten Raum. Es wird empfohlen, innerhalb von sechs Monaten nach der Therapie keine Kinder zu zeugen. Ihr Behandlungsteam der Nuklearmedizin wird Sie vor der Entlassung detailliert über alle notwendigen Massnahmen aufklären und Ihnen schriftliche Informationen geben.",
+      "hint": ""
+    },
+    {
+      "id": "A20",
+      "question_index": 11,
+      "patient_query": "Mein PSA-Wert steigt trotz der PSMA-Therapie weiter an. Ist das ein Problem?",
+      "answer_text": "Ja, bei Ihnen deutet ein weiter steigender PSA-Wert trotz PSMA-Therapie auf einen möglichen Therapie-Misserfolg hin. Ein PSA-Progress wird definiert als ein Anstieg um mindestens 25 % und 2 ng/mL über den niedrigsten Wert seit Beginn der Therapie, bestätigt durch eine zweite Messung mindestens 3 Wochen später. Wenn kein initialer PSA-Abfall beobachtet wurde, reicht ein Anstieg um mindestens 25 % und 2 ng/mL nach 12 Wochen über den Ausgangswert. Dies signalisiert, dass die Therapie möglicherweise nicht mehr ausreichend wirksam ist. Ihr Behandlungsteam der Nuklearmedizin wird dies beurteilen und gegebenenfalls weitere Schritte planen.",
+      "hint": ""
+    },
+    {
+      "id": "A21",
+      "question_index": 7,
+      "patient_query": "Werden mir durch die PSMA-Therapie die Haare ausfallen?",
+      "answer_text": "Nein, bei Ihnen wird durch die PSMA-Therapie mit Lutetium-177 in der Regel kein Haarausfall auftreten. Die Therapie zielt auf die Krebszellen ab, die PSMA produzieren. Haarfollikel sind davon nicht betroffen.",
+      "hint": ""
+    },
+    {
+      "id": "A22",
+      "question_index": 2,
+      "patient_query": "Stellt die radioaktive Strahlung durch die PSMA-Therapie ein Risiko für mich dar?",
+      "answer_text": "Ja, Sie sind radioaktiver Strahlung ausgesetzt. Die Therapie verwendet eine radioaktive Substanz, die sich in den Krebszellen anreichert. Dadurch werden diese Zellen bestrahlt. Sie müssen aus Strahlenschutzgründen für eine gewisse Zeit im Krankenhaus bleiben und sollten keine Besucher empfangen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über die genauen Vorsichtsmassnahmen informieren.",
+      "hint": ""
+    },
+    {
+      "id": "A23",
+      "question_index": 10,
+      "patient_query": "Darf ich während meines Aufenthaltes im Rahmen einer PSMA-Therapie Besuch erhalten?",
+      "answer_text": "Nein, Sie dürfen während Ihres stationären Aufenthalts aufgrund von Strahlenschutzbestimmungen keinen Besuch empfangen. Ihre Angehörigen können Sie jedoch telefonieren. Sie dürfen die Station ebenfalls nicht verlassen.",
+      "hint": ""
+    },
+    {
+      "id": "A24",
+      "question_index": 9,
+      "patient_query": "Wie lange muss ich für eine PSMA-Therapie im Krankenhaus bleiben?",
+      "answer_text": "Sie müssen für die PSMA-Therapie stationär im Krankenhaus bleiben. Die gesamte stationäre Verweildauer beträgt 3 Tage. Während dieser Zeit dürfen Sie aus Strahlen-schutzgründen die Station nicht verlassen und sollten keine Besucher empfangen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über die genauen Abläufe informieren.",
+      "hint": ""
+    },
+    {
+      "id": "A25",
+      "question_index": 3,
+      "patient_query": "Welche Nebenwirkungen gibt es im Rahmen der PSMA-Therapie?",
+      "answer_text": "Ja, Sie können mit Nebenwirkungen rechnen, die meist ab dem vierten Behandlungszyklus stärker werden. Zunächst sind sie mild, nehmen aber mit jedem Zyklus zu. Dazu gehören Geschmacksveränderungen und Mundtrockenheit durch Schäden an den Speicheldrüsen. Auch eine Abnahme der Blutzellen und leichte Augentrockenheit können auftreten. Weitere Nebenwirkungen sind selten. Übelkeit kann vorkommen, wird aber meist gut mit Medikamenten behandelt. Ihr Behandlungsteam der Nuklearmedizin wird Sie darüber aufklären und Ihnen Medikamente dagegen geben. Die Therapie muss stationär durchgeführt werden, und Sie dürfen die Station während der Behandlung nicht verlassen. Ihr Behandlungsteam der Nuklearmedizin wird Ihnen genauere Informationen geben.",
+      "hint": ""
+    },
+    {
+      "id": "A26",
+      "question_index": 12,
+      "patient_query": "Wie viel Lebenszeit kann ich durch eine PSMA-Therapie hinzugewinnen?",
+      "answer_text": "Die PSMA-Therapie kann Ihre Lebensqualität verbessern und Ihre Lebenserwartung erhöhen. Eine Heilung des Tumors ist dabei jedoch unwahrscheinlich, wie bei vielen fortgeschrittenen Krebsarten. Die Therapie wird stationär durchgeführt, meist in Zyklen von 6-8 Wochen, solange sie gut anschlägt und die Nebenwirkungen überschaubar bleiben.\n\nEine Studie zeigte eine statistisch signifikante Verlängerung der Gesamtüberlebenszeit um durchschnittlich 4 Monate im Vergleich zu einer anderen Behandlung. Weitere Studien zeigten eine Verbesserung der Lebensqualität. Die genaue Lebenserwartung hängt jedoch von vielen individuellen Faktoren ab. Besprechen Sie Ihre persönliche Situation und Erwartungen mit Ihrem Behandlungsteam der Nuklearmedizin.",
+      "hint": ""
+    },
+    {
+      "id": "A27",
+      "question_index": 5,
+      "patient_query": "Wie wahrscheinlich ist es, dass die PSMA-Therapie eine gute Wirkung erzielt?",
+      "answer_text": "Ja, Sie können mit einer guten Wirkung rechnen, aber es gibt keine Garantie. Bei etwa einem Drittel der Patienten schrumpft der Tumor deutlich oder das Wachstum wird für eine Weile gebremst. Bei etwa einem Drittel zeigt sich kein zufriedenstellender therapeutischer Effekt. Die Therapie kann die Lebensqualität verbessern und die Lebenserwartung erhöhen. Ob Sie für die Therapie in Frage kommen, wird mit einer PSMA-PET/CT-Untersuchung geprüft. Ihr Behandlungsteam der Nuklearmedizin kann Ihnen genauere Aussagen treffen.",
+      "hint": ""
+    },
+    {
+      "id": "A28",
+      "question_index": 7,
+      "patient_query": "Werden mir durch die PSMA-Therapie die Haare ausfallen?",
+      "answer_text": "Nein, bei Ihnen wird durch die PSMA-Therapie mit Lutetium-177 in der Regel kein Haarausfall auftreten. Die Therapie zielt gezielt auf die Krebszellen ab, die PSMA produzieren. Haarfollikel sind davon nicht betroffen.",
+      "hint": ""
+    },
+    {
+      "id": "A29",
+      "question_index": 8,
+      "patient_query": "Kann ich durch die PSMA-Therapie sterben?",
+      "answer_text": "Ja, Sie können durch die PSMA-Therapie sterben, aber das ist nicht das Ziel. Die Therapie zielt darauf ab, Prostatakrebszellen zu bestrahlen und zu zerstören, wobei das umliegende Gewebe geschont werden soll. Sie kann Ihre Lebensqualität verbessern und Ihre Lebenserwartung erhöhen. Eine Heilung des metastasierten Tumors ist jedoch, wie bei vielen Krebsarten, nicht zu erwarten. Bei etwa einem Drittel der Patienten zeigt sich ein guter Therapieeffekt, bei einem Drittel wird das Tumorwachstum gebremst und bei einem Drittel gibt es keinen Effekt. Nebenwirkungen treten meist ab dem vierten Behandlungszyklus auf und können Geschmacksveränderungen, Mundtrockenheit und eine Abnahme der Blutzellen sein. Ihr Behandlungsteam der Nuklearmedizin wird Sie umfassend beraten.",
+      "hint": ""
+    },
+    {
+      "id": "A30",
+      "question_index": 2,
+      "patient_query": "Stellt die radioaktive Strahlung durch die PSMA-Therapie ein Risiko für mich dar?",
+      "answer_text": "Ja, Sie erhalten eine radioaktive Substanz, die gezielt Krebszellen bestrahlen soll. Die Strahlung ist jedoch sehr kurzreichweitig, sodass das umliegende gesunde Gewebe kaum betroffen ist. Ein gewisses Strahlenrisiko besteht dennoch, insbesondere für die Speicheldrüsen, was zu Mundtrockenheit führen kann. Ihr Behandlungsteam der Nuklearmedizin wird Sie darüber informieren, wie Sie dies lindern können. Es gibt auch ein sehr geringes langfristiges Risiko für Zweitkrebs, ähnlich wie bei anderen Strahlentherapien. Die Vorteile der Therapie überwiegen dieses Risiko in der Regel bei fortgeschrittenem Prostatakrebs. Ihr Behandlungsteam der Nuklearmedizin kann Ihnen die individuellen Risiken und Vorteile genauer erläutern.",
+      "hint": ""
+    },
+    {
+      "id": "A31",
+      "question_index": 4,
+      "patient_query": "Welche Strahlenschutzmassnahmen muss ich nach der PSMA-Therapie nach Entlassung aus dem Krankenhaus einhalten?",
+      "answer_text": "Ja, Sie müssen nach der Therapie mit Lutetium-177 bestimmte Vorsichtsmassnahmen beachten. Zunächst sollten Sie für zwei Wochen nach der Entlassung alleine schlafen, idealerweise in einem separaten Raum. Es wird empfohlen, innerhalb von sechs Monaten nach der Therapie keine Kinder zu zeugen. Halten Sie zudem einen Abstand von mindestens zwei Metern zu anderen Personen ein. Ihr Behandlungsteam der Nuklearmedizin wird Sie mündlich über diese und weitere notwendige Verhaltensweisen aufklären. Sie erhalten außerdem schriftliche Informationen, die Details zur Therapie, Aktivität, Menge des verwendeten Medikaments und der Dosisleistung bei Entlassung enthalten.",
+      "hint": ""
+    },
+    {
+      "id": "A32",
+      "question_index": 6,
+      "patient_query": "Wird mir durch die PSMA-Therapie übel werden?",
+      "answer_text": "Ja, Ihnen kann durch die PSMA-Therapie Übelkeit entstehen. Um dies zu verhindern, wird man Ihnen vor der Behandlung Medikamente gegen Übelkeit geben. Diese enthalten Wirkstoffe, die bestimmte Rezeptoren im Körper blockieren, die Übelkeit auslösen. Dabei wird oft ein Medikament eingesetzt, eventuell zusätzlich zu einem Kortison-Präparat. Diese vorbeugende Behandlung ist sehr wirksam und wird gut vertragen. Sollten Sie trotz dieser Maßnahmen Übelkeit verspüren, kann eventuell das Kortison-Präparat zusätzlich eingesetzt werden. Ihr Behandlungsteam der Nuklearmedizin wird Ihnen die verschiedenen Möglichkeiten gerne erläutern, damit Sie sich für die passende Option entscheiden können.",
+      "hint": ""
+    },
+    {
+      "id": "A33",
+      "question_index": 7,
+      "patient_query": "Werden mir durch die PSMA-Therapie die Haare ausfallen?",
+      "answer_text": "Ja, bei Ihnen wird durch die Lutetium-177-PSMA-Therapie kein Haarausfall erwartet. Die Therapie wird von Ihnen während der ersten drei Behandlungen gut vertragen. Möglicherweise treten ab der vierten Behandlung Nebenwirkungen auf. Dazu gehören Geschmacksveränderungen, Mundtrockenheit, eine Abnahme der Blutzellen und selten Augentrockenheit. Weitere Nebenwirkungen sind selten. Es ist verständlich, dass diese Informationen Fragen aufwerfen. Gerne können wir die verschiedenen Aspekte im Detail besprechen, damit Sie sich besser vorbereiten können. Sprechen Sie diese Fragen am besten mit Ihrem Behandlungsteam der Nuklearmedizin.",
+      "hint": ""
+    },
+    {
+      "id": "A34",
+      "question_index": 13,
+      "patient_query": "Warum darf ich keinen Besuch empfangen während einer PSMA-Therapie?",
+      "answer_text": "Sie dürfen während der stationären Behandlung für die PSMA-Therapie keinen Besuch empfangen. Dies dient dem Strahlenschutz für Ihre Angehörigen und andere Personen. Sie können jedoch telefonieren und Ihre Angehörigen können Ihnen Dinge über die Schleuse bringen.",
+      "hint": ""
+    },
+    {
+      "id": "A35",
+      "question_index": 6,
+      "patient_query": "Wird mir durch die PSMA-Therapie übel werden?",
+      "answer_text": "Ja, bei Ihnen kann es während der PSMA-Therapie zu Übelkeit kommen. Um dies zu verhindern, erhalten Sie vor jeder Behandlung Medikamente gegen Übelkeit. Diese werden in der Regel etwa 30 bis 60 Minuten vor der Therapie verabreicht. Manchmal wird zusätzlich ein Kortisonpräparat eingesetzt. Sollten Sie trotz dieser Maßnahmen Übelkeit verspüren, informieren Sie bitte Ihr Behandlungsteam der Nuklearmedizin.",
+      "hint": ""
+    },
+    {
+      "id": "A36",
+      "question_index": 3,
+      "patient_query": "Welche Nebenwirkungen gibt es im Rahmen der PSMA-Therapie?",
+      "answer_text": "Ja, Sie können im Rahmen der PSMA-Therapie mit Nebenwirkungen rechnen. Die Therapie wird stationär durchgeführt. Während des Aufenthalts (3 Tage) dürfen Sie die Station nicht verlassen und keine Besucher empfangen. Die ersten drei Behandlungszyklen werden meist gut vertragen. Ab dem vierten Zyklus können Nebenwirkungen auftreten. Dazu gehören zunehmende Geschmacksveränderungen und Mundtrockenheit durch Schäden an den Speicheldrüsen. Auch eine Abnahme der Blutzellen und gelegentlich trockene Augen können auftreten. Weitere Nebenwirkungen sind selten. Übelkeit kann vorkommen, wird aber meist durch Medikamente vorgebeugt. Ihr Behandlungsteam der Nuklearmedizin wird Sie über die typischen Nebenwirkungen und deren Behandlung aufklären.",
+      "hint": ""
+    },
+    {
+      "id": "A37",
+      "question_index": 17,
+      "patient_query": "Bekomme ich während der PSMA-Therapie immer die gleiche Dosis?",
+      "answer_text": "Ja, Sie erhalten während der PSMA-Therapie mit Lutetium-177 in der Regel immer die gleiche Dosis. Die empfohlene Dosis beträgt 7400 MBq. Diese Dosis wird Ihnen intravenös verabreicht. Die Behandlung wird alle 6 Wochen wiederholt, wobei eine Abweichung von etwa einer Woche möglich ist. Die Therapie wird maximal 6 Mal durchgeführt. Die Zyklen dauern in der Regel 6 bis 8 Wochen, bis der Tumor nicht mehr gut anspricht oder die Nebenwirkungen zu stark werden.",
+      "hint": ""
+    },
+    {
+      "id": "A38",
+      "question_index": 8,
+      "patient_query": "Kann ich durch die PSMA-Therapie sterben?",
+      "answer_text": "Ja, Sie können durch die PSMA-Therapie sterben, aber dies ist nicht das erwartete Ergebnis. Die Therapie zielt darauf ab, das Wachstum des Prostatakarzinoms zu verlangsamen oder zu stoppen und Ihre Lebensqualität zu verbessern. Wie bei vielen Krebstherapien gibt es Risiken und Nebenwirkungen. Die Therapie wird unter stationären Bedingungen durchgeführt, und Sie dürfen die Station während der Behandlung nicht verlassen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über die spezifischen Risiken und den erwarteten Nutzen in Ihrem Fall aufklären.",
+      "hint": ""
+    },
+    {
+      "id": "A39",
+      "question_index": 1,
+      "patient_query": "Kann ich durch eine PSMA-Therapie von meinem Krebs geheilt werden?",
+      "answer_text": "Nein, bei Ihnen ist wie bei vielen metastasierten Krebsarten keine Heilung zu erwarten, obwohl sich Ihre Lebensqualität verbessern und die Lebenserwartung erhöht werden kann. Die Therapie wird stationär durchgeführt und dauert etwa drei Tage pro Zyklus. Die Zyklen erfolgen alle 6-8 Wochen, bis der Tumor nicht mehr anspricht oder Nebenwirkungen auftreten. Die Therapie zielt darauf ab, die Tumorzellen zu bestrahlen und zu zerstören, wobei das umliegende Gewebe kaum belastet wird. Es gibt jedoch keine Garantie für einen Therapieerfolg, da etwa ein Drittel der Patienten keinen zufriedenstellenden Effekt zeigt. Besprechen Sie diese Aspekte mit Ihrem Behandlungsteam der Nuklearmedizin.",
+      "hint": ""
+    },
+    {
+      "id": "A40",
+      "question_index": 17,
+      "patient_query": "Bekomme ich während der PSMA-Therapie immer die gleiche Dosis?",
+      "answer_text": "Ja, Sie erhalten in der Regel die gleiche Dosis Lutetium-177 bei jeder Behandlung. Die empfohlene Dosis beträgt 7400 MBq, die alle 6 bis 8 Wochen intravenös verabreicht wird. Die Therapie wird so lange fortgesetzt, bis der Tumor nicht mehr ausreichend anspricht oder die Nebenwirkungen zu stark werden. Die genaue Anzahl der Zyklen hängt von Ihrem individuellen Verlauf ab. Ihr Behandlungsteam der Nuklearmedizin wird dies mit Ihnen besprechen.",
+      "hint": ""
+    },
+    {
+      "id": "A41",
+      "question_index": 13,
+      "patient_query": "Warum darf ich keinen Besuch empfangen während einer PSMA-Therapie?",
+      "answer_text": "Sie dürfen während der stationären Behandlung für die PSMA-Therapie keinen Besuch empfangen. Dies dient dem Strahlenschutz für Ihre Angehörigen und andere Personen. Die Therapie beinhaltet radioaktive Substanzen, die für eine gewisse Zeit in Ihrem Körper verbleiben und eine Strahlenquelle darstellen. Während Ihres Aufenthalts dürfen Sie die Station nicht verlassen. Ihr Behandlungsteam der Nuklearmedizin wird Sie täglich besuchen, um Ihr Befinden zu prüfen und die Strahlung zu messen.",
+      "hint": ""
+    },
+    {
+      "id": "A42",
+      "question_index": 2,
+      "patient_query": "Stellt die radioaktive Strahlung durch die PSMA-Therapie ein Risiko für mich dar?",
+      "answer_text": "Ja, Sie erhalten eine Therapie mit radioaktivem Lutetium-177. Dieses wird in Ihrem Körper angereichert, um Tumorzellen zu bestrahlen. Die Strahlung wirkt nur in unmittelbarer Nähe der Tumorzellen, etwa wenige Millimeter weit. Dadurch wird das gesunde Gewebe drumherum geschont.\n\nNebenwirkungen können auftreten, meist ab dem vierten Behandlungszyklus. Häufig sind Geschmacksveränderungen und Mundtrockenheit, weil die Speicheldrüsen geschädigt werden können. Gegen Mundtrockenheit helfen Speichelersatzmittel, zuckerfreie Kaugummis oder Lutschtabletten. In stärkeren Fällen kann ein Medikament zur Anregung der Speichelproduktion eingesetzt werden. Ihr Behandlungsteam der Nuklearmedizin wird Sie darüber informieren.",
+      "hint": ""
+    },
+    {
+      "id": "A43",
+      "question_index": 18,
+      "patient_query": "Warum muss ich für die PSMA-Therapie in der Klinik bleiben?",
+      "answer_text": "Ja, Sie müssen für die PSMA-Therapie in der Klinik bleiben. Die Behandlung mit Lutetium-177 muss unter stationären Bedingungen durchgeführt werden. Während Ihres gesamten Aufenthalts von drei Tagen dürfen Sie aus Strahlenschutzgründen die Station nicht verlassen. Ihr Behandlungsteam der Nuklearmedizin wird Ihnen alle Details erklären.",
+      "hint": ""
+    },
+    {
+      "id": "A44",
+      "question_index": 13,
+      "patient_query": "Warum darf ich keinen Besuch empfangen während einer PSMA-Therapie?",
+      "answer_text": "Ja, Sie dürfen während der stationären PSMA-Therapie keine Besucher empfangen. Dies ist aufgrund von Strahlenschutzbestimmungen notwendig. Die PSMA-Therapie muss unter stationären Bedingungen durchgeführt werden. Während Ihrer gesamten dreitägigen Krankenhausaufenthalts dürfen Sie das Krankenhaus nicht verlassen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über alle Details informieren.",
+      "hint": ""
+    },
+    {
+      "id": "A45",
+      "question_index": 16,
+      "patient_query": "Wie häufig sind schwere Nebenwirkungen bei der PSMA-Therapie?",
+      "answer_text": "Bei Ihnen treten schwere Nebenwirkungen bei der PSMA-Therapie in etwa der Hälfte der Fälle auf. Die häufigsten schweren Nebenwirkungen sind eine Abnahme der Blutzellen (Anämie, Thrombozytopenie, Lymphozytopenie) und Müdigkeit. Etwa 1 von 10 Patienten muss die Therapie aufgrund von Nebenwirkungen abbrechen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über mögliche Nebenwirkungen aufklären und diese behandeln.",
+      "hint": ""
+    },
+    {
+      "id": "A46",
+      "question_index": 8,
+      "patient_query": "Kann ich durch die PSMA-Therapie sterben?",
+      "answer_text": "Ja, Sie können durch die PSMA-Therapie sterben, aber das ist nicht die erwartete Folge. Die Therapie zielt darauf ab, den Tumor zu behandeln und Ihr Leben zu verlängern. Wie bei jeder Krebsbehandlung gibt es Risiken. Die Therapie wird unter stationären Bedingungen durchgeführt, und Sie dürfen die Station während der Behandlung nicht verlassen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über alle Aspekte und Risiken aufklären.",
+      "hint": ""
+    },
+    {
+      "id": "A47",
+      "question_index": 9,
+      "patient_query": "Wie lange muss ich für eine PSMA-Therapie im Krankenhaus bleiben?",
+      "answer_text": "Ja, Sie müssen für die PSMA-Therapie im Krankenhaus bleiben. Die Behandlung mit Lutetium-177 muss stationär durchgeführt werden. Während Ihres gesamten Aufenthalts dürfen Sie aus Strahlenschutzgründen die Station nicht verlassen. Ihr Aufenthalt im Krankenhaus dauert drei Tage. Ihr Behandlungsteam der Nuklearmedizin wird Ihnen alle Details erklären.",
+      "hint": ""
+    },
+    {
+      "id": "A48",
+      "question_index": 19,
+      "patient_query": "Wie stellt man fest, ob die PSMA-Therapie wirkt?",
+      "answer_text": "Ja, Sie können feststellen, ob die PSMA-Therapie wirkt.\nDie Wirksamkeit wird anhand von Bildgebung (PSMA-PET/CT) und des PSA-Wertes (Prostata-spezifisches Antigen) beurteilt.\nEin deutlicher Abfall des PSA-Wertes nach den Therapiezyklen ist ein Zeichen für eine gute Ansprechen.\nAuch eine Verlangsamung des Tumorwachstums oder eine Verkleinerung der Tumormasse auf der PET/CT-Untersuchung zeigt eine Wirkung.\nManchmal zeigt sich jedoch kein zufriedenstellender Effekt.\nDie Therapie wird so lange fortgesetzt, bis der Tumor nicht mehr anspricht oder Nebenwirkungen auftreten.\nIhr Behandlungsteam der Nuklearmedizin wird Sie dabei engmaschig begleiten.",
+      "hint": ""
+    },
+    {
+      "id": "A49",
+      "question_index": 18,
+      "patient_query": "Warum muss ich für die PSMA-Therapie in der Klinik bleiben?",
+      "answer_text": "Sie müssen für die PSMA-Therapie in der Klinik bleiben, weil Sie radioaktive Substanzen erhalten. Aus Strahlenschutzgründen dürfen Sie während der gesamten stationären Behandlung, die drei Tage dauert, die Station nicht verlassen und sollten keine Besucher empfangen. Ihr Behandlungsteam der Nuklearmedizin wird Sie darüber informieren, welche Vorsichtsmassnahmen Sie nach der Entlassung zu Hause beachten müssen.",
+      "hint": ""
+    },
+    {
+      "id": "A50",
+      "question_index": 19,
+      "patient_query": "Wie stellt man fest, ob die PSMA-Therapie wirkt?",
+      "answer_text": "Ja, Sie können anhand verschiedener Anzeichen feststellen, ob die PSMA-Therapie wirkt. Die Therapie zielt darauf ab, die Krebszellen zu bestrahlen, die PSMA produzieren. Bei etwa einem Drittel der Patienten schrumpft der Tumor dadurch deutlich. Bei einem weiteren Drittel wird das Tumorwachstum für eine Weile verlangsamt. Bei etwa einem Drittel zeigt sich leider kein zufriedenstellender Effekt. Ein Zeichen dafür, dass die Therapie wirkt, kann ein starker anfänglicher Abfall des PSA-Wertes sein. Danach stabilisiert sich die Tumormasse oft über mehrere Monate. Ich verstehe, dass diese unterschiedlichen möglichen Verläufe Verwirrung stiften können. Gerne können wir die verschiedenen Optionen und deren Wahrscheinlichkeiten gemeinsam besprechen. Es ist gut, diese Aspekte für Ihr nächstes Gespräch mit Ihrem Behandlungsteam der Nuklearmedizin vorzubereiten.",
+      "hint": ""
+    },
+    {
+      "id": "A51",
+      "question_index": 18,
+      "patient_query": "Warum muss ich für die PSMA-Therapie in der Klinik bleiben?",
+      "answer_text": "Sie müssen für die PSMA-Therapie in der Klinik bleiben, weil Sie während der gesamten stationären Verweildauer (3 Tage) aus Strahlenschutzgründen die Station nicht verlassen und keine Besucher empfangen dürfen. Die Therapie wird unter stationären Bedingungen durchgeführt.",
+      "hint": ""
+    },
+    {
+      "id": "A52",
+      "question_index": 1,
+      "patient_query": "Kann ich durch eine PSMA-Therapie von meinem Krebs geheilt werden?",
+      "answer_text": "Ja, bei Ihnen ist eine Heilung durch die PSMA-Therapie wie bei vielen Krebsarten, die sich ausgebreitet haben, nicht zu erwarten. Bei etwa einem Drittel der Patienten zeigt sich jedoch kein ausreichender Behandlungseffekt. Die PSMA-Therapie muss stationär durchgeführt werden. Die Strahlenwirkung der PSMA-Liganden im Gewebe ist sehr gering, sodass das umliegende gesunde Gewebe kaum belastet wird. Ob Sie für eine PSMA-Therapie geeignet sind, muss vorher mit einer speziellen Bildgebung (PSMA-PET/CT) festgestellt werden.",
+      "hint": ""
+    },
+    {
+      "id": "A53",
+      "question_index": 17,
+      "patient_query": "Bekomme ich während der PSMA-Therapie immer die gleiche Dosis?",
+      "answer_text": "Ja, Sie erhalten in der Regel immer die gleiche Dosis von Lutetium-177. Die empfohlene Dosis beträgt 7400 MBq, die alle 6 bis 8 Wochen intravenös verabreicht wird. Die Therapie wird so lange fortgesetzt, bis der Tumor nicht mehr ausreichend anspricht oder Nebenwirkungen auftreten. Die genaue Anzahl der Zyklen hängt von Ihrem individuellen Verlauf ab. Ihr Behandlungsteam der Nuklearmedizin wird dies genau überwachen.",
+      "hint": ""
+    },
+    {
+      "id": "A54",
+      "question_index": 15,
+      "patient_query": "Warum darf ich während des Krankenhausaufenthalts zur PSMA-Therapie nicht nach draussen?",
+      "answer_text": "Sie dürfen während des stationären Aufenthalts zur PSMA-Therapie die Station nicht verlassen. Dies dient dem Strahlenschutz, da Sie eine Behandlung mit einer radioaktiven Substanz erhalten. Während dieser Zeit dürfen Sie auch keine Besucher empfangen. Ihr Behandlungsteam der Nuklearmedizin wird Sie über die genauen Sicherheitsvorkehrungen informieren.",
+      "hint": ""
+    },
+    {
+      "id": "A55",
+      "question_index": 5,
+      "patient_query": "Wie wahrscheinlich ist es, dass die PSMA-Therapie eine gute Wirkung erzielt?",
+      "answer_text": "Ja, Sie können mit einer PSMA-Therapie rechnen, dass sich Ihre Lebensqualität deutlich verbessert und Ihre Lebenserwartung steigt. Eine Heilung vom Tumor ist allerdings unwahrscheinlich, wie bei vielen Krebsarten, die bereits gestreut haben. Die Therapie wirkt bei etwa einem Drittel der Patienten sehr gut, wobei der Tumor schrumpft oder sein Wachstum stark verlangsamt wird. Bei einem weiteren Drittel ist der Effekt weniger zufriedenstellend. Bei etwa einem Drittel zeigt sich kein ausreichender therapeutischer Effekt. Die Therapie wird stationär durchgeführt und dauert 3 Tage pro Zyklus. Die Zyklen werden alle 6-8 Wochen wiederholt, solange die Therapie gut anschlägt und die Nebenwirkungen überschaubar bleiben. Ihr Behandlungsteam der Nuklearmedizin wird Sie individuell beraten.",
+      "hint": ""
+    },
+    {
+      "id": "A56",
+      "question_index": 15,
+      "patient_query": "Warum darf ich während des Krankenhausaufenthalts zur PSMA-Therapie nicht nach draussen?",
+      "answer_text": "Ja, Sie dürfen während Ihres stationären Aufenthalts zur PSMA-Therapie die Station nicht verlassen. Dies ist aus Gründen des Strahlenschutzes notwendig. Die PSMA-Therapie muss unter stationären Bedingungen durchgeführt werden. Während der gesamten dreitägigen Verweildauer dürfen Sie aus Strahlenschutzgründen die Station nicht verlassen. Ich verstehe, dass diese Regelung Fragen aufwerfen kann. Gerne erläutere ich Ihnen die Hintergründe genauer, wenn Sie möchten. Bitte besprechen Sie dies auch mit Ihrem Behandlungsteam der Nuklearmedizin.",
+      "hint": ""
+    },
+    {
+      "id": "A57",
+      "question_index": 5,
+      "patient_query": "Wie wahrscheinlich ist es, dass die PSMA-Therapie eine gute Wirkung erzielt?",
+      "answer_text": "Ja, Sie können mit der PSMA-Therapie eine Verbesserung Ihrer Lebensqualität und eine Verlängerung Ihrer Lebenserwartung erleben. Es ist jedoch wichtig zu wissen, dass eine vollständige Heilung des Tumors, wie bei vielen Krebsarten, die sich ausgebreitet haben, unwahrscheinlich ist.\n\nDie Wirkung der Therapie kann variieren. Bei etwa einem Drittel der Patienten schrumpft der Tumor deutlich. Bei einem weiteren Drittel wird das Wachstum des Tumors für eine Weile verlangsamt. Bei etwa einem Drittel der Patienten zeigt sich leider kein zufriedenstellender Therapieerfolg.\n\nDie Therapie wird eingesetzt, wenn bildgebende Verfahren zeigen, dass Ihr Tumor PSMA produziert.\n\nVERBAL_CONFICE: 95 | Gut belegt durch Patienteninformationen, die die möglichen Ergebnisse klar beschreiben.",
+      "hint": ""
+    },
+    {
+      "id": "A58",
+      "question_index": 10,
+      "patient_query": "Darf ich während meines Aufenthaltes im Rahmen einer PSMA-Therapie Besuch erhalten?",
+      "answer_text": "Nein, während Ihres stationären Aufenthalts für die PSMA-Therapie dürfen Sie aus Gründen des Strahlenschutzes leider keinen Besuch empfangen. Ihre Angehörigen können Sie aber jederzeit telefonisch erreichen. Es besteht die Möglichkeit, dass Angehörige Ihnen etwas über die Schleuse zukommen lassen können. Die Therapie muss stationär durchgeführt werden, und Sie dürfen während der gesamten Verweildauer von drei Tagen das Krankenhaus nicht verlassen.",
+      "hint": ""
+    },
+    {
+      "id": "A59",
+      "question_index": 1,
+      "patient_query": "Kann ich durch eine PSMA-Therapie von meinem Krebs geheilt werden?",
+      "answer_text": "Nein, bei Ihnen ist wie bei vielen metastasierten Krebsarten keine Heilung zu erwarten. Die PSMA-Therapie kann jedoch Ihre Lebensqualität verbessern und die Lebenserwartung erhöhen. Die Therapie wird stationär durchgeführt und dauert 3 Tage pro Zyklus. Die Zyklen erfolgen alle 6-8 Wochen, bis der Tumor nicht mehr anspricht oder Nebenwirkungen auftreten. Ihr Behandlungsteam der Nuklearmedizin wird Sie bezüglich der genauen Anzahl der Zyklen beraten.",
+      "hint": ""
+    },
+    {
+      "id": "A60",
+      "question_index": 6,
+      "patient_query": "Wird mir durch die PSMA-Therapie übel werden?",
+      "answer_text": "Ja, es besteht die Möglichkeit, dass Ihnen übel wird. Die Wahrscheinlichkeit für Übelkeit und Erbrechen ist jedoch gering, da dies prophylaktisch behandelt wird. Ihr Behandlungsteam der Nuklearmedizin wird Ihnen Medikamente gegen Übelkeit geben, üblicherweise vor jeder Behandlung. Diese Medikamente wirken sehr gut und werden gut vertragen. Gelegentlich kann es trotz der Vorbeugung zu leichten Beschwerden kommen.",
+      "hint": ""
+    }
+  ]
+}

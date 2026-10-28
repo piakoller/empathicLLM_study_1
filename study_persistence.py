@@ -63,9 +63,9 @@ def _uri_configured(mongo_uri: str | None) -> bool:
     return bool(mongo_uri) and "<db_password>" not in mongo_uri and "example.mongodb.net" not in mongo_uri
 
 
-def _collection(mongo_uri: str):
+def _collection(mongo_uri: str, name: str = "study_1"):
     client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=4000)
-    return client.get_database("empathicLLM_study").get_collection("study_1")
+    return client.get_database("empathicLLM_study").get_collection(name)
 
 
 def participant_count(role: str) -> int | None:
@@ -159,3 +159,46 @@ def save_current_progress(session_state) -> tuple[bool, str]:
     success, msg = save_results(payload)
     session_state.db_save_status = (success, msg)
     return success, msg
+
+# ── medical check by the physicians (review mode, review_view.py) ─────────────
+# Kept apart from the participants (collection "medical_review"), so a review
+# never counts as a participant or uses up a slot.
+REVIEW_COLLECTION = "medical_review"
+_REVIEW_FALLBACK = pathlib.Path(__file__).parent / "fallback_review.json"
+
+
+def load_review(rater: str) -> dict | None:
+    """The saved review of this rater: MongoDB first, then the local fallback file."""
+    mongo_uri = _mongo_uri()
+    if _uri_configured(mongo_uri):
+        try:
+            record = _collection(mongo_uri, REVIEW_COLLECTION).find_one({"rater": rater}, {"_id": 0})
+            if record:
+                return record
+        except Exception as exc:
+            print(f"[DB WARNING] could not load review {rater}: {exc}")
+    if _REVIEW_FALLBACK.exists():
+        try:
+            return json.loads(_REVIEW_FALLBACK.read_text(encoding="utf-8")).get(rater)
+        except Exception:
+            return None
+    return None
+
+
+def save_review(record: dict) -> bool:
+    """Save one rater's whole review (replaced each time). True if it reached MongoDB."""
+    record = {**record, "updated_at": study_date()}
+    mongo_uri = _mongo_uri()
+    if _uri_configured(mongo_uri):
+        try:
+            _collection(mongo_uri, REVIEW_COLLECTION).replace_one({"rater": record["rater"]}, record, upsert=True)
+            return True
+        except Exception as exc:
+            print(f"[DB WARNING] review {record['rater']} not saved to MongoDB: {exc}")
+    try:
+        data = json.loads(_REVIEW_FALLBACK.read_text(encoding="utf-8")) if _REVIEW_FALLBACK.exists() else {}
+        data[record["rater"]] = record
+        _REVIEW_FALLBACK.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+    except Exception as exc:
+        print(f"[DB ERROR] review {record['rater']} not saved locally either: {exc}")
+    return False

@@ -617,6 +617,10 @@ div[data-testid="stButton"] button[kind="primary"] {
 div[data-testid="stButton"] button[kind="primary"]:hover {
     background-color: #005c3f !important; border-color: #005c3f !important;
 }
+/* locked until both questions are answered: must look locked */
+div[data-testid="stButton"] button[kind="primary"]:disabled {
+    background-color: #9fc3b6 !important; border-color: #9fc3b6 !important; cursor: not-allowed;
+}
 
 /* ── the rest of the palette ────────────────────────────────────── */
 .patient-query {

@@ -1,4 +1,4 @@
-# Draft: analysis plan and sample size (27 Oct 2026)
+# Draft: analysis plan and sample size (27 Oct 2026, decision outcome added 28 Oct)
 
 For the meeting of 28 Oct. Assumes the current app: one answer at a time, a choice of
 statements A–D, 10 of the 20 questions per participant. If the rating format changes
@@ -22,7 +22,21 @@ statements A–D, 10 of the 20 questions per participant. If the rating format c
 **Primary hypothesis:** patients pick A more often for Two-Stage answers than for
 Clinical Only answers.
 
+**Co-primary (patients), added 28 Oct 2026 at the supervisor's request – does the answer
+change the patient's decision?** After each answer: "Wie wirkt diese Antwort auf Ihre
+Entscheidung für die PSMA-Therapie?" on five steps, coded +2 (deutlich sicherer) to −2
+(deutlich unsicherer) (`ratings.decision_code`). Certainty rather than for/against, because
+many participants are already in therapy. Hypothesis: Two-Stage answers make patients more
+certain than Clinical Only answers.
+
 **Secondary**
+
+- Clinicians, per answer: "Würden Sie diese Antwort einer Patientin oder einem Patienten so
+  mitgeben?" – ja, so wie sie ist / ja, mit Änderungen / nein (`decision_code` as_is /
+  with_changes / no), per arm.
+- Patients: SURE test (four yes/no items, Légaré et al. 2010) on the decision about PSMA
+  therapy, before and after the 10 answers (`pre_sure_*`, `post_sure_*`); score 0–4,
+  ≤ 3 = decisional conflict. Exploratory, like the mood items: each person reads all arms.
 
 - Two-Stage vs. Direct Empathy (same outcome).
 - Distribution of all four statements per arm; in particular C (too complicated) and
@@ -42,6 +56,9 @@ Clinical Only answers.
 - Two contrasts (Two-Stage vs. Clinical Only, Two-Stage vs. Direct Empathy), Holm-corrected,
   α = 0.05 two-sided. Report odds ratios and the model-based proportions of A per arm with
   95 % confidence intervals.
+- Decision certainty: cumulative-link mixed model (ordinal, `ordinal::clmm`),
+  `decision ~ arm + (1 | participant) + (1 | question)`; as a check, a linear mixed model on
+  the −2…+2 codes. Same two contrasts, Holm-corrected separately for this outcome.
 - Sensitivity analysis: logistic regression with question as a fixed effect and
   participant-clustered standard errors (the model used in the simulation below).
 - All rated answers enter the analysis, including those of participants who stop early;
@@ -83,3 +100,9 @@ Reading:
    (and the same number of clinicians if they are analysed on their own).
 2. Rating format (decision 3). A vs. B comparison would need its own power calculation.
 3. Realistic recruitment: how many PSMA patients per month can be asked at Insel?
+   Estimate on 28 Oct: 20–30. Then report as a pilot study (effects with confidence
+   intervals) and analyse patients and clinicians together as a pre-planned additional
+   analysis; 20 answers per person would raise the power (30 patients: 52 % → 76 % at
+   +15 pp) but double the time.
+4. The decision outcome (added 28 Oct) is not in the KEK description of study 1; inform the KEK.
+   The SURE wording should be checked against the validated German version.

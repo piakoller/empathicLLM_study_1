@@ -8,6 +8,7 @@ import streamlit as st
 from study_data import items_from_ids
 from study_persistence import load_progress, save_current_progress
 from study_views import render_study_view
+from review_view import render_review, reviewer_from_url
 
 
 st.set_page_config(
@@ -86,6 +87,14 @@ def _initialize_session_state() -> None:
     if "needs_db_save" not in st.session_state:
         st.session_state.needs_db_save = False
 
+
+# Physicians' medical check: a personal link (?review=<token>) opens the review mode
+# instead of the study; it never touches the participant data.
+_rater = reviewer_from_url()
+if _rater:
+    _load_css()
+    render_review(_rater)
+    st.stop()
 
 _initialize_session_state()
 _load_css()

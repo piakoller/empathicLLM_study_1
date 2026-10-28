@@ -14,6 +14,11 @@ streamlit.zip
 
 # Study data (do NOT commit participant results)
 fallback_results.json
+fallback_review.json
+
+# Medical check: the key that unblinds the answers stays with the study team
+medical_review/review_key.json
+medical_review/SCHLUESSEL*
 study_results_*.json
 
 # Environment

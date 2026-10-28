@@ -69,6 +69,44 @@
             "label": "Ich vertraue generell darauf, dass digitale Gesundheitstools hilfreiche Informationen liefern."
           }
         ]
+      },
+      {
+        "section": "Ihre Entscheidung zur PSMA-Therapie",
+        "description": "",
+        "items": [
+          {
+            "key": "pre_sure_s",
+            "label": "F\u00fchlen Sie sich sicher, was f\u00fcr Sie die beste Entscheidung zur PSMA-Therapie ist?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
+          },
+          {
+            "key": "pre_sure_u",
+            "label": "Kennen Sie die Vorteile und Risiken der PSMA-Therapie?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
+          },
+          {
+            "key": "pre_sure_r",
+            "label": "Ist Ihnen klar, welche Vorteile und Risiken Ihnen am wichtigsten sind?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
+          },
+          {
+            "key": "pre_sure_e",
+            "label": "Haben Sie gen\u00fcgend Unterst\u00fctzung und Beratung, um Ihre Entscheidung zu treffen?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
+          }
+        ]
       }
     ]
   },
@@ -149,6 +187,44 @@
           {
             "key": "post_recommend",
             "label": "Ich w\u00fcrde den Einsatz eines solchen Systems als Unterst\u00fctzung (z. B. zur Vorbereitung auf das Arztgespr\u00e4ch) bef\u00fcrworten."
+          }
+        ]
+      },
+      {
+        "section": "Ihre Entscheidung zur PSMA-Therapie",
+        "description": "",
+        "items": [
+          {
+            "key": "post_sure_s",
+            "label": "F\u00fchlen Sie sich sicher, was f\u00fcr Sie die beste Entscheidung zur PSMA-Therapie ist?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
+          },
+          {
+            "key": "post_sure_u",
+            "label": "Kennen Sie die Vorteile und Risiken der PSMA-Therapie?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
+          },
+          {
+            "key": "post_sure_r",
+            "label": "Ist Ihnen klar, welche Vorteile und Risiken Ihnen am wichtigsten sind?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
+          },
+          {
+            "key": "post_sure_e",
+            "label": "Haben Sie gen\u00fcgend Unterst\u00fctzung und Beratung, um Ihre Entscheidung zu treffen?",
+            "options": {
+              "1": "Ja",
+              "0": "Nein"
+            }
           }
         ]
       }
