@@ -98,6 +98,13 @@ if _rater:
     _load_css()
     render_review(_rater)
     st.stop()
+# A review link whose token the app does not know (e.g. the secrets are missing) must not
+# fall through into the study: that would save the physician as a participant.
+if "review" in st.query_params:
+    _load_css()
+    st.error("Dieser Prüf-Link ist ungültig oder die Prüfung ist noch nicht freigeschaltet. "
+             "Bitte Pia Koller (pia.koller@unibe.ch) informieren.")
+    st.stop()
 
 _initialize_session_state()
 _load_css()
